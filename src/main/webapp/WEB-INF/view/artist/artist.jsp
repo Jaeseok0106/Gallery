@@ -143,87 +143,16 @@ text-decoration-line:none;
 	</div>
 	<div class = "container">
 		<div class = "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center" id = "artist">
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">		
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
+			<c:forEach var = "artist" items= "${artist}">
+				<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
+					<div class="card" style="width: 19rem; height : 24rem;">
+					  <img src="${artist.profile}" class="card-img-top" alt="여기에 사진 들어감">
+					  <div class="card-body">
+						<a href = "./artist/${artist.id}"><h5 class="card-title">${artist.name}</h5></a>
+					  </div>
+					</div>
 				</div>
-			</div>
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-				<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">		
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-				<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">		
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
-			<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-				<div class="card" style="width: 19rem; height : 24rem;">
-				  <img src="..." class="card-img-top" alt="여기에 사진 들어감">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 </main>
