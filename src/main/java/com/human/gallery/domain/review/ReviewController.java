@@ -8,12 +8,9 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @Slf4j
@@ -47,6 +44,23 @@ public class ReviewController {
 	public String viewReview(@SessionAttribute(name = "user", required = false) Users user, Model model)
 	{
 		model.addAttribute("user", user);
-		return "review";
+		return "review/review";
+	}
+	@GetMapping("/reviewDetail")
+	public String doDetail(@SessionAttribute(name = "user", required = false) Users user,
+						   @RequestParam int id, Model model) {
+		Review rdto=review.selView(id);
+		Review ndto=review.movePage(id);
+		review.count(id);
+		model.addAttribute("rdto", rdto);
+		model.addAttribute("ndto", ndto);
+		model.addAttribute("user",user);
+		return "review/reviewDetail";
+	}
+	@RequestMapping("/writeReview")
+	public String doWriteReview(@SessionAttribute(name = "user", required = false) Users user, Model model)
+	{
+		model.addAttribute("user",user);
+		return "review/writeReview";
 	}
 }

@@ -62,7 +62,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:150px;"/>
+				<img src = "logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
