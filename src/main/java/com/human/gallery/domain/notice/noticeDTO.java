@@ -1,9 +1,9 @@
-package com.human.gallery.domain.review;
+package com.human.gallery.domain.notice;
 
 import lombok.Data;
 
 @Data
-public class Review {
+public class noticeDTO {
 	private int id;
 	private String title;
 	private String content;
@@ -14,5 +14,6 @@ public class Review {
 	private int views;
 	private String userid;
 	private int next;
-	private int last;
+	private int prev;
+
 }

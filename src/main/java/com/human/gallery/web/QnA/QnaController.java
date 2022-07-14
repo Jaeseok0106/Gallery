@@ -5,19 +5,14 @@ import java.util.ArrayList;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.human.gallery.domain.QnA.iQna;
 import com.human.gallery.domain.QnA.qnaDTO;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,7 +48,7 @@ public class QnaController {
 	@RequestMapping("/qna")
 	public String doQna(@SessionAttribute(name = "user", required = false) Users user, Model model) {
 		model.addAttribute("user",user);
-		return "qnalist";
+		return "qna/qnalist";
 	}
 	
 	@RequestMapping(value="/detail", produces="application/json;charset=utf-8")
@@ -63,6 +58,20 @@ public class QnaController {
 		qnaDTO qdto=qna.selqna(id);
 		model.addAttribute("qdto",qdto);
 		model.addAttribute("user",user);
-		return "detail";
+		return "qna/detail";
+	}
+
+	@RequestMapping("new")
+	public String doNew(@SessionAttribute(name = "user", required = false) Users user,Model model) {
+		log.info("글쓰기에 넘어옴");
+		model.addAttribute("user",user);
+		return "qna/qnawrite";
+	}
+
+	@PostMapping("/addqna")
+	public String doAddqna(@RequestParam String title, @RequestParam String content) {
+
+		qna.addqna(title,content);
+		return "redirect:/qna";
 	}
 }

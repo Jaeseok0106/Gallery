@@ -5,7 +5,7 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<title>Home</title>
+	<title>Qna</title>
 </head>
 <style>
 table {
@@ -43,7 +43,8 @@ body {
     font-style: normal;
 }
 a {
-text-decoration-line:none;
+	text-decoration: none;
+	color:black;
 }
 </style>
 <body>
@@ -137,12 +138,12 @@ text-decoration-line:none;
 <main class = "container p-5">
 	<div class = "container">
 		<div class = "page-title">
-			<h1>여기가 어떤곳인지</h1>
+			<h1>Q&A</h1>
 		</div>
 	</div>
 	<div class = "container" id = "boardList">
 		<div class = "row">
-			<table>
+			<table id='qnatb' class ="text-center">
 				<tr class ="text-center">
 					<th>번호</th>
 					<th>제목</th>
@@ -151,94 +152,9 @@ text-decoration-line:none;
 					<th>조회</th>
 					<th>추천순</th>
 				</tr>
-				<tr class = "p-5">
-					<td class = "text-center">1</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">2</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">3</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">4</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">5</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">6</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">7</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">8</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">9</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">10</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
-				<tr>
-					<td class = "text-center">11</td>
-					<td class = "text-center">여기서부터 디비에서 불러온 제목</td>
-					<td class = "text-center">디비 글쓴이</td>
-					<td class = "text-center">디비 날짜</td>
-					<td class = "text-center">조회수</td>
-					<td class = "text-center">추천 50개</td>
-				</tr>
+<!-- 				<tr class = "p-5">
+					
+				</tr> -->
 			</table>
 			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
 			
@@ -257,7 +173,7 @@ text-decoration-line:none;
                 </button>
 			</div>
 			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button>
+				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='new'">글쓰기</button>
 			</div>
 		</div>
 	</div>
@@ -289,6 +205,7 @@ text-decoration-line:none;
 $(document)
 .ready(function () {
 	console.log("시작 화면");
+	qnalist();
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
 		$("#none2").css("display", "none");
@@ -321,5 +238,28 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
+function qnalist(){
+	$.ajax({
+		url : 'qnalist',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['user_id']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
 </script>
 </html>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<title>Qna</title>
+	<title>Home</title>
 </head>
 <style>
 table {
@@ -16,6 +16,9 @@ table {
 list-style-type:none;
 float:left;
 font-size: 55px;
+}
+a {
+	text-decoration: none;
 }
 .nav-link {
     font-weight: 600;
@@ -43,8 +46,7 @@ body {
     font-style: normal;
 }
 a {
-	text-decoration: none;
-	color:black;
+text-decoration-line:none;
 }
 </style>
 <body>
@@ -52,7 +54,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:150px;"/>
+				<img src = "logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -138,12 +140,12 @@ a {
 <main class = "container p-5">
 	<div class = "container">
 		<div class = "page-title">
-			<h1>Q&A</h1>
+			<h1>Review Board</h1>
 		</div>
 	</div>
 	<div class = "container" id = "boardList">
 		<div class = "row">
-			<table id='qnatb' class ="text-center">
+			<table id=tblData class ="text-center">
 				<tr class ="text-center">
 					<th>번호</th>
 					<th>제목</th>
@@ -152,9 +154,7 @@ a {
 					<th>조회</th>
 					<th>추천순</th>
 				</tr>
-<!-- 				<tr class = "p-5">
-					
-				</tr> -->
+	
 			</table>
 			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
 			
@@ -173,8 +173,7 @@ a {
                 </button>
 			</div>
 			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button>
-			</div>
+				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>			</div>
 		</div>
 	</div>
 </main>
@@ -204,8 +203,8 @@ a {
 <script>
 $(document)
 .ready(function () {
+	showReview();
 	console.log("시작 화면");
-	qnalist();
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
 		$("#none2").css("display", "none");
@@ -236,30 +235,29 @@ $(document)
 		$("#none1").css("display", "none")
 		$("#none2").css("display", "none");
 		$("#none3").css("display", "none");
-	})	
+	})
+	function showReview() {
+		$.ajax({
+			url:'reviewList',
+			data:'',
+			dataType:'json',
+			type:'get',
+			beforeSend:function() {
+				$('#tblData tr:gt(0)').remove();
+			},
+			success:function(data) {
+				for(let i=0; i<data.length; i++) {
+					reviewitem=data[i];
+					let str='<tr><td>'+reviewitem['id']+'</td><td><a href="reviewDetail?id='+reviewitem['id']+'">'+reviewitem['title']+
+							'</a></td><td>'+reviewitem['user_id']+'</td><td>'+reviewitem['postdate']+
+							'</td><td>'+reviewitem['views']+'</td><td>'+reviewitem['heart']+'</td></tr>';
+					$('#tblData').append(str);
+				}
+			},
+			error:function() { },
+			complete:function() { }
+		})
+	}
 })
-function qnalist(){
-	$.ajax({
-		url : 'qnalist',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['user_id']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
 </script>
 </html>

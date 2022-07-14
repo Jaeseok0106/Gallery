@@ -5,7 +5,7 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<title>Home</title>
+	<title>NOTICE</title>
 </head>
 <style>
 table {
@@ -16,9 +16,6 @@ table {
 list-style-type:none;
 float:left;
 font-size: 55px;
-}
-a {
-	text-decoration: none;
 }
 .nav-link {
     font-weight: 600;
@@ -46,6 +43,10 @@ body {
     font-style: normal;
 }
 a {
+	text-decoration: none;
+	color:black;
+}
+a {
 text-decoration-line:none;
 }
 </style>
@@ -54,7 +55,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:150px;"/>
+				<img src = "logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -140,21 +141,20 @@ text-decoration-line:none;
 <main class = "container p-5">
 	<div class = "container">
 		<div class = "page-title">
-			<h1>Review Board</h1>
+			<h1>NOTICE</h1>
 		</div>
 	</div>
 	<div class = "container" id = "boardList">
 		<div class = "row">
-			<table id=tblData class ="text-center">
+			<table id=tbldata class ="text-center">
 				<tr class ="text-center">
 					<th>번호</th>
 					<th>제목</th>
-					<th>글쓴이</th>
-					<th>날짜</th>
+					<th>작성자</th>
+					<th>작성 날짜</th>
 					<th>조회</th>
-					<th>추천순</th>
+					<th>추천수</th>
 				</tr>
-	
 			</table>
 			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
 			
@@ -173,7 +173,7 @@ text-decoration-line:none;
                 </button>
 			</div>
 			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button>
+				<button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
 			</div>
 		</div>
 	</div>
@@ -204,8 +204,8 @@ text-decoration-line:none;
 <script>
 $(document)
 .ready(function () {
-	showReview();
 	console.log("시작 화면");
+	listnotice();
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
 		$("#none2").css("display", "none");
@@ -236,29 +236,28 @@ $(document)
 		$("#none1").css("display", "none")
 		$("#none2").css("display", "none");
 		$("#none3").css("display", "none");
-	})
-function showReview() {
-		$.ajax({
-			url:'reviewList',
-			data:'',
-			dataType:'json',
-			type:'get',
-			beforeSend:function() {
-				$('#tblData tr:gt(0)').remove();
-			},
-			success:function(data) {
-				for(let i=0; i<data.length; i++) {
-					reviewitem=data[i];
-					let str='<tr><td>'+reviewitem['id']+'</td><td>'+reviewitem['title']+
-						'</td><td>'+reviewitem['user_id']+'</td><td>'+reviewitem['postdate']+
-						'</td><td>'+reviewitem['views']+'</td><td>'+reviewitem['heart']+'</td></tr>';
-					$('#tblData').append(str);
-					}
-			},
-			error:function() { },
-			complete:function() { }
-		})
-	}
+	})	
 })
+function listnotice(){
+	$.get('listnotice','',function(data){
+			$('#tbldata tr:gt(0)').remove();
+			for(let i=0; i<data.length; i++){
+				listnotice=data[i];
+				let str='<tr><td>'+listnotice['id']
+						+'</td><td><a href="content?id='+listnotice['id']+'">' +listnotice['title']+
+                '</a></td><td>'+listnotice['user_id']+'</td><td>'+listnotice['postdate']+
+                '</td><td>'+listnotice['views']+'</td><td>'+listnotice['heart']+'</td></tr>';
+				$('#tbldata').append(str);
+				}
+			},'json');
+	}
+$(document)
+		.on('click','#logo',function(){
+			document.location.href='../../..';
+		})
+$(document)
+		.on('click','#btnwrite',function(){
+			document.location.href='/write';
+		})
 </script>
 </html>

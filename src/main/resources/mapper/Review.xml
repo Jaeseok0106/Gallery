@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "com.human.gallery.domain.review.ReviewRepository">
 	<select id = "reviewList" resultType = "com.human.gallery.domain.review.Review">
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
 		from board_post a, users b
 		where categoryList=2
-		and a.writer=b.usernum
+		  and a.writer=b.usernum
 	</select>
+	<select id = "selView" resultType = "com.human.gallery.domain.review.Review">
+		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=2
+		  and a.writer=b.usernum
+		  and a.id=#{param1}
+	</select>
+	<select id="movePage" resultType="com.human.gallery.domain.review.Review">
+		select * from(SELECT id, LEAD(id,1,9999) OVER(ORDER BY id) AS next,
+        LAG(id,1,9999) OVER(ORDER BY id) AS last
+					  FROM board_post
+					  where categoryList=2)
+		WHERE id = #{param1}
+	</select>
+	<update id="count" parameterType="int">
+		update board_post set views=views+1 where id=#{param1}
+	</update>
+	<!--<insert id="insertReview" resultType="com.human.gallery.domain.review.Review">
+		insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, #{param3}, 2, 0, to_char(sysdate, 'YYYY-MM-DD'), 0);
+	</insert>-->
 </mapper>
