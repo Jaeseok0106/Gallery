@@ -5,16 +5,9 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
 	<title>Home</title>
 </head>
 <style>
-#main {
-font-size:75px;
-}
-.carousel-item, .carousel-inner {
-height:568px;
-}
 .nav-item{
 list-style-type:none;
 float:left;
@@ -26,10 +19,39 @@ font-size: 55px;
     padding: 0 0.3125rem;
     font-size: 20px;
     font-size: 1.25rem;
-  }
- #detail {
- 	font-size: 0.7rem;
- }
+}
+.page-title {
+	border-top: 10px solid black;
+	border-bottom : 10px solid black;
+	margin-bottom : 4rem;
+}
+.page-title h1{
+	padding : 2rem;
+	text-align : center;
+}
+body {
+	font-family : LeeSeoyun;
+}
+@font-face {
+    font-family: 'LeeSeoyun';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+img {
+	text-align:center;
+}
+.exhibit-name {
+	text-align : left;
+	font-size : 1.5rem;
+}
+.artist-name {
+	text-align : right;
+	font-size : 1rem;
+}
+a {
+text-decoration-line:none;
+}
 </style>
 <body>
 <div class="container">
@@ -118,37 +140,47 @@ font-size: 55px;
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
-
-
-<main class = "container">
-	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active" data-bs-interval="2000">
-	      <img src="1.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item" data-bs-interval="2000">
-	      <img src="2.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item" data-bs-interval="2000">
-	      <img src="3.jpeg" class="d-block w-100" alt="...">
-	    </div>
-	  </div>
-	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </button>
-	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </button>
+<!-- main 안에다가 주 내용 작성할것 -->
+<main class = "container p-5 text-center">
+	<div class = "page-title">
+		<h1>Exhibition</h1>
 	</div>
-	
-	<div class = "row-mb-2" style = "height:500px;">
-		<div class = "col-6">
-		
-		</div>
-	
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
 	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 	<span class = "artist-name" style = "float:right;">작가 이름</span>
+		<br><br>
+		</p>
+	</div>
+	<br><br>		
 </main>
 
 <!-- 하단 -->

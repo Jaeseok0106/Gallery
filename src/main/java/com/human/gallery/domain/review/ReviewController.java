@@ -63,4 +63,10 @@ public class ReviewController {
 		model.addAttribute("user",user);
 		return "review/writeReview";
 	}
+	@PostMapping("/insertReview")
+	public String doInsert(@RequestParam String title, @RequestParam(value = "content" , required = false) String content, @RequestParam int writer) {
+		log.info("넘어온 값 = {}, {}, {}", title, content, writer);
+		review.insertReview(title, content, writer);
+		return "redirect:/review";
+	}
 }

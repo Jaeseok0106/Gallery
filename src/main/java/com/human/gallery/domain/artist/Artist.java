@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Artist {
 
-    private int id;
+    private String id;
     private String profile;
     private String name;
     private String career;

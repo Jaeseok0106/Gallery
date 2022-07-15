@@ -77,7 +77,7 @@ prefix="c" %> <%@ page session="false" %>
             </div>
           </li>
           <li class="nav-item mx-5">
-            <a class="nav-link" href="#" id = "nav2">exhibition</a>
+            <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
           </li>
           <li class="nav-item mx-5">
             <a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -133,15 +133,6 @@ prefix="c" %> <%@ page session="false" %>
   <input type = "hidden" id = "role" value = "${user.role}">
   <input type = "hidden" id = "usernum" value = "${user.userNum}">
   <br><br>
-  <!-- main 안에다가 주 내용 작성할것 -->
-  <main class = "container p-5">
-    <div class = "row">
-      <div class = "col-12" style = "border-top: 0.1rem solid black; border-bottom: 0.1rem solid black;">
-        <p class = "text-start"> ${qdto.title}
-          <span style = "float:right">
-            ${qdto.postdate}
-          </span>
-        </p>
       </div>
       <div class = "col-12" style = "border-bottom: 0.1rem solid black;">
         <p class = "text-start">

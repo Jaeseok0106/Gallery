@@ -3,6 +3,7 @@ package com.human.gallery.web.artist;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import com.human.gallery.domain.artist.Artist;
 import com.human.gallery.domain.artist.ArtistRepository;
@@ -30,6 +31,7 @@ public class ArtistController {
 
 	@Value("${artistfile.path}")
 	private String filePath;
+
 	@GetMapping("")
 	public String viewArtist(@SessionAttribute(name = "user", required = false) Users user,
 							 Model model) {
@@ -39,6 +41,7 @@ public class ArtistController {
 		model.addAttribute("user", user);
 		return "artist/artist";
 	}
+
 	@RequestMapping("/upload")
 	public String viewUpload(@SessionAttribute(name = "user", required = false) Users user,
 							 Model model) {
@@ -46,12 +49,13 @@ public class ArtistController {
 		model.addAttribute("user", user);
 		return "artist/uploadArtist";
 	}
+
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String doUpload(@RequestParam("name") String name,
-							@RequestParam("career") String career,
-							@RequestParam("direction") String direction,
-							@RequestParam("file") MultipartFile file
-							) throws IllegalStateException, IOException {
+						   @RequestParam("career") String career,
+						   @RequestParam("direction") String direction,
+						   @RequestParam("file") MultipartFile file
+	) throws IllegalStateException, IOException {
 
 		log.info("name = {}", name);
 		log.info("career = {}", career);
@@ -60,8 +64,9 @@ public class ArtistController {
 
 
 		if (!file.isEmpty()) {
-			String fullPath = fileDir + file.getOriginalFilename();
-			String artistPath = filePath + file.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String fullPath = fileDir + uuid + file.getOriginalFilename();
+			String artistPath = filePath + uuid + file.getOriginalFilename();
 			log.info("파일 경로 fullPath = {}", fullPath);
 			file.transferTo(new File(fullPath));
 			artistRepository.addArtist(artistPath, name, career, direction);
@@ -69,7 +74,58 @@ public class ArtistController {
 
 		return "redirect:/artist";
 	}
-	public String aaa() {
-		return null;
+
+	@GetMapping("/detail/{artistid}")
+	public String viewDetail(@PathVariable("artistid") int id,
+							 @SessionAttribute(name = "user", required = false) Users user,
+							 Model model) {
+
+		Artist artist = artistRepository.findById(id);
+		model.addAttribute("user", user);
+		model.addAttribute("artist", artist);
+		return "artist/artistDetail";
+	}
+
+	@PostMapping("/delete/{artistid}")
+	@ResponseBody
+	public String delteArtist(@PathVariable("artistid") int id) {
+		log.info("받아온 id 값 = {}", id);
+		try {
+			artistRepository.deleteById(id);
+		} catch (Exception e) {
+			return "false";
+		}
+		return "true";
+	}
+
+	@GetMapping("/modify/{artistid}")
+	public String viewModify(@SessionAttribute(name = "user", required = false) Users user,
+							 Model model,
+							 @PathVariable("artistid") int id) {
+		Artist artist = artistRepository.findById(id);
+		model.addAttribute("artist", artist);
+		model.addAttribute("user", user);
+		return "artist/modifyArtist";
+	}
+	@PostMapping("/modify/{artistid}")
+	public String doModifyArtist(@PathVariable("artistid") int id,
+								 @RequestParam("name") String name,
+								 @RequestParam("career") String career,
+								 @RequestParam("direction") String direction,
+								 @RequestParam("file") MultipartFile file)
+			throws IllegalStateException, IOException {
+
+		if (!file.isEmpty()) {
+			String uuid = UUID.randomUUID().toString();
+			String fullPath = fileDir + uuid + file.getOriginalFilename();
+			String artistPath = filePath + uuid + file.getOriginalFilename();
+			log.info("파일 경로 fullPath = {}", fullPath);
+			artistRepository.modifyById(artistPath, name, career, direction, id);
+			file.transferTo(new File(fullPath));
+		}
+		else {
+			artistRepository.modifyByIdWithOutImage(name, career, direction, id);
+		}
+		return "redirect:/artist/detail/"+id;
 	}
 }

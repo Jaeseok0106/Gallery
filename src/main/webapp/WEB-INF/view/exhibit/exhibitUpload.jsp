@@ -1,24 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false" %>
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
 	<title>Home</title>
 </head>
 <style>
-#main {
-font-size:75px;
-}
-.carousel-item, .carousel-inner {
-height:568px;
-}
 .nav-item{
 list-style-type:none;
 float:left;
 font-size: 55px;
+}
+.ck-editor__editable {
+	height : 400px;
 }
 .nav-link {
     font-weight: 600;
@@ -26,10 +23,28 @@ font-size: 55px;
     padding: 0 0.3125rem;
     font-size: 20px;
     font-size: 1.25rem;
-  }
- #detail {
- 	font-size: 0.7rem;
- }
+}
+.page-title {
+	border-top: 10px solid black;
+	border-bottom : 10px solid black;
+	margin-bottom : 4rem;
+}
+.page-title h1{
+	padding : 2rem;
+	text-align : center;
+}
+body {
+	font-family : LeeSeoyun;
+}
+@font-face {
+    font-family: 'LeeSeoyun';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+a {
+text-decoration-line:none;
+}
 </style>
 <body>
 <div class="container">
@@ -65,19 +80,19 @@ font-size: 55px;
 					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/artist" id = "nav3">artist</a>
+					<a class="nav-link" href="./artist" id = "nav3">artist</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" id = "nav4">Post</a>
 					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
+							<a class="nav-link" aria-current="page" href="./review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -89,15 +104,15 @@ font-size: 55px;
 					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
 						<c:if test = "${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+								<a class="nav-link" aria-current="page" href="./login" id = "detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/signin" id = "detail">Sign in</a>
+								<a class="nav-link" href="./signin" id = "detail">Sign in</a>
 							</li>
 						</c:if>
 						<c:if test = "${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+								<a class="nav-link" aria-current="page" href="./logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
 						<li class="nav-item">
@@ -118,36 +133,66 @@ font-size: 55px;
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
-
-
-<main class = "container">
-	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active" data-bs-interval="2000">
-	      <img src="1.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item" data-bs-interval="2000">
-	      <img src="2.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item" data-bs-interval="2000">
-	      <img src="3.jpeg" class="d-block w-100" alt="...">
-	    </div>
-	  </div>
-	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </button>
-	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </button>
-	</div>
-	
-	<div class = "row-mb-2" style = "height:500px;">
-		<div class = "col-6">
-		
-		</div>
-	
+<!-- main 안에다가 주 내용 작성할것 -->
+<main class = "container p-5">
+	<table class = "col-12">
+		<tr>
+			<td class = "col-3 text-center">전시회 이름 : </td>
+			<td class = "col-8 text-left">
+				<input type = "text" path = "name" class="form-control" placeholder="Default input" aria-label="default input example"/>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">전시회 사진 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="file" id="formFile" name = "file">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">아티스트 : </td>
+			<td class = "col-8 text-left">
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					<option selected>Open this select menu</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">시작 날짜 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="date" name = "startDate">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">끝 날짜 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="date" name = "endDate">
+			</td>
+		</tr>
+		<tr class = "py-5">
+			<td class = "col-3 text-center">전시회 설명 : </td>
+			<td class = "col-8 text-left">
+				<textarea name = "info" class="form-control" id="editor" rows="15" cols = "30" placeholder="전시회의 설명을 적어주세요."></textarea> <br><br>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">가격 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="text" name = "price">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">총 인원 수 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="text" name = "total">
+			</td>
+		</tr>
+	</table>
+	<div class = "col-12 text-end">
+		<button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
+		<button type="button" class="btn btn-outline-danger" onclick="location.href='/exhibit'">취소</button>
 	</div>
 </main>
 
@@ -209,5 +254,11 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
+</script>
+<script src="${classpath}/editor/ckeditor.js"></script>
+<script src="${classpath}/editor/translations/ko.js"></script>
+<script>
+	ClassicEditor.create( document.querySelector( '#editor')
+	);
 </script>
 </html>

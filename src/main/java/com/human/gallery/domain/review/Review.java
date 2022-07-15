@@ -15,4 +15,5 @@ public class Review {
 	private String userid;
 	private int next;
 	private int last;
+	private int userNum;
 }

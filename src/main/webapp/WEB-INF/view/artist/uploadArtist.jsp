@@ -42,7 +42,7 @@ a {
 	text-decoration-line:none;
 }
 .ck-editor__editable {
-	height : 600px;
+	height : 500px;
 }
 </style>
 <body>
@@ -76,7 +76,7 @@ a {
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -141,12 +141,12 @@ a {
 		<div class = "row mb-2 py-4">
 			<form class = "row mb-2" id = "frmAdd" method = "POST" action = "./upload" enctype="multipart/form-data">
 				<div class = "col-6">
-						<input class="form-control" name = "name" type="text" placeholder="아티스트 이름" aria-label="default input example"><br><br>
-						<textarea name = "career" class="form-control" rows = "3" cols = "5" placeholder="아티스트 커리어"></textarea> <br><br>
+						<input class="form-control" id = "name" name = "name" type="text" placeholder="아티스트 이름" aria-label="default input example"><br><br>
+						<textarea name = "career" class="form-control" id = "editor2" rows = "3" cols = "5" placeholder="아티스트 커리어"></textarea> <br><br>
 						<textarea name = "direction" class="form-control" id="editor" rows="30" cols = "50" placeholder="아티스트의 방향성에 대해 입력해주세요"></textarea> <br><br>
 					<div class = "text-end">
-						<button type="submit" class="btn btn-outline-primary">작성 완료</button>
-						<button type="button" class="btn btn-outline-danger">취소</button>						
+						<button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
+						<button type="button" class="btn btn-outline-danger" onclick="location.href='/artist'">취소</button>
 					</div>
 				</div>
 				<div class = "col-6">
@@ -214,12 +214,27 @@ $(document)
 		$("#none1").css("display", "none")
 		$("#none2").css("display", "none");
 		$("#none3").css("display", "none");
-	})	
+	})
+	$("#artistSend").click(function() {
+		if ($("#name", "#formFile").val() == '') {
+			alert("이름을 입력해주세요.");
+			return false;
+		}
+		if ($(".ck-content").text() == '') {
+			alert("안에를 채워주세요");
+			return false;
+		} else {
+			return true;
+		}
+	})
 })
 </script>
 <script src="${classpath}/editor/ckeditor.js"></script>
 <script src="${classpath}/editor/translations/ko.js"></script>
 <script>
-ClassicEditor.create( document.querySelector( '#editor' ) );
+ClassicEditor.create( document.querySelector( '#editor')
+);
+ClassicEditor.create( document.querySelector( '#editor2')
+);
 </script>
 </html>
