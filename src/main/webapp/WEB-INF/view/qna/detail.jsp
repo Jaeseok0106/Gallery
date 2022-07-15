@@ -77,7 +77,7 @@ prefix="c" %> <%@ page session="false" %>
             </div>
           </li>
           <li class="nav-item mx-5">
-            <a class="nav-link" href="#" id = "nav2">exhibition</a>
+            <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
           </li>
           <li class="nav-item mx-5">
             <a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -161,14 +161,21 @@ prefix="c" %> <%@ page session="false" %>
         <div class="col-12 py-2">
            	${qdto.content}
         </div>
-        <div class="col-3 text-start">
-          <button type="button" class="btn btn-outline-primary">이전</button>
+        <div class = "col-3 text-start">
+          <c:if test="${nepr.prev!=0}">
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.prev}'">이전</button>
+          </c:if>
+          <c:if test="${nepr.prev==0}"></c:if>
         </div>
-        <div class="col-6 text-center">
+        <div class = "col-6 text-center">
           <button type="button" class="btn btn-outline-primary">추천</button>
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='qna'">목록</button>
         </div>
-        <div class="col-3 text-end">
-          <button type="button" class="btn btn-outline-primary">다음</button>
+        <div class = "col-3 text-end">
+          <c:if test="${nepr.next!=9999}">
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.next}'">다음</button>
+          </c:if>
+          <c:if test="${nepr.next==9999}"></c:if>
         </div>
       </div>
     </main>

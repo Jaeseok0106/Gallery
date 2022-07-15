@@ -8,17 +8,10 @@
 	<title>Home</title>
 </head>
 <style>
-table {
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
 .nav-item{
 list-style-type:none;
 float:left;
 font-size: 55px;
-}
-a {
-	text-decoration: none;
 }
 .nav-link {
     font-weight: 600;
@@ -30,7 +23,7 @@ a {
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
-	margin-bottom : 2rem;
+	margin-bottom : 4rem;
 }
 .page-title h1{
 	padding : 2rem;
@@ -44,6 +37,17 @@ body {
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
+img {
+	text-align:center;
+}
+.exhibit-name {
+	text-align : left;
+	font-size : 1.5rem;
+}
+.artist-name {
+	text-align : right;
+	font-size : 1rem;
 }
 a {
 text-decoration-line:none;
@@ -137,45 +141,46 @@ text-decoration-line:none;
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
-<main class = "container p-5">
-	<div class = "container">
-		<div class = "page-title">
-			<h1>Review Board</h1>
-		</div>
+<main class = "container p-5 text-center">
+	<div class = "page-title">
+		<h1>Exhibition</h1>
 	</div>
-	<div class = "container" id = "boardList">
-		<div class = "row">
-			<table id=tblData class ="text-center">
-				<tr class ="text-center">
-					<th>번호</th>
-					<th>제목</th>
-					<th>글쓴이</th>
-					<th>날짜</th>
-					<th>조회</th>
-					<th>추천순</th>
-				</tr>
-	
-			</table>
-			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			
-			<p></p>
-			<p></p>		
-			<p></p>
-			<div class = "col-2">
-				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
-			</div>
-			<div class = "col-1 text-left">
-                <button type="button" class="btn btn-outline-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				  </svg>
-                  <span class="visually-hidden">Button</span>
-                </button>
-			</div>
-			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>			</div>
-		</div>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
 	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 	<span class = "artist-name" style = "float:right;">작가 이름</span>
+		<br><br>
+		</p>
+	</div>
+	<br><br>		
 </main>
 
 <!-- 하단 -->
@@ -203,7 +208,6 @@ text-decoration-line:none;
 <script>
 $(document)
 .ready(function () {
-	showReview();
 	console.log("시작 화면");
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
@@ -235,29 +239,7 @@ $(document)
 		$("#none1").css("display", "none")
 		$("#none2").css("display", "none");
 		$("#none3").css("display", "none");
-	})
-	function showReview() {
-		$.ajax({
-			url:'reviewList',
-			data:'',
-			dataType:'json',
-			type:'get',
-			beforeSend:function() {
-				$('#tblData tr:gt(0)').remove();
-			},
-			success:function(data) {
-				for(let i=0; i<data.length; i++) {
-					reviewitem=data[i];
-					let str='<tr><td>'+reviewitem['id']+'</td><td><a href="reviewDetail?id='+reviewitem['id']+'">'+reviewitem['title']+
-							'</a></td><td>'+reviewitem['user_id']+'</td><td>'+reviewitem['postdate']+
-							'</td><td>'+reviewitem['views']+'</td><td>'+reviewitem['heart']+'</td></tr>';
-					$('#tblData').append(str);
-				}
-			},
-			error:function() { },
-			complete:function() { }
-		})
-	}
+	})	
 })
 </script>
 </html>

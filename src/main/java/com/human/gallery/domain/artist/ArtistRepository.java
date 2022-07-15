@@ -9,4 +9,9 @@ public interface ArtistRepository {
 
     void addArtist(String profile, String name, String career, String direction);
     ArrayList<Artist> findAll();
+    Artist findById(int id);
+    void deleteById(int id);
+
+    void modifyById(String profile, String name, String career, String direction, int id);
+    void modifyByIdWithOutImage(String name, String career, String direction, int id);
 }

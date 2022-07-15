@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -8,17 +9,13 @@
 	<title>Home</title>
 </head>
 <style>
-table {
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
 .nav-item{
 list-style-type:none;
 float:left;
 font-size: 55px;
 }
-a {
-	text-decoration: none;
+.ck-editor__editable {
+	height : 400px;
 }
 .nav-link {
     font-weight: 600;
@@ -30,7 +27,7 @@ a {
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
-	margin-bottom : 2rem;
+	margin-bottom : 4rem;
 }
 .page-title h1{
 	padding : 2rem;
@@ -83,19 +80,19 @@ text-decoration-line:none;
 					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/artist" id = "nav3">artist</a>
+					<a class="nav-link" href="./artist" id = "nav3">artist</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" id = "nav4">Post</a>
 					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
+							<a class="nav-link" aria-current="page" href="./review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -107,15 +104,15 @@ text-decoration-line:none;
 					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
 						<c:if test = "${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+								<a class="nav-link" aria-current="page" href="./login" id = "detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/signin" id = "detail">Sign in</a>
+								<a class="nav-link" href="./signin" id = "detail">Sign in</a>
 							</li>
 						</c:if>
 						<c:if test = "${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+								<a class="nav-link" aria-current="page" href="./logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
 						<li class="nav-item">
@@ -138,43 +135,64 @@ text-decoration-line:none;
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-	<div class = "container">
-		<div class = "page-title">
-			<h1>Review Board</h1>
-		</div>
-	</div>
-	<div class = "container" id = "boardList">
-		<div class = "row">
-			<table id=tblData class ="text-center">
-				<tr class ="text-center">
-					<th>번호</th>
-					<th>제목</th>
-					<th>글쓴이</th>
-					<th>날짜</th>
-					<th>조회</th>
-					<th>추천순</th>
-				</tr>
-	
-			</table>
-			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			
-			<p></p>
-			<p></p>		
-			<p></p>
-			<div class = "col-2">
-				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
-			</div>
-			<div class = "col-1 text-left">
-                <button type="button" class="btn btn-outline-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				  </svg>
-                  <span class="visually-hidden">Button</span>
-                </button>
-			</div>
-			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>			</div>
-		</div>
+	<table class = "col-12">
+		<tr>
+			<td class = "col-3 text-center">전시회 이름 : </td>
+			<td class = "col-8 text-left">
+				<input type = "text" path = "name" class="form-control" placeholder="Default input" aria-label="default input example"/>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">전시회 사진 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="file" id="formFile" name = "file">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">아티스트 : </td>
+			<td class = "col-8 text-left">
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					<option selected>Open this select menu</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">시작 날짜 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="date" name = "startDate">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">끝 날짜 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="date" name = "endDate">
+			</td>
+		</tr>
+		<tr class = "py-5">
+			<td class = "col-3 text-center">전시회 설명 : </td>
+			<td class = "col-8 text-left">
+				<textarea name = "info" class="form-control" id="editor" rows="15" cols = "30" placeholder="전시회의 설명을 적어주세요."></textarea> <br><br>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">가격 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="text" name = "price">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">총 인원 수 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="text" name = "total">
+			</td>
+		</tr>
+	</table>
+	<div class = "col-12 text-end">
+		<button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
+		<button type="button" class="btn btn-outline-danger" onclick="location.href='/exhibit'">취소</button>
 	</div>
 </main>
 
@@ -203,7 +221,6 @@ text-decoration-line:none;
 <script>
 $(document)
 .ready(function () {
-	showReview();
 	console.log("시작 화면");
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
@@ -235,29 +252,13 @@ $(document)
 		$("#none1").css("display", "none")
 		$("#none2").css("display", "none");
 		$("#none3").css("display", "none");
-	})
-	function showReview() {
-		$.ajax({
-			url:'reviewList',
-			data:'',
-			dataType:'json',
-			type:'get',
-			beforeSend:function() {
-				$('#tblData tr:gt(0)').remove();
-			},
-			success:function(data) {
-				for(let i=0; i<data.length; i++) {
-					reviewitem=data[i];
-					let str='<tr><td>'+reviewitem['id']+'</td><td><a href="reviewDetail?id='+reviewitem['id']+'">'+reviewitem['title']+
-							'</a></td><td>'+reviewitem['user_id']+'</td><td>'+reviewitem['postdate']+
-							'</td><td>'+reviewitem['views']+'</td><td>'+reviewitem['heart']+'</td></tr>';
-					$('#tblData').append(str);
-				}
-			},
-			error:function() { },
-			complete:function() { }
-		})
-	}
+	})	
 })
+</script>
+<script src="${classpath}/editor/ckeditor.js"></script>
+<script src="${classpath}/editor/translations/ko.js"></script>
+<script>
+	ClassicEditor.create( document.querySelector( '#editor')
+	);
 </script>
 </html>

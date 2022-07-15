@@ -78,7 +78,7 @@ text-decoration-line:none;
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="./artist" id = "nav3">artist</a>
@@ -146,9 +146,9 @@ text-decoration-line:none;
 			<c:forEach var = "artist" items= "${artist}">
 				<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
 					<div class="card" style="width: 19rem; height : 24rem;">
-					  <img src="${artist.profile}" class="card-img-top" alt="여기에 사진 들어감">
+					  <img src="${artist.profile}" class="card-img-top" alt="여기에 사진 들어감" style = "height:100%;">
 					  <div class="card-body">
-						<a href = "./artist/${artist.id}"><h5 class="card-title">${artist.name}</h5></a>
+						<a href = "./artist/detail/${artist.id}"><h5 class="card-title">${artist.name}</h5></a>
 					  </div>
 					</div>
 				</div>

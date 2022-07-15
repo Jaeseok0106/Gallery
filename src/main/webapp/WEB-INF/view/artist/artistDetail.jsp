@@ -13,6 +13,9 @@ list-style-type:none;
 float:left;
 font-size: 55px;
 }
+h2 {
+	color:gray;
+}
 .nav-link {
     font-weight: 600;
     color: #000000;
@@ -38,17 +41,6 @@ body {
     font-weight: normal;
     font-style: normal;
 }
-img {
-	text-align:center;
-}
-.exhibit-name {
-	text-align : left;
-	font-size : 1.5rem;
-}
-.artist-name {
-	text-align : right;
-	font-size : 1rem;
-}
 a {
 text-decoration-line:none;
 }
@@ -58,7 +50,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "/logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -84,7 +76,7 @@ text-decoration-line:none;
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -96,10 +88,10 @@ text-decoration-line:none;
 							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -141,46 +133,30 @@ text-decoration-line:none;
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
-<main class = "container p-5 text-center">
-	<div class = "page-title">
-		<h1>Exhibition</h1>
+<main class = "container p-5">
+	<input type = hidden value = "${artist.id}">
+	<div class = "container">
+		<div class = "page-title">
+			<h1>${artist.name}</h1>
+		</div>
 	</div>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
+	<div class="text-center">
+		<img src="${artist.profile}" class="img-fluid rounded" alt="...">
 	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
+	<div class ="py-3">
+		<h2>career</h2>
+		${artist.career}
 	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
+	<div class = "py-3">
+		<h2>Artist note</h2>
+		${artist.direction}
 	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
-	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 	<span class = "artist-name" style = "float:right;">작가 이름</span>
-		<br><br>
-		</p>
-	</div>
-	<br><br>		
+	<c:if test = "${user.role == '관리자'}">
+		<div class = "col-12 text-end">
+			<button type="button" class="btn btn-primary" onclick="location.href='/artist/modify/${artist.id}'">수정</button>
+			<button type="button" class="btn btn-danger" id = "deleteArtist">삭제</button>
+		</div>
+	</c:if>
 </main>
 
 <!-- 하단 -->
@@ -240,6 +216,25 @@ $(document)
 		$("#none2").css("display", "none");
 		$("#none3").css("display", "none");
 	})	
+})
+.on("click", "#deleteArtist", function() {
+	if (confirm("정말 삭제하시겠습니까?")) {
+		$.ajax({
+			type : "POST",
+			url : "/artist/delete/${artist.id}",
+			data : {},
+			dataType : "text",
+			success : function (data) {
+				if (data == "true") {
+					alert("삭제가 완료되었습니다.");
+					document.location.href = "/artist";
+				}
+				else if (data == "false") {
+					alert("삭제할 수 없는 아티스트입니다.");
+				}
+			}
+		})
+	}
 })
 </script>
 </html>
