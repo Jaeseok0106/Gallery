@@ -19,6 +19,7 @@ font-size: 55px;
 }
 a {
 	text-decoration: none;
+	color:black;
 }
 .nav-link {
     font-weight: 600;
