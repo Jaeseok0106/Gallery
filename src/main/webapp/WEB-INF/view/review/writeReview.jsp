@@ -130,7 +130,6 @@
     </header>
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
-<input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
@@ -138,13 +137,14 @@
         <h5>Review 작성</h5>
     </div>
     <div class = "row py-4">
-        <form>
+        <form action="insertReview" method="post">
             <div class = "col">
-                <input class="form-control" type="text" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
+                <input class="form-control" type="text" name="title" placeholder="제목" aria-label="default input example"><br><br>
+                <textarea name = "content" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
+                <input type = "hidden" id = "usernum" name="writer" value = "${user.userNum}">
             </div>
             <div class = "col text-end">
-                <button type="button" class="btn btn-outline-primary"><a href="/review">작성 완료</a></button>
+                <button type="submit" class="btn btn-outline-primary">작성 완료</button>
                 <button type="button" class="btn btn-outline-danger" onclick="location.href='/review'">취소</button>
             </div>
         </form>
@@ -173,6 +173,8 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="${classpath}/editor/ckeditor.js"></script>
+<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
     $(document)
         .ready(function () {
@@ -210,10 +212,10 @@
             })
         })
 </script>
-<script src="editor/ckeditor.js"></script>
+<%--<script src="editor/ckeditor.js"></script>
 <script src="editor/translations/ko.js"></script>
 <script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
+<script src="${classpath}/editor/translations/ko.js"></script>--%>
 <script>
     ClassicEditor.create( document.querySelector( '#editor' ) );
 </script>
