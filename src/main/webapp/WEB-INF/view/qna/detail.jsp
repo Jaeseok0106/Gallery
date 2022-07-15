@@ -9,7 +9,7 @@ prefix="c" %> <%@ page session="false" %>
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>Home</title>
+    <title>QnA</title>
   </head>
   <style>
     .nav-item {
@@ -133,45 +133,61 @@ prefix="c" %> <%@ page session="false" %>
   <input type = "hidden" id = "role" value = "${user.role}">
   <input type = "hidden" id = "usernum" value = "${user.userNum}">
   <br><br>
-    <!-- main 안에다가 주 내용 작성할것 -->
-    <main class="container p-5">
-      <div class="row">
-        <div
-          class="col-12"
-          style="
-            border-top: 0.1rem solid black;
-            border-bottom: 0.1rem solid black;
-          "
-        >
-          <p class="text-start">
-            ${qdto.title}
-            <span style="float: right"> ${qdto.postdate} </span>
-          </p>
-        </div>
-        <div class="col-12" style="border-bottom: 0.1rem solid black">
-          <p class="text-start">
-            ${qdto.userid}
-            <span style="float: right">
-              조회수 : ${qdto.views}  추천수 : ${qdto.heart}  댓글 : 222
-            </span>
-          </p>
-        </div>
-        <p></p>
-        <p></p>
-        <div class="col-12 py-2">
-           	${qdto.content}
-        </div>
-        <div class="col-3 text-start">
-          <button type="button" class="btn btn-outline-primary">이전</button>
-        </div>
-        <div class="col-6 text-center">
-          <button type="button" class="btn btn-outline-primary">추천</button>
-        </div>
-        <div class="col-3 text-end">
-          <button type="button" class="btn btn-outline-primary">다음</button>
-        </div>
+  <!-- main 안에다가 주 내용 작성할것 -->
+  <main class = "container p-5">
+    <div class = "row">
+      <div class = "col-12" style = "border-top: 0.1rem solid black; border-bottom: 0.1rem solid black;">
+        <p class = "text-start"> ${qdto.title}
+          <span style = "float:right">
+            ${qdto.postdate}
+          </span>
+        </p>
       </div>
-    </main>
+      <div class = "col-12" style = "border-bottom: 0.1rem solid black;">
+        <p class = "text-start">
+          ${qdto.userid}
+          <span style = "float:right">
+				조회수 : ${qdto.views+1}  추천수 : ${qdto.heart} 댓글 : 222
+			</span>
+        </p>
+      </div>
+      <p></p><p></p>
+      <div class = "col-12">
+        <p>
+          ${qdto.content}
+        </p>
+      </div>
+      <div class = "col-3 text-start">
+        <c:if test="${nepr.prev!=0}">
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.prev}'">이전</button>
+        </c:if>
+        <c:if test="${nepr.prev==0}"></c:if>
+      </div>
+      <div class = "col-6 text-center">
+        <c:if test = "${user.id != null}">
+        <button type="button" class="btn btn-outline-danger">추천</button>
+        </c:if>
+        <c:if test = "${user.id == null}">
+        <button type="button" class="btn btn-outline-danger" disabled>추천</button>
+        </c:if>
+        <button type="button" class="btn btn-outline-primary" onclick="location.href='qna'">목록</button>
+      </div>
+      <div class = "col-3 text-end">
+        <c:if test="${nepr.next!=9999}">
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.next}'">다음</button>
+        </c:if>
+        <c:if test="${nepr.next==9999}"></c:if>
+      </div>
+      <br><br>
+      <div class="text-end">
+        <c:if test="${user.id == qdto.userid}">
+        <button type="button" class="btn btn-outline-dark" onclick="location.href='up?id=${qdto.id}'">수정</button>
+        <a href="delqna?id=${qdto.id}"><button type="button" class="btn btn-outline-dark" id="btnDel">삭제</button></a>
+        </c:if>
+<%--        <c:if test="${user.id != qdto.userid}"></c:if>--%>
+      </div>
+    </div>
+  </main>
 
     <!-- 하단 -->
     <div class="container-fluid">
@@ -252,5 +268,10 @@ prefix="c" %> <%@ page session="false" %>
         $("#none3").css("display", "none");
       });
     });
+    $('#btnDel').click(function () {
+      if(!confirm('게시글을 삭제하시겠습니까?')) {
+        return false;
+      }
+    })
   </script>
 </html>

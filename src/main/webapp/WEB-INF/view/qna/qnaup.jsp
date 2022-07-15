@@ -6,7 +6,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>QnA 작성</title>
+    <title>게시글 수정</title>
 </head>
 <style>
     .nav-item{
@@ -136,18 +136,19 @@
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>Q&A 작성</h5>
+        <h5>게시글 수정</h5>
     </div>
     <div class = "row py-4">
-        <form id="frmAdd" action="addqna" method="post">
+        <form id="frmAdd" action="upqna" method="post">
             <div class = "col">
-                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50"></textarea> <br><br>
+                <input type="hidden" name="id" value="${qdto.id}">
+                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example" value="${qdto.title}"><br><br>
+                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50">${qdto.content}</textarea><br><br>
                 <input type = "hidden" id = "usernum" name="writer" value ="${user.userNum}">
             </div>
             <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary" id="btnWrite">작성 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='qna'">취소</button>
+                <button type="submit" class="btn btn-outline-primary" id="btnUp">수정 완료</button>
+                <button type="button" class="btn btn-outline-danger" onclick="location.href='qna'">수정 취소</button>
             </div>
         </form>
     </div>
@@ -213,7 +214,7 @@
                 $("#none3").css("display", "none");
             })
         })
-    $("#btnWrite").click(function() {
+    $("#btnUp").click(function() {
         if($('#title').val()=='' || $('#title').val()<1) {
             alert('제목을 입력해야 합니다.');
             $('#title').focus();
@@ -226,9 +227,9 @@
             window.scrollTo({left: 0, top: 350, behavior: "smooth"});
             return false;
         }
-        alert('게시글이 등록되었습니다.');
+        alert('게시글이 수정되었습니다.');
         return true;
     })
-ClassicEditor.create( document.querySelector( '#editor' ) );
+    ClassicEditor.create( document.querySelector( '#editor' ) );
 </script>
 </html>
