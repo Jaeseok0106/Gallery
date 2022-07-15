@@ -11,5 +11,7 @@ public interface inotice {
 
     noticeDTO nepr(int id);
     public void count(int views,int id);
-
+    void delete(String id);
+    int addnotice(String title, String content);
+    int updatenotice(String title, String content, int id); //게시판테이블 update
 }

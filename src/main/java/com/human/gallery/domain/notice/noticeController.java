@@ -66,9 +66,36 @@ public class noticeController {
 		model.addAttribute("user",user);
 		return "notice/noticecontent";
 	}
-	@RequestMapping(value="/write", produces="application/json;charset=utf-8")
-	public String dowrite(@SessionAttribute(name = "user", required = false) Users user, Model model) {
+	@GetMapping("/write")
+	public String dowrite(@SessionAttribute(name = "user", required = false) Users user,Model model) {
 		model.addAttribute("user", user);
 		return "notice/noticewrite";
+	}
+	@PostMapping("/write")
+	public String dowrite2(@ModelAttribute("notice") noticeDTO notice) {
+
+		log.info("넘어온 값 = {}, {}", notice.getContent(), notice.getTitle());
+		board_post.addnotice(notice.getTitle(),notice.getContent());
+		return "notice/noticewrite";
+	}
+	@RequestMapping("/content/delete")
+	public String dodelete(@RequestParam("id") String id) {
+		log.info("넘어온 값 = {}" , id);
+		board_post.delete(id);
+		return "redirect:/notice";
+	}
+	@PostMapping("/update/{id}")
+	public String doupdate(@ModelAttribute("notice") noticeDTO notice,
+						   @PathVariable("id") int id){
+		log.info(notice.getContent());
+		board_post.updatenotice(notice.getTitle(),notice.getContent(),id);
+		return "redirect:/content?id="+id;
+	}
+	@GetMapping("/update/{id}")
+	public String doupno(@SessionAttribute(name = "user", required = false) Users user,Model model, @PathVariable int id){
+		model.addAttribute("user", user);
+		noticeDTO ndto=board_post.noticecontent(id);
+		model.addAttribute("ndto",ndto);
+		return "notice/noticeupdate";
 	}
 }
