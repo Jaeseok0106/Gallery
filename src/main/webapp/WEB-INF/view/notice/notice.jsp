@@ -81,7 +81,7 @@ text-decoration-line:none;
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="/artist" id = "nav3">artist</a>

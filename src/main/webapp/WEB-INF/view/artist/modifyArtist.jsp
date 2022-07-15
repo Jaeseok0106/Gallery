@@ -5,8 +5,7 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>Home</title>
+    <title>아티스트 수정</title>
 </head>
 <style>
     .nav-item{
@@ -40,11 +39,10 @@
         font-style: normal;
     }
     a {
-        text-decoration: none;
-        color:black;
+        text-decoration-line:none;
     }
     .ck-editor__editable {
-        height : 600px;
+        height : 500px;
     }
 </style>
 <body>
@@ -52,7 +50,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" style = "height:100px;"/>
+                <img src = "/logo.png" style = "height:100px;"/>
             </div>
         </div>
         <br><br><br>
@@ -137,19 +135,33 @@
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>Q&A 작성</h5>
+        <h5>아티스트 수정</h5>
     </div>
-    <div class = "row py-4">
-        <form id="frmAdd" action="addqna" method="post">
-            <div class = "col">
-                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50"></textarea> <br><br>
-            </div>
-            <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary">작성 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='qna'">취소</button>
-            </div>
-        </form>
+    <div class = "container">
+        <div class = "row mb-2 py-4">
+            <form class = "row mb-2" id = "frmAdd" method = "POST" action = "/artist/modify/${artist.id}" enctype="multipart/form-data">
+                <div class = "col-6">
+                    <input class="form-control" id = "name" name = "name" type="text"
+                           placeholder="아티스트 이름" aria-label="default input example"
+                            value = ${artist.name}>
+                    <br><br>
+                    <textarea name = "career" class="form-control" id = "editor2" rows = "3" cols = "5" placeholder="아티스트 커리어">
+                        ${artist.career}
+                    </textarea> <br><br>
+                    <textarea name = "direction" class="form-control" id="editor" rows="30" cols = "50" placeholder="아티스트의 방향성에 대해 입력해주세요">
+                        ${artist.direction}
+                    </textarea> <br><br>
+                    <div class = "text-end">
+                        <button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="location.href='/artist/detail/${artist.id}'">취소</button>
+                    </div>
+                </div>
+                <div class = "col-6">
+                    <label for="formFile" class="form-label">아티스트의 사진을 업로드해주세요</label>
+                    <input class="form-control" type="file" id="formFile" name = "file">
+                </div>
+            </form>
+        </div>
     </div>
 </main>
 
@@ -175,8 +187,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
     $(document)
         .ready(function () {
@@ -212,7 +222,26 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
+            $("#artistSend").click(function() {
+                if ($("#name").val() == '') {
+                    alert("이름을 입력해주세요.");
+                    return false;
+                }
+                if ($(".ck-content").text() == '') {
+                    alert("안에를 채워주세요");
+                    return false;
+                } else {
+                    return true;
+                }
+            })
         })
-ClassicEditor.create( document.querySelector( '#editor' ) );
+</script>
+<script src="${classpath}/editor/ckeditor.js"></script>
+<script src="${classpath}/editor/translations/ko.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#editor')
+    );
+    ClassicEditor.create( document.querySelector( '#editor2')
+    );
 </script>
 </html>
