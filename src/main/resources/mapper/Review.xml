@@ -26,7 +26,7 @@
 	<update id="count" parameterType="int">
 		update board_post set views=views+1 where id=#{param1}
 	</update>
-	<!--<insert id="insertReview" resultType="com.human.gallery.domain.review.Review">
-		insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, #{param3}, 2, 0, to_char(sysdate, 'YYYY-MM-DD'), 0);
-	</insert>-->
+	<insert id="insertReview">
+		insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, #{param3}, 2, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
+	</insert>
 </mapper>

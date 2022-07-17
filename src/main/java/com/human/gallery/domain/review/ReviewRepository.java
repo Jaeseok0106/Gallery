@@ -10,4 +10,5 @@ public interface ReviewRepository {
 	Review selView(int id);
 	Review movePage(int id);
 	public void count(int id);
+	int insertReview(String title, String content, int writer);
 }

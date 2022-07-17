@@ -78,7 +78,7 @@
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="#" id = "nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
                     <a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -165,7 +165,7 @@
             <c:if test="${ndto.last == 9999}"></c:if>
         </div>
         <div class="col-6 text-center">
-            <button type="button" class="btn btn-outline-primary">추천</button>
+            <button type="button" class="btn btn-outline-Danger">추천</button>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='/review'">목록</button>
         </div>
         <div class="col-3 text-end">
@@ -174,6 +174,11 @@
             </c:if>
             <c:if test="${ndto.next == 9999}"></c:if>
         </div>
+    </div>
+    <br>
+    <div class="text-end">
+        <button type="button" class="btn btn-outline-Dark" id="update">수정</button>
+        <button type="button" class="btn btn-outline-Dark" id="delete">삭제</button>
     </div>
 </main>
 

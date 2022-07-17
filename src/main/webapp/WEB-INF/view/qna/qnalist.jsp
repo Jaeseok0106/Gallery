@@ -78,7 +78,7 @@ a {
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -252,7 +252,7 @@ function qnalist(){
 				list = data[i];
 				let str = '<tr><td>' + list['id']
 						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['user_id']
+						+ '</a></td><td>' + list['userid']
 						+ '</td><td>' + list['postdate']
 						+ '</td><td>' + list['views']
 						+ '</td><td>' + list['heart'] +'</td></tr>';

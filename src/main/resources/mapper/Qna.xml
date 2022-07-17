@@ -7,14 +7,14 @@
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
 		from board_post a, users b
 		where categoryList=3
-		  and a.writer=b.usernum
+		  and a.writer=b.userNum
 		order by id
 	</select>
 	<select id='selqna' resultType="com.human.gallery.domain.QnA.qnaDTO">
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
 		from board_post a, users b
 		where a.categoryList=3
-		  and a.writer=b.usernum
+		  and a.writer=b.userNum
 		  and a.id=#{param1}
 	</select>
 	<select id='nepr' resultType="com.human.gallery.domain.QnA.qnaDTO">
@@ -32,13 +32,28 @@
 		where id=#{param1}
 	</update>
 	<insert id='addqna'>
-		insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, 22, 3, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
+		insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, #{param3}, 3, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
 	</insert>
 	<update id='upqna'>
-		update board_post set title=#{param1}, content=#{param2}, writer=22, categoryList=3,
-							  heart=#{param4}, postdate=to_char(sysdate, 'YYYY-MM-DD'), views=#{param5} where id=#{param6}
+		update board_post
+		set title=#{param1}, content=#{param2}, postdate=to_char(sysdate, 'YYYY-MM-DD')
+		where id=#{param3}
 	</update>
 	<delete id='delqna'>
 		delete from board_post where id=#{param1}
 	</delete>
+	<select id='heartlist' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select count(*) as cnt
+		from post_heart
+		where post_id=#{param1}
+		and heart_id=#{param2}
+	</select>
+	<insert id="addheart">
+		insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
+	</insert>
+	<update id="plusheart" parameterType="int">
+		update board_post
+		set heart=heart+1
+		where id=#{param1}
+	</update>
 </mapper>
