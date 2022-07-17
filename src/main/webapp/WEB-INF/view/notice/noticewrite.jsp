@@ -61,16 +61,16 @@
           <div>
             <ul class="nav justify-content-end" style = "display : none;" id = "none1">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+                <a class="nav-link" aria-current="page" href="#" id = "detail1">Active</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" id = "detail">Link</a>
+                <a class="nav-link" href="#" id = "detail2">Link</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" id = "detail">Link</a>
+                <a class="nav-link" href="#" id = "detail3">Link</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id = "detail">Disabled</a>
+                <a class="nav-link" id = "detail4">Disabled</a>
               </li>
             </ul>
           </div>
@@ -85,16 +85,16 @@
           <a class="nav-link" id = "nav4">Post</a>
           <ul class="nav justify-content-end" style = "display : none;" id = "none2">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
+              <a class="nav-link" aria-current="page" href="/review" id = "detail5">Review</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/qna" id = "detail">Q&A</a>
+              <a class="nav-link" href="/qna" id = "detail6">Q&A</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+              <a class="nav-link" href="/FAQ" id = "detail7">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id = "detail">Disabled</a>
+              <a class="nav-link" id = "detail8">Disabled</a>
             </li>
           </ul>
         </li>
@@ -103,22 +103,22 @@
           <ul class="nav justify-content-end" style = "display : none;" id = "none3">
             <c:if test = "${user.id == null}">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+                <a class="nav-link" aria-current="page" href="/login" id = "detail9">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/signin" id = "detail">Sign in</a>
+                <a class="nav-link" href="/signin" id = "detail10">Sign in</a>
               </li>
             </c:if>
             <c:if test = "${user.id != null }">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+                <a class="nav-link" aria-current="page" href="/logout" id = "detail11">Logout</a>
               </li>
             </c:if>
             <li class="nav-item">
-              <a class="nav-link" href="#" id = "detail">My page</a>
+              <a class="nav-link" href="#" id = "detail12">My page</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id = "detail">Disabled</a>
+              <a class="nav-link" id = "detail13">Disabled</a>
             </li>
           </ul>
         </li>
@@ -218,6 +218,22 @@
           .on('click','#reset',function(){
             if(confirm("정말 작성을 취소 하시겠습니까?")){
               document.location.href='/notice';
+            }
+            else{
+
+            }
+          })
+  $(document)
+          .on('click','#clear',function(){
+            if(confirm("정말 작성 완료 하시겠습니까?")){
+              $.ajax({
+                type:'post',datatype:'text',url:'write',
+                data : {title:$("#title").val(),content:$(".ck-content").text()},
+                success:function(){
+                  alert("게시물이 등록이 완료 되었습니다.");
+                  document.location.href = "/notice";
+                }
+              })
             }
             else{
 

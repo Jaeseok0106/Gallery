@@ -52,27 +52,27 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" style = "height:100px;"/>
+                <img src = "logo.png" id="logo" style = "height:100px;"/>
             </div>
         </div>
         <br><br><br>
-        <div class="nav-scroller mb-7" id = "list">
+        <div class="nav-scroller mb-7" id = "list1">
             <ul class="nav justify-content-center" style = "display:block;">
                 <li class="nav-item mx-5">
                     <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
                     <div>
                         <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+                                <a class="nav-link" aria-current="page" href="#" id = "detail1">Active</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
+                                <a class="nav-link" href="#" id = "detail2">Link</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
+                                <a class="nav-link" href="#" id = "detail3">Link</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id = "detail">Disabled</a>
+                                <a class="nav-link" id = "detail4">Disabled</a>
                             </li>
                         </ul>
                     </div>
@@ -87,16 +87,16 @@
                     <a class="nav-link" id = "nav4">Post</a>
                     <ul class="nav justify-content-end" style = "display : none;" id = "none2">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
+                            <a class="nav-link" aria-current="page" href="/review" id = "detail5">Review</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/qna" id = "detail">Q&A</a>
+                            <a class="nav-link" href="/qna" id = "detail6">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+                            <a class="nav-link" href="/FAQ" id = "detail7">FAQ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
+                            <a class="nav-link" id = "detail8">Disabled</a>
                         </li>
                     </ul>
                 </li>
@@ -105,22 +105,22 @@
                     <ul class="nav justify-content-end" style = "display : none;" id = "none3">
                         <c:if test = "${user.id == null}">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+                                <a class="nav-link" aria-current="page" href="/login" id = "detail9">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/signin" id = "detail">Sign in</a>
+                                <a class="nav-link" href="/signin" id = "detail10">Sign in</a>
                             </li>
                         </c:if>
                         <c:if test = "${user.id != null }">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+                                <a class="nav-link" aria-current="page" href="/logout" id = "detail11">Logout</a>
                             </li>
                         </c:if>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id = "detail">My page</a>
+                            <a class="nav-link" href="#" id = "detail12">My page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
+                            <a class="nav-link" id = "detail13">Disabled</a>
                         </li>
                     </ul>
                 </li>
@@ -133,6 +133,7 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
+<input type = "hidden" id = "id" value = "${ndto.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
@@ -180,10 +181,12 @@
         </div>
     </div>
     <br>
+    <c:if test="${user.role=='관리자'}">
     <div class="text-end">
         <button type="button" class="btn btn-outline-Dark" id="update">수정</button>
         <button type="button" class="btn btn-outline-Dark" id="delete">삭제</button>
     </div>
+    </c:if>
 </main>
 
 <!-- 하단 -->
@@ -273,5 +276,25 @@
         .on('click','#logo',function(){
             document.location.href='../../..';
         })
+    $(document)
+        .on('click','#delete',function(){
+            if(confirm("정말 삭제 하시겠습니까?")) {
+                $.ajax({
+                    type:'get',datatype:'text',url:'content/delete',
+                    data : {id : $("#id").val()},
+                    success:function(){
+                        alert("게시물이 삭제 되었습니다.");
+                        document.location.href = "/notice";
+                    }
+                })
+            }
+
+            else {
+            };
+        })
+    $(document)
+    .on('click','#update',function(){
+        document.location.href='/update/${ndto.id}';
+    })
 </script>
 </html>

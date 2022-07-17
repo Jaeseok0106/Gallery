@@ -29,4 +29,15 @@
               where categoryList=4)
         where id=#{param1}
     </select>
+    <delete id="delete">
+        delete from board_post where id=#{param1}
+    </delete>
+    <insert id='addnotice'>
+        insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, 2, 4,
+                              0, to_char(sysdate, 'YYYY-MM-DD'), 0)
+    </insert>
+    <update id='updatenotice'>
+        update board_post set title=#{param1}, content=#{param2}, writer=2, categoryList=4,
+                               postdate=to_char(sysdate, 'YYYY-MM-DD') where id=#{param3}
+    </update>
 </mapper>
