@@ -9,7 +9,7 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossorigin="anonymous"
     />
-    <title>Home</title>
+    <title>${rdto.title}</title>
 </head>
 <style>
     .nav-item {
@@ -165,7 +165,7 @@
             <c:if test="${ndto.last == 9999}"></c:if>
         </div>
         <div class="col-6 text-center">
-            <button type="button" class="btn btn-outline-Danger">추천</button>
+            <button type="button" class="btn btn-outline-Danger" id="btnLike">추천</button>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='/review'">목록</button>
         </div>
         <div class="col-3 text-end">
@@ -177,8 +177,10 @@
     </div>
     <br>
     <div class="text-end">
-        <button type="button" class="btn btn-outline-Dark" id="update">수정</button>
-        <button type="button" class="btn btn-outline-Dark" id="delete">삭제</button>
+        <c:if test="${user.id == rdto.userid}">
+        <button type="button" class="btn btn-outline-Dark" onclick="location.href='reviewUpdate?id=${rdto.id}'">수정</button>
+        <a href="deleteReview?id=${rdto.id}"><button type="button" class="btn btn-outline-Dark" id="delete">삭제</button></a>
+        </c:if>
     </div>
 </main>
 
@@ -260,7 +262,11 @@
             $("#none2").css("display", "none");
             $("#none3").css("display", "none");
         });
-
     });
+    $('#delete').click(function () {
+        if(!confirm('게시글을 삭제하시겠습니까?')) {
+            return false;
+        }
+    })
 </script>
 </html>
