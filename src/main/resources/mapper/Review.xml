@@ -7,7 +7,7 @@
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
 		from board_post a, users b
 		where categoryList=2
-		  and a.writer=b.usernum
+		  and a.writer=b.usernum order by a.id
 	</select>
 	<select id = "selView" resultType = "com.human.gallery.domain.review.Review">
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
@@ -29,4 +29,19 @@
 	<insert id="insertReview">
 		insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, #{param3}, 2, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
 	</insert>
+	<update id="updateReview">
+		update board_post
+		set title=#{param1}, content=#{param2}, postdate=to_char(sysdate, 'YYYY-MM-DD')
+		where id=#{param3}
+	</update>
+<!--	<select id="findLike" resultType = "com.human.gallery.domain.review.Review">
+		select count(*) from post_heart where id=#{param1} and post_heart=#{param2}
+	</select>
+	<update id="likeReview">
+		update board_post
+		set heart=heart+1 where id=#{param1}
+	</update>-->
+	<delete id="deleteReview">
+		delete from board_post where id=#{param1}
+	</delete>
 </mapper>

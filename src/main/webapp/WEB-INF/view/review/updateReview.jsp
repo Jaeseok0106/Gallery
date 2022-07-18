@@ -5,7 +5,7 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>글작성</title>
+    <title>글수정</title>
 </head>
 <style>
     .nav-item{
@@ -134,18 +134,19 @@
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>Review 작성</h5>
+        <h5>Review 수정</h5>
     </div>
     <div class = "row py-4">
-        <form action="insertReview" method="post">
+        <form id="frmAdd" action="updateReview" method="post">
             <div class = "col">
-                <input class="form-control" type="text" name="title" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea name = "content" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
-                <input type = "hidden" id = "usernum" name="writer" value = "${user.userNum}">
+                <input type="hidden" name="id" value="${rdto.id}">
+                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example" value="${rdto.title}"><br><br>
+                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50">${rdto.content}</textarea><br><br>
+                <input type = "hidden" id = "usernum" name="writer" value ="${user.userNum}">
             </div>
             <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary" >작성 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='/review'">취소</button>
+                <button type="submit" class="btn btn-outline-primary" id="btnUpdate">수정 완료</button>
+                <button type="button" class="btn btn-outline-danger" id="btnCan" onclick="location.href='/review'">취소</button>
             </div>
         </form>
     </div>
@@ -211,16 +212,31 @@
                 $("#none3").css("display", "none");
             })
         })
-    $('#delete').click(function () {
-        if(!confirm('게시글을 삭제하시겠습니까?')) {
+    $("#btnUpdate").click(function() {
+        if($('#title').val()=='' || $('#title').val()<1) {
+            alert('제목을 입력해야 합니다.');
+            $('#title').focus();
+            window.scrollTo({left:0, top:250, behavior:"smooth"});
+            return false;
+        }
+        if ($(".ck-content").text() == '') {
+            alert('내용을 입력해야 합니다.');
+            $(".ck-content").focus();
+            window.scrollTo({left: 0, top: 350, behavior: "smooth"});
+            return false;
+        }
+        if(!confirm('게시글을 수정하시겠습니까?')) {
+            return false;
+        }
+        alert('게시글이 수정되었습니다.');
+        return true;
+    })
+    $("#btnCan").click(function() {
+        if(!confirm('취소 하시겠습니까?')) {
             return false;
         }
     })
 </script>
-<%--<script src="editor/ckeditor.js"></script>
-<script src="editor/translations/ko.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>--%>
 <script>
     ClassicEditor.create( document.querySelector( '#editor' ) );
 </script>
