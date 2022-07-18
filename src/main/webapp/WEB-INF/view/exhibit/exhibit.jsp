@@ -5,13 +5,9 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<title>Qna</title>
+	<title>Home</title>
 </head>
 <style>
-table {
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
 .nav-item{
 list-style-type:none;
 float:left;
@@ -27,7 +23,7 @@ font-size: 55px;
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
-	margin-bottom : 2rem;
+	margin-bottom : 4rem;
 }
 .page-title h1{
 	padding : 2rem;
@@ -42,9 +38,19 @@ body {
     font-weight: normal;
     font-style: normal;
 }
+img {
+	text-align:center;
+}
+.exhibit-name {
+	text-align : left;
+	font-size : 1.5rem;
+}
+.artist-name {
+	text-align : right;
+	font-size : 1rem;
+}
 a {
-	text-decoration: none;
-	color:black;
+text-decoration-line:none;
 }
 </style>
 <body>
@@ -52,7 +58,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:150px;"/>
+				<img src = "logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -78,7 +84,7 @@ a {
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="/artist" id = "nav3">artist</a>
@@ -135,48 +141,46 @@ a {
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
-<main class = "container p-5">
-	<div class = "container">
-		<div class = "page-title">
-			<h1>Q&A</h1>
-		</div>
+<main class = "container p-5 text-center">
+	<div class = "page-title">
+		<h1>Exhibition</h1>
 	</div>
-	<div class = "container" id = "boardList">
-		<div class = "row">
-			<table id='qnatb' class ="text-center">
-				<tr class ="text-center">
-					<th>번호</th>
-					<th>제목</th>
-					<th>글쓴이</th>
-					<th>날짜</th>
-					<th>조회</th>
-					<th>추천순</th>
-				</tr>
-<!-- 				<tr class = "p-5">
-					
-				</tr> -->
-			</table>
-			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			
-			<p></p>
-			<p></p>		
-			<p></p>
-			<div class = "col-2">
-				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
-			</div>
-			<div class = "col-1 text-left">
-                <button type="button" class="btn btn-outline-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				  </svg>
-                  <span class="visually-hidden">Button</span>
-                </button>
-			</div>
-			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button>
-			</div>
-		</div>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
 	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
+		</p>
+	</div>
+	<br><br>
+	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+		<br><br>
+		<p class = "exhibit-name">전시회 이름 	<span class = "artist-name" style = "float:right;">작가 이름</span>
+		<br><br>
+		</p>
+	</div>
+	<br><br>		
 </main>
 
 <!-- 하단 -->
@@ -205,7 +209,6 @@ a {
 $(document)
 .ready(function () {
 	console.log("시작 화면");
-	qnalist();
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
 		$("#none2").css("display", "none");
@@ -238,28 +241,5 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
-function qnalist(){
-	$.ajax({
-		url : 'qnalist',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['user_id']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
 </script>
 </html>

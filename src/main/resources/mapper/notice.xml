@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.human.gallery.domain.notice.inotice">
+    <select id="listnotice" resultType="com.human.gallery.domain.notice.noticeDTO">
+        select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+        from board_post a, users b
+        where categoryList=4
+          and a.writer=b.usernum
+        order by a.id desc
+    </select>
+    <select id='noticecontent' resultType="com.human.gallery.domain.notice.noticeDTO">
+        select a.id, a.title, a.content, b.id as user_id, a.categoryList, a.heart, a.postdate, a.views
+        from board_post a, users b
+        where categoryList=4
+          and a.writer=b.usernum
+          and a.id=#{param1}
+    </select>
+    <update id="count" parameterType="int">
+        update board_post set views=#{param1} where id=#{param2}
+    </update>
+    <select id='nepr' resultType="com.human.gallery.domain.notice.noticeDTO">
+        select *
+        from (select id,
+                     lead(id,1,9999) over(order by id) as next,
+           lag(id,1,0) over(order by id) as prev
+              from board_post
+              where categoryList=4)
+        where id=#{param1}
+    </select>
+    <delete id="delete">
+        delete from board_post where id=#{param1}
+    </delete>
+    <insert id='addnotice'>
+        insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, 2, 4,
+                              0, to_char(sysdate, 'YYYY-MM-DD'), 0)
+    </insert>
+    <update id='updatenotice'>
+        update board_post set title=#{param1}, content=#{param2}, writer=2, categoryList=4,
+                               postdate=to_char(sysdate, 'YYYY-MM-DD') where id=#{param3}
+    </update>
+</mapper>

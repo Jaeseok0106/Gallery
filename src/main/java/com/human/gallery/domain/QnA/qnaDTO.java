@@ -13,4 +13,9 @@ public class qnaDTO {
 	private int heart;
 	private String postdate;
 	private int views;
+	private int next;
+	private int prev;
+	private int userNum;
+	private int postid;
+	private int heartid;
 }

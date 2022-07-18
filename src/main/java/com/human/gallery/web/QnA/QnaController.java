@@ -5,19 +5,14 @@ import java.util.ArrayList;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.human.gallery.domain.QnA.iQna;
 import com.human.gallery.domain.QnA.qnaDTO;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,7 +39,7 @@ public class QnaController {
 			jo.put("heart", qdto.getHeart());
 			jo.put("postdate", qdto.getPostdate());
 			jo.put("views", qdto.getViews());
-			jo.put("user_id", qdto.getUserid());
+			jo.put("userid", qdto.getUserid());
 			ja.add(jo);
 		}
 		return ja.toJSONString();
@@ -53,16 +48,56 @@ public class QnaController {
 	@RequestMapping("/qna")
 	public String doQna(@SessionAttribute(name = "user", required = false) Users user, Model model) {
 		model.addAttribute("user",user);
-		return "qnalist";
+		return "qna/qnalist";
 	}
 	
 	@RequestMapping(value="/detail", produces="application/json;charset=utf-8")
-	public String doSelqna(
+	public String doDetail(
 			@SessionAttribute(name = "user", required = false) Users user,
 			@RequestParam int id, Model model) {
+		model.addAttribute("user",user);
 		qnaDTO qdto=qna.selqna(id);
 		model.addAttribute("qdto",qdto);
-		model.addAttribute("user",user);
-		return "detail";
+		qnaDTO nepr=qna.nepr(id);
+		model.addAttribute("nepr", nepr);
+		qna.viewcount(id);
+		return "qna/detail";
 	}
+
+	@RequestMapping("/new")
+	public String doNew(@SessionAttribute(name = "user", required = false) Users user,Model model) {
+		log.info("글쓰기에 넘어옴");
+		model.addAttribute("user",user);
+		return "qna/qnawrite";
+	}
+
+	@PostMapping("/addqna")
+	public String doInsert(@RequestParam String title, @RequestParam String content, @RequestParam int writer) {
+		qna.addqna(title, content, writer);
+		return "redirect:/qna";
+	}
+
+	@RequestMapping("/up")
+	public String doUp(@SessionAttribute(name = "user", required = false) Users user,Model model,
+					   @RequestParam int id) {
+		log.info("수정으로 넘어옴");
+		model.addAttribute("user",user);
+		qnaDTO qdto=qna.selqna(id);
+		model.addAttribute("qdto",qdto);
+		return "qna/qnaup";
+	}
+
+	@RequestMapping("/upqna")
+	public String doUpdate(@RequestParam String title, @RequestParam String content, @RequestParam int id) {
+		qna.upqna(title, content, id);
+		return "redirect:/qna";
+	}
+
+	@RequestMapping("/delqna")
+	public String doDelete(@RequestParam int id) {
+		qna.delqna(id);
+		return "redirect:/qna";
+	}
+
+
 }

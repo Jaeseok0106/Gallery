@@ -13,4 +13,9 @@ public class Review {
 	private String postdate;
 	private int views;
 	private String userid;
+	private int next;
+	private int last;
+	private int userNum;
+	private int post_id;
+	private String heart_id;
 }

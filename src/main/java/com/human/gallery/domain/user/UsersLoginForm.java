@@ -12,6 +12,5 @@ public class UsersLoginForm {
 	@NotBlank()
 	String id;
 	@NotBlank()
-	@Size(min=6, max=12)
 	String password;
 }
