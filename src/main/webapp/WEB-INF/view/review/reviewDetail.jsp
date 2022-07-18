@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-                                           prefix="c" %> <%@ page session="false" %>
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+           prefix="c" %>
+<%@ page session="false" %>
 <html>
 <head>
     <link
@@ -17,6 +19,7 @@
         float: left;
         font-size: 55px;
     }
+
     .nav-link {
         font-weight: 600;
         color: #000000;
@@ -24,115 +27,123 @@
         font-size: 20px;
         font-size: 1.25rem;
     }
+
     .page-title {
         border-top: 10px solid black;
         border-bottom: 10px solid black;
         margin-bottom: 4rem;
     }
+
     .page-title h1 {
         padding: 2rem;
         text-align: center;
     }
+
     body {
         font-family: LeeSeoyun;
     }
+
     @font-face {
         font-family: "LeeSeoyun";
-        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff") format("woff");
         font-weight: normal;
         font-style: normal;
     }
+
     a {
         text-decoration-line: none;
+    }
+
+    #comment, #commentForm {
+        margin: 0.5rem;
     }
 </style>
 <body>
 <div class="container">
-    <header class="blog-header py-3" style = "height : 230px;">
+    <header class="blog-header py-3" style="height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" style = "height:100px;"/>
+                <img src="logo.png" style="height:100px;"/>
             </div>
         </div>
         <br><br><br>
-        <div class="nav-scroller mb-7" id = "list">
-            <ul class="nav justify-content-center" style = "display:block;">
+        <div class="nav-scroller mb-7" id="list">
+            <ul class="nav justify-content-center" style="display:block;">
                 <li class="nav-item mx-5">
-                    <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
+                    <a class="nav-link active p-7" aria-current="page" href="#" id="nav1">About us</a>
                     <div>
-                        <ul class="nav justify-content-end" style = "display : none;" id = "none1">
+                        <ul class="nav justify-content-end" style="display : none;" id="none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+                                <a class="nav-link" aria-current="page" href="#" id="detail">Active</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
+                                <a class="nav-link" href="#" id="detail">Link</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
+                                <a class="nav-link" href="#" id="detail">Link</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id = "detail">Disabled</a>
+                                <a class="nav-link" id="detail">Disabled</a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/artist" id = "nav3">artist</a>
+                    <a class="nav-link" href="/artist" id="nav3">artist</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" id = "nav4">Post</a>
-                    <ul class="nav justify-content-end" style = "display : none;" id = "none2">
+                    <a class="nav-link" id="nav4">Post</a>
+                    <ul class="nav justify-content-end" style="display : none;" id="none2">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
+                            <a class="nav-link" aria-current="page" href="/review" id="detail">Review</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/qna" id = "detail">Q&A</a>
+                            <a class="nav-link" href="/qna" id="detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+                            <a class="nav-link" href="/FAQ" id="detail">FAQ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
+                            <a class="nav-link" id="detail">Disabled</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" aria-current="page" href="#" id = "nav5">Member</a>
-                    <ul class="nav justify-content-end" style = "display : none;" id = "none3">
-                        <c:if test = "${user.id == null}">
+                    <a class="nav-link" aria-current="page" href="#" id="nav5">Member</a>
+                    <ul class="nav justify-content-end" style="display : none;" id="none3">
+                        <c:if test="${user.id == null}">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+                                <a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/signin" id = "detail">Sign in</a>
+                                <a class="nav-link" href="/signin" id="detail">Sign in</a>
                             </li>
                         </c:if>
-                        <c:if test = "${user.id != null }">
+                        <c:if test="${user.id != null }">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+                                <a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
                             </li>
                         </c:if>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id = "detail">My page</a>
+                            <a class="nav-link" href="#" id="detail">My page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
+                            <a class="nav-link" id="detail">Disabled</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" aria-current="page" href="/notice" id = "nav6">Notice</a>
+                    <a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
                 </li>
             </ul>
         </div>
     </header>
 </div>
-<input type = "hidden" id = "role" value = "${user.role}">
-<input type = "hidden" id = "usernum" value = "${user.userNum}">
+<input type="hidden" id="role" value="${user.role}">
+<input type="hidden" id="usernum" value="${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
@@ -152,7 +163,8 @@
             </span>
             </p>
         </div>
-        <p></p><p></p>
+        <p></p>
+        <p></p>
         <div class="col-12">
             <p>
                 ${rdto.content}
@@ -160,7 +172,9 @@
         </div>
         <div class="col-3 text-start">
             <c:if test="${ndto.last != 9999}">
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='reviewDetail?id=${ndto.last}'">이전</button>
+                <button type="button" class="btn btn-outline-primary"
+                        onclick="location.href='reviewDetail?id=${ndto.last}'">이전
+                </button>
             </c:if>
             <c:if test="${ndto.last == 9999}"></c:if>
         </div>
@@ -170,7 +184,9 @@
         </div>
         <div class="col-3 text-end">
             <c:if test="${ndto.next != 9999}">
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='reviewDetail?id=${ndto.next}'">다음</button>
+                <button type="button" class="btn btn-outline-primary"
+                        onclick="location.href='reviewDetail?id=${ndto.next}'">다음
+                </button>
             </c:if>
             <c:if test="${ndto.next == 9999}"></c:if>
         </div>
@@ -181,6 +197,28 @@
         <button type="button" class="btn btn-outline-Dark" onclick="location.href='reviewUpdate?id=${rdto.id}'">수정</button>
         <a href="deleteReview?id=${rdto.id}"><button type="button" class="btn btn-outline-Dark" id="delete">삭제</button></a>
         </c:if>
+    </div>
+
+    <div class="container">
+        <div id="writeComment" class="mb-3" style="border: 0.5rem ridge;">
+            <div id="comment">
+                댓글 쓰기
+            </div>
+            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
+            <button type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;">댓글 등록</button>
+        </div>
+        <div style="border-bottom:1px solid black;">
+            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>
+        </div>
+        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment">
+            <strong>여기는 이제 댓글을 다는거죠 </strong>
+        </div>
+        <div style="border-bottom:1px solid black;">
+            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>
+        </div>
+        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment">
+            <strong>여기는 이제 댓글을 다는거죠 </strong>
+        </div>
     </div>
 </main>
 
@@ -196,7 +234,7 @@
                 class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
         >
             <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
+                <use xlink:href="#bootstrap"/>
             </svg>
         </a>
 
@@ -235,7 +273,8 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             },
-            function () {}
+            function () {
+            }
         );
         $("#nav2").hover(function () {
             $("#none1").css("display", "none");
@@ -261,6 +300,41 @@
             $("#none1").css("display", "none");
             $("#none2").css("display", "none");
             $("#none3").css("display", "none");
+        })
+    })
+        .on("click", "#addComment", function() {
+            $.ajax({
+                type : "POST",
+                url : "/commentWrite",
+                dataType : "text",
+                data : {postId : ${rdto.id}, writer : $("#usernum").val(), content : $("#commentForm").val()},
+                success : function(data) {
+                    console.log("음..");
+                }
+            })
+        })
+    let click = 0;
+    function reply_click() {
+        click++;
+        console.log("클릭 ! " ,click);
+        if (click % 2 == 1) {
+            let str =
+                `
+         <div id="writeComment" class="mb-3">
+            <div id="comment">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
+        </svg> <strong>댓글 쓰기</strong>
+            </div>
+            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
+            <button type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;">등록</button>
+         </div>`;
+            console.log(str);
+            $("#userComment").append(str);
+        } else {
+            $("#userComment").children().remove("#writeComment");
+        }
+    }
         });
     });
     $('#delete').click(function () {

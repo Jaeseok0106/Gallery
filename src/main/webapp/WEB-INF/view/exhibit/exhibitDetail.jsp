@@ -38,17 +38,6 @@ body {
     font-weight: normal;
     font-style: normal;
 }
-img {
-	text-align:center;
-}
-.exhibit-name {
-	text-align : left;
-	font-size : 1.5rem;
-}
-.artist-name {
-	text-align : right;
-	font-size : 1rem;
-}
 a {
 text-decoration-line:none;
 }
@@ -58,7 +47,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "/logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -141,19 +130,54 @@ text-decoration-line:none;
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
-<main class = "container p-5 text-center">
+<main class = "container p-5">
 	<div class = "page-title">
-		<h1>Exhibition</h1>
+		<h1>전시회 정보</h1>
 	</div>
-	<c:forEach var = "exhibit" items="${exhibit}">
-		<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-			<a href = "/exhibit/detail/${exhibit.id}"><img src="${exhibit.images}" class="img-fluid" alt="전시회 이미지"></a>
-			<br><br>
-			<p class = "exhibit-name"><a href = "/exhibit/detail/${exhibit.id}">${exhibit.name} / ${exhibit.startDate} ~ ${exhibit.endDate}</a><span class = "artist-name" style = "float:right;">${exhibit.artist}</span>
-			</p>
+	<div class = "row mb-2" style = "height : 700px;">
+		<div class = "col-6">
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img src="${exhibit.images}" class="d-block w-100" alt="...">
+					</div>
+				</div>
+			</div>
 		</div>
-		<br><br>
-	</c:forEach>
+		<div class = "col-6">
+			<div class = "container">
+				<dl class="row py-5">
+					<dt class="col-sm-3">전시회 이름</dt>
+					<dd class="col-sm-9">${exhibit.name}</dd>
+					<dt class="col-sm-3">아티스트 정보</dt>
+					<dd class="col-sm-9">
+						<p>${exhibit.artist}</p>
+					</dd>
+					<dt class="col-sm-3">전시회 날짜</dt>
+					<dd class="col-sm-9">
+						<p>${exhibit.startDate} ~ ${exhibit.endDate}</p>
+					</dd>
+					<dt class="col-sm-3">전시회 정보</dt>
+					<dd class="col-sm-9">
+						${exhibit.info}
+					<dt class="col-sm-3">가격</dt>
+					<dd class="col-sm-9">
+						${exhibit.price}
+					</dd>
+					<dt class="col-sm-3">입장 가능 인원</dt>
+					<dd class="col-sm-9">
+						${exhibit.total}
+					</dd>
+					<p></p>
+				</dl>
+				<button type="button" class="btn btn-primary">예매하기</button>
+				<c:if test = "${user.role == '관리자'}">
+					<button type="button" class="btn btn-dark" onclick="location.href='/exhibit/modify/${exhibit.id}'">전시회 수정</button>
+					<button type="button" class="btn btn-danger" id = "deleteExhibit">전시회 삭제</button>
+				</c:if>
+			</div>
+		</div>
+	</div>
 </main>
 
 <!-- 하단 -->
@@ -214,5 +238,24 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
+		.on("click", "#deleteExhibit", function() {
+			if (confirm("정말 삭제하시겠습니까?")) {
+				$.ajax({
+					type : "POST",
+					url : "/exhibit/delete/${exhibit.id}",
+					data : {},
+					dataType : "text",
+					success : function (data) {
+						if (data == "true") {
+							alert("삭제가 완료되었습니다.");
+							document.location.href = "/exhibit";
+						}
+						else if (data == "false") {
+							alert("삭제할 수 없는 아티스트입니다.");
+						}
+					}
+				})
+			}
+		})
 </script>
 </html>
