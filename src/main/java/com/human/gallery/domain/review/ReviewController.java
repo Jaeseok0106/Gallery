@@ -69,4 +69,29 @@ public class ReviewController {
 		review.insertReview(title, content, writer);
 		return "redirect:/review";
 	}
+	@RequestMapping("/reviewUpdate")
+	public String doUpdateReview(@SessionAttribute(name = "user", required = false) Users user,
+								 Model model, @RequestParam int id) {
+		Review rdto=review.selView(id);
+		model.addAttribute("user", user);
+		model.addAttribute("rdto", rdto);
+		return "review/updateReview";
+	}
+	@RequestMapping("/updateReview")
+	public String doUpdate(@RequestParam(value="title", required=false) String title,
+						   @RequestParam(value="content", required=false) String content,
+						   @RequestParam int id) {
+		review.updateReview(title, content, id);
+		return "redirect:/review";
+	}
+	@RequestMapping("/deleteReview")
+	public String doDelete(@RequestParam int id) {
+		review.deleteReview(id);
+		return "redirect:/review";
+	}
+/*	@RequestMapping("/findLike")
+	public String dofindLike(@RequestParam int id) {
+
+		return "redirect:/reviewDetail";
+	}*/
 }
