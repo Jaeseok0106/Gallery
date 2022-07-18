@@ -1,7 +1,10 @@
 package com.human.gallery.web.user;
 
-import javax.servlet.http.HttpSession;
-
+import com.human.gallery.domain.user.UserService;
+import com.human.gallery.domain.user.Users;
+import com.human.gallery.domain.user.UsersLoginForm;
+import com.human.gallery.domain.user.UsersSignForm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.human.gallery.domain.user.UserService;
-import com.human.gallery.domain.user.Users;
-import com.human.gallery.domain.user.UsersLoginForm;
-import com.human.gallery.domain.user.UsersSignForm;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @Slf4j
@@ -100,7 +98,7 @@ public class UserController {
 		}
 		userService.addUsers(form);
 		model.addAttribute("user", usera);
-		return "users/login";
+		return "redirect:/login";
 	}
 
 }

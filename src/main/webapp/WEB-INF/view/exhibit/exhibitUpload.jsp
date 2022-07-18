@@ -51,7 +51,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "/logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -135,11 +135,12 @@ text-decoration-line:none;
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
+	<form id = "frmAdd" action = "./upload" method = "POST" enctype="multipart/form-data">
 	<table class = "col-12">
 		<tr>
 			<td class = "col-3 text-center">전시회 이름 : </td>
 			<td class = "col-8 text-left">
-				<input type = "text" path = "name" class="form-control" placeholder="Default input" aria-label="default input example"/>
+				<input type = "text" name = "name" class="form-control" placeholder="Default input" aria-label="default input example"/>
 			</td>
 		</tr>
 		<tr class="py-5">
@@ -151,11 +152,8 @@ text-decoration-line:none;
 		<tr class="py-5">
 			<td class = "col-3 text-center">아티스트 : </td>
 			<td class = "col-8 text-left">
-				<select class="form-select form-select-sm" aria-label=".form-select-sm example">
-					<option selected>Open this select menu</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example" id = "artistList" name = "artist">
+
 				</select>
 			</td>
 		</tr>
@@ -194,6 +192,7 @@ text-decoration-line:none;
 		<button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
 		<button type="button" class="btn btn-outline-danger" onclick="location.href='/exhibit'">취소</button>
 	</div>
+	</form>
 </main>
 
 <!-- 하단 -->
@@ -260,5 +259,29 @@ $(document)
 <script>
 	ClassicEditor.create( document.querySelector( '#editor')
 	);
+</script>
+<script>
+	$(document).ready(function() {
+		console.log("ㅇㅇㅇㅇ");
+		$.ajax({
+			type : "post",
+			url : "/artist/getArtist",
+			data : {},
+			dataType : 'JSON',
+			beforeSend : function () {
+				$("#artistList").empty();
+			},
+			success : function (data) {
+				console.log(data);
+				for (let i = 0; i < data.length; i++) {
+					let list = data[i];
+					let str = "<option name = artist id = " + list['id'] + ">"
+							+ list['name'] + "</option>";
+					console.log(str);
+					$("#artistList").append(str);
+				}
+			}
+		})
+	})
 </script>
 </html>

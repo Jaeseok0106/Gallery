@@ -9,6 +9,7 @@ public class Exhibit {
     private String name;
     private String images;
     private String artist;
+    private int artistId;
     private String startDate;
     private String endDate;
     private String info;

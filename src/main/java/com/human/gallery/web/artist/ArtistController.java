@@ -1,22 +1,22 @@
 package com.human.gallery.web.artist;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
-
 import com.human.gallery.domain.artist.Artist;
 import com.human.gallery.domain.artist.ArtistRepository;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequestMapping("/artist")
@@ -127,5 +127,21 @@ public class ArtistController {
 			artistRepository.modifyByIdWithOutImage(name, career, direction, id);
 		}
 		return "redirect:/artist/detail/"+id;
+	}
+	@PostMapping("/getArtist")
+	@ResponseBody
+	public String sendArtist() {
+		log.info("sendArtsit 호출 여부");
+		List<Artist> artistList = artistRepository.findAll();
+		JSONArray jA = new JSONArray();
+		for (int i = 0; i < artistList.size(); i++) {
+			JSONObject jO = new JSONObject();
+			Artist artist = artistList.get(i);
+			jO.put("id", artist.getId());
+			jO.put("name", artist.getName());
+			jA.add(jO);
+		}
+		log.info("넘길 값 = {}", JSONArray.toJSONString(jA));
+		return JSONArray.toJSONString(jA);
 	}
 }
