@@ -15,4 +15,11 @@ public interface CommentRepository {
 
     Comment findByParentId(String parentid);
     void updateParentById(String postId, String reorder);
+
+    Integer findNumByPostId(String postId);
+    void updateById(String content, String id);
+
+    Integer findChildren(String id);
+
+    void updateByIdWithDelete(String content, String id);
 }

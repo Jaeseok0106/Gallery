@@ -12,6 +12,9 @@ prefix="c" %> <%@ page session="false" %>
     <title>${qdto.title}</title>
   </head>
   <style>
+    .commentJob {
+      cursor : pointer;
+    }
     .nav-item {
       list-style-type: none;
       float: left;
@@ -132,6 +135,7 @@ prefix="c" %> <%@ page session="false" %>
   </div>
   <input type = "hidden" id = "role" value = "${user.role}">
   <input type = "hidden" id = "usernum" value = "${user.userNum}">
+  <input type = "hidden" id = "postId" value = "${qdto.id}">
   <br><br>
   <main class = "container p-5">
     <div class = "row">
@@ -182,6 +186,12 @@ prefix="c" %> <%@ page session="false" %>
         <a href="delqna?id=${qdto.id}"><button type="button" class="btn btn-outline-dark" id="btnDel">삭제</button></a>
         </c:if>
       </div>
+    </div>
+
+    <div class="container">
+      <div id="writeComment" class="mb-3">
+      </div>
+    </div>
     </div>
   </main>
 
@@ -293,4 +303,5 @@ prefix="c" %> <%@ page session="false" %>
       });
     }
   </script>
+  <script src="/js/comment.js"></script>
 </html>

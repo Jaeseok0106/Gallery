@@ -9,7 +9,7 @@
 
     <insert id = "addComment">
         insert into post_comment values (post_comment_seq.nextval, #{param1}, #{param2}, #{param3},
-                                         to_char(sysdate, 'yyyy-mm-dd'), #{param4}, #{param5}, #{param6})
+                                         to_char(sysdate, 'yyyy-mm-dd'), #{param4}, #{param5}, #{param6}, 'N')
     </insert>
 
     <select id = "findByPostId" resultType="com.human.gallery.domain.comment.Comment">
@@ -22,5 +22,21 @@
 
     <update id = "updateParentById">
         update post_comment set reorder = reorder + 1 where post_id = #{param1} and <![CDATA[reorder > #{param2}]]>
+    </update>
+
+    <select id = "findNumByPostId" resultType="Integer">
+        select count(*) from post_comment where post_id = #{param1}
+    </select>
+
+    <update id = "updateById">
+        update post_comment set content = #{param1} where id = #{param2}
+    </update>
+
+    <select id = "findChildren" resultType="Integer">
+        select count(*) from post_comment where reparent = #{param1}
+    </select>
+
+    <update id = "updateByIdWithDelete">
+        update post_comment set content = #{param1} , isDelete = 'Y' where id = #{param2}
     </update>
 </mapper>
