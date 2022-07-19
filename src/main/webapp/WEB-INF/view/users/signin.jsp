@@ -62,7 +62,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "logo.png" id='logo' style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -251,6 +251,10 @@ a {
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	$(document)
+			.on('click','#logo',function(){
+				document.location.href='/';
+			})
 	$(document).ready(function() {
 		console.log("시작 화면");
 		$("#nav1").hover(function() {

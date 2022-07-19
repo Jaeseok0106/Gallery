@@ -24,6 +24,9 @@ font-size: 55px;
     font-size: 20px;
     font-size: 1.25rem;
 }
+#detail {
+	font-size: 0.7rem;
+}
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
@@ -85,7 +88,7 @@ div {white-space: nowrap;}
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -126,7 +129,7 @@ div {white-space: nowrap;}
 							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -286,6 +289,10 @@ div {white-space: nowrap;}
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script>
+	$(document)
+			.on('click','#logo',function(){
+				document.location.href='/';
+			})
 $(document)
 .ready(function() {
     $('#detail').dialog({

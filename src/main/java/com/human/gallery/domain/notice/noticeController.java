@@ -98,4 +98,5 @@ public class noticeController {
 		model.addAttribute("ndto",ndto);
 		return "notice/noticeupdate";
 	}
+
 }
