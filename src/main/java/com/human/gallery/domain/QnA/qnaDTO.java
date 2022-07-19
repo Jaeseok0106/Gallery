@@ -18,4 +18,5 @@ public class qnaDTO {
 	private int userNum;
 	private int postid;
 	private int heartid;
+	private int RN;
 }

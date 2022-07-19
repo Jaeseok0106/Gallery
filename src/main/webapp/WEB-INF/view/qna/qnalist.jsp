@@ -49,6 +49,10 @@ a {
 	text-decoration: none;
 	color:black;
 }
+#btnDate, #btnView, #btnHeart {
+	width: 30px;
+	height: 23px;
+}
 </style>
 <body>
 <div class="container">
@@ -151,9 +155,9 @@ a {
 					<th>번호</th>
 					<th>제목</th>
 					<th>글쓴이</th>
-					<th>날짜</th>
-					<th>조회</th>
-					<th>추천순</th>
+					<th>날짜&nbsp;&nbsp;<input type="button" id="btnDate" value="▲"></th>
+					<th>조회&nbsp;&nbsp;<input type="button" id="btnView" value="▲"></th>
+					<th>추천순&nbsp;&nbsp;<input type="button" id="btnHeart" value="▲"></th>
 				</tr>
 <!-- 				<tr class = "p-5">
 					
@@ -164,6 +168,15 @@ a {
 			<p></p>
 			<p></p>		
 			<p></p>
+			<div class="w3-bar" align="center">
+				<a href="#" class="w3-button">&laquo;</a>&nbsp;
+				<a href="/qnalist" class="w3-button">1</a>&nbsp;
+				<a href="/qnalist" class="w3-button">2</a>&nbsp;
+				<a href="/qnalist" class="w3-button">3</a>&nbsp;
+				<a href="/qnalist" class="w3-button">4</a>&nbsp;
+				<a href="/qnalist" class="w3-button">5</a>&nbsp;
+				<a href="/qnalist" class="w3-button">&raquo;</a>
+			</div>
 			<div class = "col-2">
 				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
 			</div>
@@ -245,9 +258,174 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
+		.on('click','#btnDate',function () {
+			if($('#btnDate').val()=='▲') {
+				listdate();
+				$('#btnDate').val('▼');
+			} else if($('#btnDate').val()=='▼') {
+				descdate();
+				$('#btnDate').val('▲');
+			}
+		})
+		.on('click','#btnView',function () {
+			if($('#btnView').val()=='▲') {
+				listview();
+				$('#btnView').val('▼');
+			} else if($('#btnView').val()=='▼') {
+				descview();
+				$('#btnView').val('▲');
+			}
+		})
+		.on('click','#btnHeart',function () {
+			if($('#btnHeart').val()=='▲') {
+				listheart();
+				$('#btnHeart').val('▼');
+			} else if($('#btnHeart').val()=='▼') {
+				descheart();
+				$('#btnHeart').val('▲');
+			}
+		})
 function qnalist(){
 	$.ajax({
 		url : 'qnalist',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['userid']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
+function listdate(){
+	$.ajax({
+		url : 'listdate',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['userid']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
+function descdate(){
+	$.ajax({
+		url : 'descdate',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['userid']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
+function listview(){
+	$.ajax({
+		url : 'listview',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['userid']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
+function descview(){
+	$.ajax({
+		url : 'descview',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['userid']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
+function listheart(){
+	$.ajax({
+		url : 'listheart',
+		data : '',
+		dataType : 'json',
+		type : 'get',
+		beforeSend:function(){
+			$('#qnatb tr:gt(0)').remove();
+		},
+		success : function(data) {
+			for (let i = 0; i < data.length; i++) {
+				list = data[i];
+				let str = '<tr><td>' + list['id']
+						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
+						+ '</a></td><td>' + list['userid']
+						+ '</td><td>' + list['postdate']
+						+ '</td><td>' + list['views']
+						+ '</td><td>' + list['heart'] +'</td></tr>';
+				$('#qnatb').append(str);
+			}
+		}
+	});
+}
+function descheart(){
+	$.ajax({
+		url : 'descheart',
 		data : '',
 		dataType : 'json',
 		type : 'get',

@@ -148,42 +148,15 @@ text-decoration-line:none;
 	<div class = "page-title">
 		<h1>Exhibition</h1>
 	</div>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
+	<c:forEach var = "exhibit" items="${exhibit}">
+		<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
+			<a href = "/exhibit/detail/${exhibit.id}"><img src="${exhibit.images}" class="img-fluid" alt="전시회 이미지"></a>
+			<br><br>
+			<p class = "exhibit-name"><a href = "/exhibit/detail/${exhibit.id}">${exhibit.name} / ${exhibit.startDate} ~ ${exhibit.endDate}</a><span class = "artist-name" style = "float:right;">${exhibit.artist}</span>
+			</p>
+		</div>
 		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
-	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
-	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
-	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 / 날짜 <span class = "artist-name" style = "float:right;">작가 이름</span>
-		</p>
-	</div>
-	<br><br>
-	<div class = "col-sm-12 col-md-12 col-xs-12 col-lg-12">
-		<img src="/resources/test.png" class="img-fluid" alt="전시회 이미지">
-		<br><br>
-		<p class = "exhibit-name">전시회 이름 	<span class = "artist-name" style = "float:right;">작가 이름</span>
-		<br><br>
-		</p>
-	</div>
-	<br><br>		
+	</c:forEach>
 </main>
 
 <!-- 하단 -->

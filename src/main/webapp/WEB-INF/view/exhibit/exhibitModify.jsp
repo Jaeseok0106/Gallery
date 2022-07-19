@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -13,15 +14,15 @@ list-style-type:none;
 float:left;
 font-size: 55px;
 }
+.ck-editor__editable {
+	height : 400px;
+}
 .nav-link {
     font-weight: 600;
     color: #000000;
     padding: 0 0.3125rem;
     font-size: 20px;
     font-size: 1.25rem;
-}
-#detail {
-	font-size: 0.7rem;
 }
 .page-title {
 	border-top: 10px solid black;
@@ -42,10 +43,7 @@ body {
     font-style: normal;
 }
 a {
-	text-decoration-line:none;
-}
-.ck-editor__editable {
-	height : 600px;
+text-decoration-line:none;
 }
 </style>
 <body>
@@ -53,7 +51,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:80px;"/>
+				<img src = "/logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -82,19 +80,19 @@ a {
 					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/artist" id = "nav3">artist</a>
+					<a class="nav-link" href="./artist" id = "nav3">artist</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" id = "nav4">Post</a>
 					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
+							<a class="nav-link" aria-current="page" href="./review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
+							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -106,15 +104,15 @@ a {
 					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
 						<c:if test = "${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+								<a class="nav-link" aria-current="page" href="./login" id = "detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/signin" id = "detail">Sign in</a>
+								<a class="nav-link" href="./signin" id = "detail">Sign in</a>
 							</li>
 						</c:if>
 						<c:if test = "${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+								<a class="nav-link" aria-current="page" href="./logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
 						<li class="nav-item">
@@ -137,21 +135,64 @@ a {
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-	<div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-		<h5>게시판 제목</h5>
+	<form id = "frmAdd" action = "/exhibit/modify/${exhibit.id}" method = "POST" enctype="multipart/form-data">
+	<table class = "col-12">
+		<tr>
+			<td class = "col-3 text-center">전시회 이름 : </td>
+			<td class = "col-8 text-left">
+				<input type = "text" name = "name" class="form-control" value="${exhibit.name}"/>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">전시회 사진 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="file" id="formFile" name = "file">
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">아티스트 : </td>
+			<td class = "col-8 text-left">
+				<select class="form-select form-select-sm" aria-label=".form-select-sm example" id = "artistList" name = "artist">
+
+				</select>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">시작 날짜 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="date" name = "startDate" value = ${exhibit.startDate}>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">끝 날짜 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="date" name = "endDate" value = ${exhibit.endDate}>
+			</td>
+		</tr>
+		<tr class = "py-5">
+			<td class = "col-3 text-center">전시회 설명 : </td>
+			<td class = "col-8 text-left">
+				<textarea name = "info" class="form-control" id="editor" rows="15" cols = "30" placeholder="전시회의 설명을 적어주세요.">${exhibit.info}</textarea> <br><br>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">가격 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="text" name = "price" value = ${exhibit.price}>
+			</td>
+		</tr>
+		<tr class="py-5">
+			<td class = "col-3 text-center">총 인원 수 : </td>
+			<td class = "col-8 text-left">
+				<input class="form-control" type="text" name = "total" value = ${exhibit.total}>
+			</td>
+		</tr>
+	</table>
+	<div class = "col-12 text-end">
+		<button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
+		<button type="button" class="btn btn-outline-danger" onclick="location.href='/exhibit'">취소</button>
 	</div>
-	<div class = "row py-4">
-		<form>
-			<div class = "col">
-				<input class="form-control" type="text" placeholder="제목" aria-label="default input example"><br><br>
-				<textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
-			</div>
-			<div class = "col text-end">
-				<button type="button" class="btn btn-outline-primary">작성 완료</button>
-				<button type="button" class="btn btn-outline-danger">취소</button>						
-			</div>
-		</form>
-	</div>
+	</form>
 </main>
 
 <!-- 하단 -->
@@ -177,10 +218,6 @@ a {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-	$(document)
-			.on('click','#logo',function(){
-				document.location.href='/';
-			})
 $(document)
 .ready(function () {
 	console.log("시작 화면");
@@ -217,9 +254,34 @@ $(document)
 	})	
 })
 </script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
+<script src="${classpath}/editor/ckeditor.js"></script>
+<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
-ClassicEditor.create( document.querySelector( '#editor' ) );
+	ClassicEditor.create( document.querySelector( '#editor')
+	);
+</script>
+<script>
+	$(document).ready(function() {
+		console.log("ㅇㅇㅇㅇ");
+		$.ajax({
+			type : "post",
+			url : "/artist/getArtist",
+			data : {},
+			dataType : 'JSON',
+			beforeSend : function () {
+				$("#artistList").empty();
+			},
+			success : function (data) {
+				console.log(data);
+				for (let i = 0; i < data.length; i++) {
+					let list = data[i];
+					let str = "<option name = artist id = " + list['id'] + ">"
+							+ list['name'] + "</option>";
+					console.log(str);
+					$("#artistList").append(str);
+				}
+			}
+		})
+	})
 </script>
 </html>

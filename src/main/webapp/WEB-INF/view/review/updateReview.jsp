@@ -5,8 +5,7 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>게시글 수정</title>
+    <title>글수정</title>
 </head>
 <style>
     .nav-item{
@@ -40,8 +39,7 @@
         font-style: normal;
     }
     a {
-        text-decoration: none;
-        color:black;
+        text-decoration-line:none;
     }
     .ck-editor__editable {
         height : 600px;
@@ -52,7 +50,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <img src = "logo.png" style = "height:100px;"/>
             </div>
         </div>
         <br><br><br>
@@ -93,7 +91,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
+                            <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id = "detail">Disabled</a>
@@ -136,19 +134,19 @@
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>게시글 수정</h5>
+        <h5>Review 수정</h5>
     </div>
     <div class = "row py-4">
-        <form id="frmAdd" action="upqna" method="post">
+        <form id="frmAdd" action="updateReview" method="post">
             <div class = "col">
-                <input type="hidden" name="id" value="${qdto.id}">
-                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example" value="${qdto.title}"><br><br>
-                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50">${qdto.content}</textarea><br><br>
+                <input type="hidden" name="id" value="${rdto.id}">
+                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example" value="${rdto.title}"><br><br>
+                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50">${rdto.content}</textarea><br><br>
                 <input type = "hidden" id = "usernum" name="writer" value ="${user.userNum}">
             </div>
             <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary" id="btnUp">수정 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='qna'">수정 취소</button>
+                <button type="submit" class="btn btn-outline-primary" id="btnUpdate">수정 완료</button>
+                <button type="button" class="btn btn-outline-danger" id="btnCan" onclick="location.href='/review'">취소</button>
             </div>
         </form>
     </div>
@@ -179,10 +177,6 @@
 <script src="${classpath}/editor/ckeditor.js"></script>
 <script src="${classpath}/editor/translations/ko.js"></script>
 <script>
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
     $(document)
         .ready(function () {
             console.log("시작 화면");
@@ -218,7 +212,7 @@
                 $("#none3").css("display", "none");
             })
         })
-    $("#btnUp").click(function() {
+    $("#btnUpdate").click(function() {
         if($('#title').val()=='' || $('#title').val()<1) {
             alert('제목을 입력해야 합니다.');
             $('#title').focus();
@@ -231,9 +225,19 @@
             window.scrollTo({left: 0, top: 350, behavior: "smooth"});
             return false;
         }
+        if(!confirm('게시글을 수정하시겠습니까?')) {
+            return false;
+        }
         alert('게시글이 수정되었습니다.');
         return true;
     })
+    $("#btnCan").click(function() {
+        if(!confirm('취소 하시겠습니까?')) {
+            return false;
+        }
+    })
+</script>
+<script>
     ClassicEditor.create( document.querySelector( '#editor' ) );
 </script>
 </html>

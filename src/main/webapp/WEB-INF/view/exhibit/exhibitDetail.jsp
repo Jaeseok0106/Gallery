@@ -20,9 +20,6 @@ font-size: 55px;
     font-size: 20px;
     font-size: 1.25rem;
 }
-#detail {
-	font-size: 0.7rem;
-}
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
@@ -42,10 +39,7 @@ body {
     font-style: normal;
 }
 a {
-	text-decoration-line:none;
-}
-.ck-editor__editable {
-	height : 600px;
+text-decoration-line:none;
 }
 </style>
 <body>
@@ -53,7 +47,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:80px;"/>
+				<img src = "/logo.png" style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -94,7 +88,7 @@ a {
 							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
+							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -137,20 +131,52 @@ a {
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-	<div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-		<h5>게시판 제목</h5>
+	<div class = "page-title">
+		<h1>전시회 정보</h1>
 	</div>
-	<div class = "row py-4">
-		<form>
-			<div class = "col">
-				<input class="form-control" type="text" placeholder="제목" aria-label="default input example"><br><br>
-				<textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
+	<div class = "row mb-2" style = "height : 700px;">
+		<div class = "col-6">
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img src="${exhibit.images}" class="d-block w-100" alt="...">
+					</div>
+				</div>
 			</div>
-			<div class = "col text-end">
-				<button type="button" class="btn btn-outline-primary">작성 완료</button>
-				<button type="button" class="btn btn-outline-danger">취소</button>						
+		</div>
+		<div class = "col-6">
+			<div class = "container">
+				<dl class="row py-5">
+					<dt class="col-sm-3">전시회 이름</dt>
+					<dd class="col-sm-9">${exhibit.name}</dd>
+					<dt class="col-sm-3">아티스트 정보</dt>
+					<dd class="col-sm-9">
+						<p>${exhibit.artist}</p>
+					</dd>
+					<dt class="col-sm-3">전시회 날짜</dt>
+					<dd class="col-sm-9">
+						<p>${exhibit.startDate} ~ ${exhibit.endDate}</p>
+					</dd>
+					<dt class="col-sm-3">전시회 정보</dt>
+					<dd class="col-sm-9">
+						${exhibit.info}
+					<dt class="col-sm-3">가격</dt>
+					<dd class="col-sm-9">
+						${exhibit.price}
+					</dd>
+					<dt class="col-sm-3">입장 가능 인원</dt>
+					<dd class="col-sm-9">
+						${exhibit.total}
+					</dd>
+					<p></p>
+				</dl>
+				<button type="button" class="btn btn-primary">예매하기</button>
+				<c:if test = "${user.role == '관리자'}">
+					<button type="button" class="btn btn-dark" onclick="location.href='/exhibit/modify/${exhibit.id}'">전시회 수정</button>
+					<button type="button" class="btn btn-danger" id = "deleteExhibit">전시회 삭제</button>
+				</c:if>
 			</div>
-		</form>
+		</div>
 	</div>
 </main>
 
@@ -177,10 +203,6 @@ a {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-	$(document)
-			.on('click','#logo',function(){
-				document.location.href='/';
-			})
 $(document)
 .ready(function () {
 	console.log("시작 화면");
@@ -216,10 +238,24 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
-</script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
-<script>
-ClassicEditor.create( document.querySelector( '#editor' ) );
+		.on("click", "#deleteExhibit", function() {
+			if (confirm("정말 삭제하시겠습니까?")) {
+				$.ajax({
+					type : "POST",
+					url : "/exhibit/delete/${exhibit.id}",
+					data : {},
+					dataType : "text",
+					success : function (data) {
+						if (data == "true") {
+							alert("삭제가 완료되었습니다.");
+							document.location.href = "/exhibit";
+						}
+						else if (data == "false") {
+							alert("삭제할 수 없는 아티스트입니다.");
+						}
+					}
+				})
+			}
+		})
 </script>
 </html>

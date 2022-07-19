@@ -3,13 +3,13 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.human.gallery.domain.QnA.iQna">
-	<select id='qnalist' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by id
-	</select>
+<!--	<select id='qnalist' resultType="com.human.gallery.domain.QnA.qnaDTO">-->
+<!--		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views-->
+<!--		from board_post a, users b-->
+<!--		where categoryList=3-->
+<!--		  and a.writer=b.userNum-->
+<!--		order by id-->
+<!--	</select>-->
 	<select id='selqna' resultType="com.human.gallery.domain.QnA.qnaDTO">
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
 		from board_post a, users b
@@ -20,10 +20,10 @@
 	<select id='nepr' resultType="com.human.gallery.domain.QnA.qnaDTO">
 		select *
 		from (select id,
-					 lead(id,1,9999) over(order by id) as next,
-           	  lag(id,1,0) over(order by id) as prev
-			  from board_post
-			  where categoryList=3)
+			lead(id,1,9999) over(order by id) as next,
+           	lag(id,1,0) over(order by id) as prev
+			from board_post
+			where categoryList=3)
 		where id=#{param1}
 	</select>
 	<update id="viewcount" parameterType="int">
@@ -42,7 +42,7 @@
 	<delete id='delqna'>
 		delete from board_post where id=#{param1}
 	</delete>
-	<select id='heartlist' resultType="com.human.gallery.domain.QnA.qnaDTO">
+	<select id='heart' resultType="int">
 		select count(*) as cnt
 		from post_heart
 		where post_id=#{param1}
@@ -56,4 +56,56 @@
 		set heart=heart+1
 		where id=#{param1}
 	</update>
+	<select id='listdate' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=3
+		  and a.writer=b.userNum
+		order by postdate, id
+	</select>
+	<select id='descdate' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=3
+		  and a.writer=b.userNum
+		order by postdate desc, id desc
+	</select>
+	<select id='listview' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=3
+		  and a.writer=b.userNum
+		order by views, id
+	</select>
+	<select id='descview' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=3
+		  and a.writer=b.userNum
+		order by views desc, id desc
+	</select>
+	<select id='listheart' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=3
+		  and a.writer=b.userNum
+		order by heart, id
+	</select>
+	<select id='descheart' resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+		from board_post a, users b
+		where categoryList=3
+		  and a.writer=b.userNum
+		order by heart desc, id desc
+	</select>
+	<select id="qnalist" resultType="com.human.gallery.domain.QnA.qnaDTO">
+		select * from (
+			select rownum as RN, c.*
+			from (select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
+				from board_post a, users b
+				where categoryList=3
+				and a.writer=b.userNum
+				order by id) c)
+		where RN between 1 and 10;
+	</select>
 </mapper>
