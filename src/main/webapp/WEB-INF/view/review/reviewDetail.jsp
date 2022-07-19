@@ -201,23 +201,23 @@
 
     <div class="container">
         <div id="writeComment" class="mb-3" style="border: 0.5rem ridge;">
-            <div id="comment">
-                댓글 쓰기
-            </div>
-            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
-            <button type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;">댓글 등록</button>
+<%--            <div id="comment">--%>
+<%--                댓글 쓰기--%>
+<%--            </div>--%>
+<%--            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>--%>
+<%--            <input type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;" value = "댓글 등록"/>--%>
         </div>
-        <div style="border-bottom:1px solid black;">
-            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>
-        </div>
-        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment">
-            <strong>여기는 이제 댓글을 다는거죠 </strong>
-        </div>
-        <div style="border-bottom:1px solid black;">
-            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>
-        </div>
-        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment">
-            <strong>여기는 이제 댓글을 다는거죠 </strong>
+<%--        <div style="border-bottom:1px solid black;">--%>
+<%--            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>--%>
+<%--        </div>--%>
+<%--        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment1">--%>
+<%--            <strong>여기는 이제 댓글을 다는거죠 </strong>--%>
+<%--        </div>--%>
+<%--        <div style="border-bottom:1px solid black;">--%>
+<%--            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>--%>
+<%--        </div>--%>
+<%--        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment2">--%>
+<%--            <strong>여기는 이제 댓글을 다는거죠 </strong>--%>
         </div>
     </div>
 </main>
@@ -271,6 +271,7 @@
         })
     $(document).ready(function () {
         console.log("시작 화면");
+        getComment();
         $("#nav1").hover(
             function () {
                 $("#none1").css("display", "block");
@@ -312,39 +313,110 @@
                 url : "/commentWrite",
                 dataType : "text",
                 data : {postId : ${rdto.id}, writer : $("#usernum").val(), content : $("#commentForm").val()},
+                beforeSend : function() {
+                    // $("#addComment").after().remove();
+                },
                 success : function(data) {
-                    console.log("음..");
+                    getComment();
                 }
             })
         })
-    let click = 0;
-    function reply_click() {
-        click++;
-        console.log("클릭 ! " ,click);
-        if (click % 2 == 1) {
-            let str =
-                `
-         <div id="writeComment" class="mb-3">
-            <div id="comment">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
-        </svg> <strong>댓글 쓰기</strong>
-            </div>
-            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
-            <button type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;">등록</button>
-         </div>`;
-            console.log(str);
-            $("#userComment").append(str);
-        } else {
-            $("#userComment").children().remove("#writeComment");
-        }
-    }
-        });
-    });
+        .on("click", "#addReply", function() {
+            console.log("호출 여부");
+            $.ajax({
+                type : "POST",
+                url : "/commentWrite",
+                dataType : "text",
+                data : {postId : ${rdto.id}, writer : $("#usernum").val(), content : $("#replyForm").val(),
+                    reparent : $("#reparent").val()},
+                beforeSend : function () {
+                    // $("#writeComment").empty();
+                },
+                success : function () {
+                    console.log("데이터 보낸거같은데");
+                    getComment();
+                }
+            })
+        })
     $('#delete').click(function () {
         if(!confirm('게시글을 삭제하시겠습니까?')) {
             return false;
         }
     })
+    let click = 0;
+    function reply_click(commentNumber) {
+        click++;
+        console.log(commentNumber);
+        console.log("클릭 ! " ,click);
+        if (click % 2 == 1) {
+            let str =
+                `
+         <div id="writePostComment" class="mb-3">
+            <input type = "hidden" id = "reparent" value = \${commentNumber}>
+            <div id="comment">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
+        </svg> <strong>댓글 쓰기</strong>
+            </div>
+            <textarea id="replyForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
+            <button type="button" id="addReply" class="btn btn-outline-Dark" style="height:auto;">등록</button>
+         </div>`;
+            console.log($(this).children());
+            $(`#userComment\${commentNumber}`).children().append(str);
+        } else {
+            $("#writePostComment").remove();
+        }
+    }
+
+    function getComment() {
+        $.ajax({
+            url : "/getComment",
+            type : "POST",
+            dataType : "JSON",
+            data : {postId : ${rdto.id}},
+            beforeSend : function() {
+              $("#writeComment").empty();
+            },
+            success : function(data) {
+                let text = `                            <div id="comment">
+                                댓글 쓰기
+                            </div>
+                            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
+                            <input type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;" value = "댓글 등록"/>`
+                $("#writeComment").append(text);
+                for (let i = 0; i < data.length; i++) {
+                    let comment = data[i];
+                    console.log(comment);
+                    let str;
+                    if (comment['writer'] == $("#usernum").val()) {
+                         str =
+                            `<div class = reply\${i} style="border-bottom:1px solid black;">
+                                <div >
+                                    <strong>\${comment['writeName']}</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click(\${comment['id']})"><span> 댓글 </span> </a> <span>\${comment['postDate']} </span>
+                                </div>
+                               <div class="py-4" id = userComment\${comment['id']}>
+                                    <strong>\${comment['content']}</strong>
+                                </div>
+                            </div>`;
+                    }
+                    else {
+                        str =
+                            `<div class = reply\${i} style="border-bottom:1px solid black;">
+                                <div>
+                                    <strong>\${comment['writeName']}</strong> <a href = "#" onclick = "reply_click(\${comment['id']})"><span> 댓글 </span> </a> <span>\${comment['postDate']} </span>
+                                </div>
+                               <div class="py-4" id = userComment\${comment['id']}>
+                                    <strong>\${comment['content']}</strong>
+                                </div>
+                            </div>`;
+                    }
+                    $("#writeComment").append(str);
+                    let temp = comment['redepth'];
+                    console.log(i+" 번째 댓글 temp 값 = ",temp);
+                    $(".reply"+i).css("margin-left", temp*20);
+                }
+            }
+        })
+    }
 </script>
 </html>
