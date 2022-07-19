@@ -24,6 +24,12 @@ font-size: 55px;
     font-size: 20px;
     font-size: 1.25rem;
 }
+#detail {
+	font-size: 0.7rem;
+}
+#detail {
+	font-size: 0.7rem;
+}
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
@@ -55,7 +61,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -69,13 +75,13 @@ text-decoration-line:none;
 							<a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
 						</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail2">Link</a>
+								<a class="nav-link" href="#" id = "detail">Link</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail3">Link</a>
+								<a class="nav-link" href="#" id = "detail">Link</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id = "detail4">Disabled</a>
+								<a class="nav-link" id = "detail">Disabled</a>
 							</li>
 						</ul>
 					</div>
@@ -90,16 +96,13 @@ text-decoration-line:none;
 					<a class="nav-link" id = "nav4">Post</a>
 					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/review" id = "detail5">Review</a>
+							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/qna" id = "detail6">Q&A</a>
+							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail7">FAQ</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail8">Disabled</a>
+							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
 						</li>
 					</ul>
 				</li>
@@ -108,22 +111,22 @@ text-decoration-line:none;
 					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
 						<c:if test = "${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/login" id = "detail9">Login</a>
+								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/signin" id = "detail10">Sign in</a>
+								<a class="nav-link" href="/signin" id = "detail">Sign in</a>
 							</li>
 						</c:if>
 						<c:if test = "${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/logout" id = "detail11">Logout</a>
+								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
 						<li class="nav-item">
-							<a class="nav-link" href="#" id = "detail12">My page</a>
+							<a class="nav-link" href="#" id = "detail">My page</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id = "detail13">Disabled</a>
+							<a class="nav-link" id = "detail">Disabled</a>
 						</li>
 					</ul>
 				</li>
@@ -157,11 +160,30 @@ text-decoration-line:none;
 				</tr>
 			</table>
 			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			
+
 			<p></p>
 			<p></p>		
 			<p></p>
-			<div class = "col-2">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination" >
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous" class ="text-center">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">4</a></li>
+					<li class="page-item"><a class="page-link" href="#">5</a></li>
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div class = "col-2" >
 				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
 			</div>
 			<div class = "col-1 text-left">
@@ -172,9 +194,11 @@ text-decoration-line:none;
                   <span class="visually-hidden">Button</span>
                 </button>
 			</div>
+			<c:if test="${user.role=='관리자'}">
 			<div class = "col-9 text-end">
 				<button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </main>
@@ -253,7 +277,7 @@ function listnotice(){
 	}
 $(document)
 		.on('click','#logo',function(){
-			document.location.href='../../..';
+			document.location.href='/';
 		})
 $(document)
 		.on('click','#btnwrite',function(){

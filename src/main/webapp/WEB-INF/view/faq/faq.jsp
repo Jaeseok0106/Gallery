@@ -5,10 +5,13 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>QnA 작성</title>
+    <title>FAQ</title>
 </head>
 <style>
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
     .nav-item{
         list-style-type:none;
         float:left;
@@ -21,10 +24,16 @@
         font-size: 20px;
         font-size: 1.25rem;
     }
+    #detail {
+        font-size: 0.7rem;
+    }
+    #detail {
+        font-size: 0.7rem;
+    }
     .page-title {
         border-top: 10px solid black;
         border-bottom : 10px solid black;
-        margin-bottom : 4rem;
+        margin-bottom : 2rem;
     }
     .page-title h1{
         padding : 2rem;
@@ -43,8 +52,8 @@
         text-decoration: none;
         color:black;
     }
-    .ck-editor__editable {
-        height : 600px;
+    a {
+        text-decoration-line:none;
     }
 </style>
 <body>
@@ -93,10 +102,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
+                            <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -132,24 +138,49 @@
     </header>
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
+<input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>Q&A 작성</h5>
+    <div class = "container">
+        <div class = "page-title">
+            <h1>FAQ</h1>
+        </div>
     </div>
-    <div class = "row py-4">
-        <form id="frmAdd" action="addqna" method="post">
-            <div class = "col">
-                <input class="form-control" type="text" id="title" name="title" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea class="form-control" id="editor" name="content" rows="30" cols = "50"></textarea> <br><br>
-                <input type = "hidden" id = "usernum" name="writer" value ="${user.userNum}">
+    <div class = "container" id = "boardList">
+        <div class = "row">
+            <table id=tbldata class ="text-center">
+                <tr class ="text-center">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성 날짜</th>
+                    <th>조회</th>
+                    <th>추천수</th>
+                </tr>
+            </table>
+            <!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
+
+            <p></p>
+            <p></p>
+            <p></p>
+            <div class = "col-2">
+                <input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
             </div>
-            <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary" id="btnWrite">작성 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='qna'">취소</button>
+            <div class = "col-1 text-left">
+                <button type="button" class="btn btn-outline-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    <span class="visually-hidden">Button</span>
+                </button>
             </div>
-        </form>
+            <c:if test="${user.role=='관리자'}">
+                <div class = "col-9 text-end">
+                    <button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
+                </div>
+            </c:if>
+        </div>
     </div>
 </main>
 
@@ -175,16 +206,11 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
     $(document)
         .ready(function () {
             console.log("시작 화면");
+            listfaq();
             $("#nav1").hover(function() {
                 $("#none1").css("display", "block");
                 $("#none2").css("display", "none");
@@ -217,22 +243,25 @@
                 $("#none3").css("display", "none");
             })
         })
-    $("#btnWrite").click(function() {
-        if($('#title').val()=='' || $('#title').val()<1) {
-            alert('제목을 입력해야 합니다.');
-            $('#title').focus();
-            window.scrollTo({left:0, top:250, behavior:"smooth"});
-            return false;
-        }
-        if ($(".ck-content").text() == '') {
-            alert('내용을 입력해야 합니다.');
-            $(".ck-content").focus();
-            window.scrollTo({left: 0, top: 350, behavior: "smooth"});
-            return false;
-        }
-        alert('게시글이 등록되었습니다.');
-        return true;
-    })
-ClassicEditor.create( document.querySelector( '#editor' ) );
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='/';
+        })
+    function listfaq(){
+        $.get('listfaq','',function(data){
+            for(let i=0; i<data.length; i++){
+                listfaq=data[i];
+                let str='<tr><td>'+listfaq['id']
+                    +'</td><td><a href="content?id='+listfaq['id']+'">' +listfaq['title']+
+                    '</a></td><td>'+listfaq['user_id']+'</td><td>'+listfaq['postdate']+
+                    '</td><td>'+listfaq['views']+'</td><td>'+listfaq['heart']+'</td></tr>';
+                $('#tbldata').append(str);
+            }
+        },'json');
+    }
+    $(document)
+        .on('click','#btnwrite',function(){
+            document.location.href='/faqwrite';
+        })
 </script>
 </html>

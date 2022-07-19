@@ -5,7 +5,7 @@
 <html>
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <title>Home</title>
+  <title>NOTICE WRITE</title>
 </head>
 <style>
   .nav-item{
@@ -50,7 +50,7 @@
   <header class="blog-header py-3" style = "height : 230px;">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="text-center">
-        <img src = "logo.png" style = "height:100px;"/>
+        <img src = "logo.png" id='logo' style = "height:80px;"/>
       </div>
     </div>
     <br><br><br>
@@ -61,16 +61,16 @@
           <div>
             <ul class="nav justify-content-end" style = "display : none;" id = "none1">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#" id = "detail1">Active</a>
+                <a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" id = "detail2">Link</a>
+                <a class="nav-link" href="#" id = "detail">Link</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" id = "detail3">Link</a>
+                <a class="nav-link" href="#" id = "detail">Link</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id = "detail4">Disabled</a>
+                <a class="nav-link" id = "detail">Disabled</a>
               </li>
             </ul>
           </div>
@@ -85,16 +85,16 @@
           <a class="nav-link" id = "nav4">Post</a>
           <ul class="nav justify-content-end" style = "display : none;" id = "none2">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/review" id = "detail5">Review</a>
+              <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/qna" id = "detail6">Q&A</a>
+              <a class="nav-link" href="/qna" id = "detail">Q&A</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/FAQ" id = "detail7">FAQ</a>
+              <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id = "detail8">Disabled</a>
+              <a class="nav-link" id = "detail">Disabled</a>
             </li>
           </ul>
         </li>
@@ -103,22 +103,22 @@
           <ul class="nav justify-content-end" style = "display : none;" id = "none3">
             <c:if test = "${user.id == null}">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/login" id = "detail9">Login</a>
+                <a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/signin" id = "detail10">Sign in</a>
+                <a class="nav-link" href="/signin" id = "detail">Sign in</a>
               </li>
             </c:if>
             <c:if test = "${user.id != null }">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/logout" id = "detail11">Logout</a>
+                <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
               </li>
             </c:if>
             <li class="nav-item">
-              <a class="nav-link" href="#" id = "detail12">My page</a>
+              <a class="nav-link" href="#" id = "detail">My page</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id = "detail13">Disabled</a>
+              <a class="nav-link" id = "detail">Disabled</a>
             </li>
           </ul>
         </li>
@@ -238,6 +238,10 @@
             else{
 
             }
+          })
+  $(document)
+          .on('click','#logo',function(){
+            document.location.href='/';
           })
 </script>
 </html>

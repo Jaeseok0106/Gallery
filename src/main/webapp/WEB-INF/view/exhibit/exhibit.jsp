@@ -20,6 +20,9 @@ font-size: 55px;
     font-size: 20px;
     font-size: 1.25rem;
 }
+#detail {
+	font-size: 0.7rem;
+}
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
@@ -58,7 +61,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" style = "height:100px;"/>
+				<img src = "logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -99,7 +102,7 @@ text-decoration-line:none;
 							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id = "detail">Disabled</a>
@@ -206,6 +209,10 @@ text-decoration-line:none;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
+	$(document)
+			.on('click','#logo',function(){
+				document.location.href='/';
+			})
 $(document)
 .ready(function () {
 	console.log("시작 화면");

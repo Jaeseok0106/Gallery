@@ -52,7 +52,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" style = "height:100px;"/>
+                <img src = "logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -93,7 +93,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id = "detail">Disabled</a>
@@ -179,6 +179,10 @@
 <script src="${classpath}/editor/ckeditor.js"></script>
 <script src="${classpath}/editor/translations/ko.js"></script>
 <script>
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='/';
+        })
     $(document)
         .ready(function () {
             console.log("시작 화면");

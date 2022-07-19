@@ -40,4 +40,18 @@
         update board_post set title=#{param1}, content=#{param2}, writer=2, categoryList=4,
                                postdate=to_char(sysdate, 'YYYY-MM-DD') where id=#{param3}
     </update>
+    <select id="pagingcount" resultType="com.human.gallery.domain.notice.noticeDTO" parameterType="int">
+        select count(id)
+        from board_post
+        where categorylist = 4;
+    </select>
+    <select id="paging" resultType="com.human.gallery.domain.notice.noticeDTO">
+        select * from (
+                          select rownum as RN, a.*
+                          from (select *
+                                from board_post
+                                where categoryList = 4
+                                order by id desc) a)
+        where RN between 1 and 10;
+    </select>
 </mapper>
