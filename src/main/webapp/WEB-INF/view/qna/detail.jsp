@@ -9,7 +9,7 @@ prefix="c" %> <%@ page session="false" %>
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>QnA</title>
+    <title>${qdto.title}</title>
   </head>
   <style>
     .nav-item {
@@ -133,6 +133,14 @@ prefix="c" %> <%@ page session="false" %>
   <input type = "hidden" id = "role" value = "${user.role}">
   <input type = "hidden" id = "usernum" value = "${user.userNum}">
   <br><br>
+  <main class = "container p-5">
+    <div class = "row">
+      <div class = "col-12" style = "border-bottom: 0.1rem solid black;">
+        <p class = "text-start"> ${qdto.title}
+          <span style = "float:right">
+            ${qdto.postdate}
+          </span>
+        </p>
       </div>
       <div class = "col-12" style = "border-bottom: 0.1rem solid black;">
         <p class = "text-start">
@@ -152,13 +160,12 @@ prefix="c" %> <%@ page session="false" %>
         <c:if test="${nepr.prev!=0}">
           <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.prev}'">이전</button>
         </c:if>
-        <c:if test="${nepr.prev==0}"></c:if>
       </div>
       <div class = "col-6 text-center">
-        <c:if test = "${user.id != null}">
-        <button type="button" class="btn btn-outline-danger">추천</button>
+        <c:if test = "${user.id != null and user.id != qdto.userid}">
+        <button type="button" class="btn btn-outline-danger" onclick="like(); return false;">추천</button>
         </c:if>
-        <c:if test = "${user.id == null}">
+        <c:if test = "${user.id == null or user.id == qdto.userid}">
         <button type="button" class="btn btn-outline-danger" disabled>추천</button>
         </c:if>
         <button type="button" class="btn btn-outline-primary" onclick="location.href='qna'">목록</button>
@@ -167,7 +174,6 @@ prefix="c" %> <%@ page session="false" %>
         <c:if test="${nepr.next!=9999}">
           <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.next}'">다음</button>
         </c:if>
-        <c:if test="${nepr.next==9999}"></c:if>
       </div>
       <br><br>
       <div class="text-end">
@@ -175,7 +181,6 @@ prefix="c" %> <%@ page session="false" %>
         <button type="button" class="btn btn-outline-dark" onclick="location.href='up?id=${qdto.id}'">수정</button>
         <a href="delqna?id=${qdto.id}"><button type="button" class="btn btn-outline-dark" id="btnDel">삭제</button></a>
         </c:if>
-<%--        <c:if test="${user.id != qdto.userid}"></c:if>--%>
       </div>
     </div>
   </main>
@@ -264,5 +269,24 @@ prefix="c" %> <%@ page session="false" %>
         return false;
       }
     })
+    var postid=${qdto.id};
+    var userid=${user.userNum};
+    function like() {
+      $.ajax({
+        type:"POST",
+        url:"/qna/like",
+        dataType:"json",
+        data:{"postid":postid, "userid":userid},
+        success:function(heartcheck) {
+          if(heartcheck==0) {
+            alert("추천이 완료되었습니다.");
+            location.reload();
+          } else if(heartcheck==1) {
+            alert("이미 추천한 게시글입니다.");
+            location.reload();
+          }
+        }
+      });
+    }
   </script>
 </html>
