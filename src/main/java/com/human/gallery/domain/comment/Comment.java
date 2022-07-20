@@ -13,4 +13,5 @@ public class Comment {
     private String reparent;
     private String redepth;
     private String reorder;
+    private String isDelete;
 }

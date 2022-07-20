@@ -99,18 +99,5 @@
 		  and a.writer=b.userNum
 		order by heart desc, id desc
 	</select>
-<!--	<select id="qnaa" resultType="com.human.gallery.domain.QnA.qnaDTO">-->
-<!--		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views-->
-<!--		from board_post a, users b-->
-<!--		where categoryList=3-->
-<!--		  and a.writer=b.userNum-->
-<!--		  and rownum as rn between #{start} and #{end}-->
-<!--		order by id;-->
-<!--	</select>-->
-<!--	<select id="qnacount" resultType="int">-->
-<!--		select count(id)-->
-<!--		from board_post-->
-<!--		where id>0-->
-<!--		and categoryList=3-->
-<!--	</select>-->
+
 </mapper>
