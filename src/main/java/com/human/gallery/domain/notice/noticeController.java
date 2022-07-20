@@ -3,6 +3,7 @@ package com.human.gallery.domain.notice;
 import java.util.ArrayList;
 
 
+import com.human.gallery.domain.paging.criteria;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;

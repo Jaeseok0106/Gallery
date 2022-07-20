@@ -147,36 +147,85 @@
             <h1>FAQ</h1>
         </div>
     </div>
-    <div class = "container" id = "boardList">
-        <div class = "row">
-            <table id=tbldata class ="text-center">
-                <tr class ="text-center">
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성 날짜</th>
-                    <th>조회</th>
-                    <th>추천수</th>
-                </tr>
-            </table>
-            <!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-
-            <p></p>
-            <p></p>
-            <p></p>
-            <div class = "col-2">
-                <input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
-            </div>
-            <div class = "col-1 text-left">
-                <button type="button" class="btn btn-outline-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                    <span class="visually-hidden">Button</span>
+    <ul class="nav justify-content-center">
+        <li class="nav-item col-1">
+            <a class="nav-link active" aria-current="page" href="#">관람</a>
+        </li>
+        <li class="nav-item col-1">
+            <a class="nav-link" href="#">예약</a>
+        </li>
+        <li class="nav-item col-1">
+            <a class="nav-link" href="#">홈페이지</a>
+        </li>
+        <li class="nav-item col-1">
+            <a class="nav-link" href="#">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기타</a>
+        </li>
+    </ul>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    갤러리 '누르'의 위치를 안내해주세요.
                 </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>주소:<strong>충남 천안시 동남구 대흥로 215 7층</strong></p>
+                    <p>오시는 길: 1호선 천안역 하차 → 3번 출구 → 나와서 우측 방향으로 도보 5분</p>
+                    <p>좀 더 자세한 위치는</p>
+                    <p><strong>TEL:041-561-1122</strong></p>
+                    <p>문의 주시면 친절하고 자세 하게 안내 도와 드리 겠습니다.</p>
+                </div>
             </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    미술관 관람 시간 및 휴관일은 어떻게 됩니까?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>휴관일 안내</p>
+                    <p>1.주말(토요일,일요일)</p>
+                    <p>2.공휴일</p>
+                    <p>3.갤러리 '누르' 에서 지정한 날 </p>
+                    <p>전시 기간에는 휴관일과 관람 시간이 변경될 수 있으니 해당 페이지에서 별도로 확인하시기 바랍니다.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    전시실의 작품 촬영이 가능 한가요?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>작품이 전시되어 있는 전시장 내부에서는 삼각대 및 플래시를 사용한 사진촬영은 불가능합니다.</p>
+                    <p>다만, 언론사의 보도 및 공공기관의 공익사업, 교육기관의 학술적 연구를 목적으로 한 촬영은 가능합니다.</p>
+                    <p>사진 촬영을 원하실 경우 촬영 5일 전까지 일시, 촬영장소, 촬영내용, 촬영인원 등을 기재한 촬영신청서와 촬영각서를 작성 후 관련부서로 방문 및 우편, 전자메일로 신청한 후,</p>
+                    <p>구체적인 촬영계획을 협의(행정지원과 041-561-1122)하시기 바랍니다.</p>
+                    <br>
+                    <p><strong>* 촬영신청서 및 허가규정은 <code>알림참〮여 > 시설대관/복제신청</code>을 참고하시기 바랍니다.</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    단체 관람을 가고 싶습니다. 신청을 어떻게 해야 하나요?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong><code>현재 코로나로 단체 예약은 없습니다.</code></strong>
+                </div>
+            </div>
+        </div>
+    </div>
             <c:if test="${user.role=='관리자'}">
-                <div class = "col-9 text-end">
+                <div class = "text-center">
                     <button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
                 </div>
             </c:if>
