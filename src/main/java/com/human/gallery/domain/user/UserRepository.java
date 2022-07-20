@@ -9,4 +9,5 @@ public interface UserRepository {
 	void addUser(String id, String password);
 	void addDetail(Integer number, String name, String mobile, String address, String dtaddress, String email, int postcode);
 	Integer findNumById(String id);
+	Users findDetailById(String id);
 }

@@ -16,7 +16,7 @@
         select a.*, b.id as writeName from post_comment a, users b where post_id = #{param1} and a.writer = b.userNum order by reorder asc
     </select>
 
-    <select id = "findByParentId" resultType="com.human.gallery.domain.comment.Comment">
+    <select id = "findById" resultType="com.human.gallery.domain.comment.Comment">
         select * from post_comment where id = #{param1}
     </select>
 
@@ -39,4 +39,16 @@
     <update id = "updateByIdWithDelete">
         update post_comment set content = #{param1} , isDelete = 'Y' where id = #{param2}
     </update>
+
+    <delete id = "deleteById">
+        delete from post_comment where id = #{param1}
+    </delete>
+
+    <update id = "adjustReorder">
+        update post_comment set reorder = reorder - 1 where post_id = #{param1} and reorder > #{param2}
+    </update>
+
+    <select id = "getMaxReorder" resultType="Integer">
+        select NVL(max(reorder), 0) from post_comment where post_id = #{param1} and redepth = #{param2} and reparent = #{param3}
+    </select>
 </mapper>
