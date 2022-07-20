@@ -14,6 +14,9 @@
     <title>${rdto.title}</title>
 </head>
 <style>
+    .commentJob {
+        cursor : pointer;
+    }
     .nav-item {
         list-style-type: none;
         float: left;
@@ -63,7 +66,7 @@
     <header class="blog-header py-3" style="height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <img src = "/logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -144,6 +147,7 @@
 </div>
 <input type="hidden" id="role" value="${user.role}">
 <input type="hidden" id="usernum" value="${user.userNum}">
+<input type = "hidden" id = "postId" value = "${rdto.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
@@ -159,7 +163,7 @@
             <p class="text-start">
                 ${rdto.userid}
                 <span style="float: right">
-              조회수 : ${rdto.views+1} 추천수 : ${rdto.heart} 댓글 : 222
+                    조회수 : ${rdto.views+1} 추천수 : ${rdto.heart} <span id = "commentNum">댓글 : 222</span>
             </span>
             </p>
         </div>
@@ -200,24 +204,8 @@
     </div>
 
     <div class="container">
-        <div id="writeComment" class="mb-3" style="border: 0.5rem ridge;">
-            <div id="comment">
-                댓글 쓰기
-            </div>
-            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
-            <button type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;">댓글 등록</button>
+        <div id="writeComment" class="mb-3">
         </div>
-        <div style="border-bottom:1px solid black;">
-            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>
-        </div>
-        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment">
-            <strong>여기는 이제 댓글을 다는거죠 </strong>
-        </div>
-        <div style="border-bottom:1px solid black;">
-            <strong>여기는 이름</strong> <span> 수정 </span> <span> 삭제 </span> <a href = "#" onclick = "reply_click()"><span> 댓글 </span> </a>
-        </div>
-        <div class="py-4" style="border-bottom:1px solid red;" id = "userComment">
-            <strong>여기는 이제 댓글을 다는거죠 </strong>
         </div>
     </div>
 </main>
@@ -264,87 +252,5 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script>
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
-    $(document).ready(function () {
-        console.log("시작 화면");
-        $("#nav1").hover(
-            function () {
-                $("#none1").css("display", "block");
-                $("#none2").css("display", "none");
-                $("#none3").css("display", "none");
-            },
-            function () {
-            }
-        );
-        $("#nav2").hover(function () {
-            $("#none1").css("display", "none");
-            $("#none2").css("display", "none");
-            $("#none3").css("display", "none");
-        });
-        $("#nav3").hover(function () {
-            $("#none1").css("display", "none");
-            $("#none2").css("display", "none");
-            $("#none3").css("display", "none");
-        });
-        $("#nav4").hover(function () {
-            $("#none1").css("display", "none");
-            $("#none2").css("display", "block");
-            $("#none3").css("display", "none");
-        });
-        $("#nav5").hover(function () {
-            $("#none1").css("display", "none");
-            $("#none2").css("display", "none");
-            $("#none3").css("display", "block");
-        });
-        $("#nav6").hover(function () {
-            $("#none1").css("display", "none");
-            $("#none2").css("display", "none");
-            $("#none3").css("display", "none");
-        })
-    })
-        .on("click", "#addComment", function() {
-            $.ajax({
-                type : "POST",
-                url : "/commentWrite",
-                dataType : "text",
-                data : {postId : ${rdto.id}, writer : $("#usernum").val(), content : $("#commentForm").val()},
-                success : function(data) {
-                    console.log("음..");
-                }
-            })
-        })
-    let click = 0;
-    function reply_click() {
-        click++;
-        console.log("클릭 ! " ,click);
-        if (click % 2 == 1) {
-            let str =
-                `
-         <div id="writeComment" class="mb-3">
-            <div id="comment">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z"/>
-        </svg> <strong>댓글 쓰기</strong>
-            </div>
-            <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
-            <button type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;">등록</button>
-         </div>`;
-            console.log(str);
-            $("#userComment").append(str);
-        } else {
-            $("#userComment").children().remove("#writeComment");
-        }
-    }
-        });
-    });
-    $('#delete').click(function () {
-        if(!confirm('게시글을 삭제하시겠습니까?')) {
-            return false;
-        }
-    })
-</script>
+<script src="/js/comment.js"></script>
 </html>

@@ -106,6 +106,6 @@
 				where categoryList=3
 				and a.writer=b.userNum
 				order by id) c)
-		where RN between 1 and 10;
+		where RN between 1 and 10
 	</select>
 </mapper>
