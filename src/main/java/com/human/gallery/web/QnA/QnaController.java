@@ -2,6 +2,7 @@ package com.human.gallery.web.QnA;
 
 import java.util.ArrayList;
 
+import com.github.pagehelper.PageInfo;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,15 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.human.gallery.domain.QnA.iQna;
 import com.human.gallery.domain.QnA.qnaDTO;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class QnaController {
-	
-
 	private final iQna qna;
 
 	@ResponseBody

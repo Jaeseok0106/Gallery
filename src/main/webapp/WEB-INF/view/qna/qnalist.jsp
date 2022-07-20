@@ -160,23 +160,29 @@ a {
 					<th>추천순&nbsp;&nbsp;<input type="button" id="btnHeart" value="▲"></th>
 				</tr>
 <!-- 				<tr class = "p-5">
-					
+
 				</tr> -->
 			</table>
 			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			
+			<nav aria-label="Page navigation example">
+				<p></p>
+				<ul class="nav justify-content-center bg-light">
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 			<p></p>
-			<p></p>		
-			<p></p>
-			<div class="w3-bar" align="center">
-				<a href="#" class="w3-button">&laquo;</a>&nbsp;
-				<a href="/qnalist" class="w3-button">1</a>&nbsp;
-				<a href="/qnalist" class="w3-button">2</a>&nbsp;
-				<a href="/qnalist" class="w3-button">3</a>&nbsp;
-				<a href="/qnalist" class="w3-button">4</a>&nbsp;
-				<a href="/qnalist" class="w3-button">5</a>&nbsp;
-				<a href="/qnalist" class="w3-button">&raquo;</a>
-			</div>
 			<div class = "col-2">
 				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
 			</div>
