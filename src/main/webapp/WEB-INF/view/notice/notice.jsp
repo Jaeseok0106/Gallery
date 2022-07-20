@@ -160,14 +160,10 @@ text-decoration-line:none;
 				</tr>
 			</table>
 			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-
-			<p></p>
-			<p></p>		
-			<p></p>
 			<nav aria-label="Page navigation example">
 				<ul class="pagination" >
 					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Previous" class ="text-center">
+						<a class="page-link" href="#" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
@@ -183,6 +179,10 @@ text-decoration-line:none;
 					</li>
 				</ul>
 			</nav>
+			<p></p>
+			<p></p>		
+			<p></p>
+
 			<div class = "col-2" >
 				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
 			</div>
@@ -264,7 +264,6 @@ $(document)
 })
 function listnotice(){
 	$.get('listnotice','',function(data){
-			$('#tbldata tr:gt(0)').remove();
 			for(let i=0; i<data.length; i++){
 				listnotice=data[i];
 				let str='<tr><td>'+listnotice['id']
@@ -283,5 +282,6 @@ $(document)
 		.on('click','#btnwrite',function(){
 			document.location.href='/write';
 		})
+
 </script>
 </html>

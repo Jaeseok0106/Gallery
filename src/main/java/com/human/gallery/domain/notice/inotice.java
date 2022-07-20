@@ -14,4 +14,8 @@ public interface inotice {
     void delete(String id);
     int addnotice(String title, String content);
     int updatenotice(String title, String content, int id); //게시판테이블 update
+
+    public void pagingcount(int id);
+
+    ArrayList<noticeDTO> paging();
 }
