@@ -12,6 +12,7 @@ public class Users {
 	private String address;
 	private String dtaddress;
 	private String email;
+	private String username;
 	private int postcode;
 	private String mobile;
 
