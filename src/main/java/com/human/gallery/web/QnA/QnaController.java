@@ -1,8 +1,9 @@
 package com.human.gallery.web.QnA;
 
+import java.util.List;
 import java.util.ArrayList;
 
-import com.github.pagehelper.PageInfo;
+import com.human.gallery.domain.QnA.pageDTO;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,32 +22,27 @@ import com.human.gallery.domain.QnA.qnaDTO;
 public class QnaController {
 	private final iQna qna;
 
-	@ResponseBody
-	@RequestMapping(value="/qnalist", produces="application/json;charset=utf-8")
-	public String doQnalist() {
-		ArrayList<qnaDTO> arlist=qna.qnalist();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-
 	@RequestMapping("/qna")
-	public String doQna(@SessionAttribute(name = "user", required = false) Users user, Model model) {
+	public String Qnalist(@SessionAttribute(name = "user", required = false) Users user, Model model,
+						  @ModelAttribute("paging") pageDTO paging) {
 		model.addAttribute("user",user);
+		int cnt=qna.getCount(paging);
+		paging.setTotalRowCount(cnt);
+		paging.pageSetting();
+		List<qnaDTO> qnalist=qna.qnalist(paging);
+		model.addAttribute("qnalist",qnalist);
+		List<qnaDTO> listdate=qna.listdate(paging);
+		model.addAttribute("listdate",listdate);
+		List<qnaDTO> descdate=qna.descdate(paging);
+		model.addAttribute("descdate",descdate);
+		List<qnaDTO> listview = qna.listview(paging);
+		model.addAttribute("listview", listview);
+		List<qnaDTO> descview=qna.descview(paging);
+		model.addAttribute("descview",descview);
+		List<qnaDTO> listheart = qna.listheart(paging);
+		model.addAttribute("listheart", listheart);
+		List<qnaDTO> descheart=qna.descheart(paging);
+		model.addAttribute("descheart",descheart);
 		return "qna/qnalist";
 	}
 
@@ -108,140 +104,4 @@ public class QnaController {
 		}
 		return heartcheck;
 	}
-
-	@ResponseBody
-	@RequestMapping(value="/listdate", produces="application/json;charset=utf-8")
-	public String doListdate() {
-		ArrayList<qnaDTO> arlist=qna.listdate();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-	@ResponseBody
-	@RequestMapping(value="/descdate", produces="application/json;charset=utf-8")
-	public String doDescdate() {
-		ArrayList<qnaDTO> arlist=qna.descdate();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-
-	@ResponseBody
-	@RequestMapping(value="/listview", produces="application/json;charset=utf-8")
-	public String doListview() {
-		ArrayList<qnaDTO> arlist=qna.listview();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-	@ResponseBody
-	@RequestMapping(value="/descview", produces="application/json;charset=utf-8")
-	public String doDescview() {
-		ArrayList<qnaDTO> arlist=qna.descview();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-
-	@ResponseBody
-	@RequestMapping(value="/listheart", produces="application/json;charset=utf-8")
-	public String doListheart() {
-		ArrayList<qnaDTO> arlist=qna.listheart();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-	@ResponseBody
-	@RequestMapping(value="/descheart", produces="application/json;charset=utf-8")
-	public String doDescheart() {
-		ArrayList<qnaDTO> arlist=qna.descheart();
-		log.info("넘어온 값 = {}", arlist);
-		JSONArray ja=new JSONArray();
-		for(int i=0; i<arlist.size(); i++) {
-			qnaDTO qdto=arlist.get(i);
-			JSONObject jo=new JSONObject();
-			jo.put("id", qdto.getId());
-			jo.put("title", qdto.getTitle());
-			jo.put("content", qdto.getContent());
-			jo.put("writer", qdto.getWriter());
-			jo.put("categoryList", qdto.getCategoryList());
-			jo.put("heart", qdto.getHeart());
-			jo.put("postdate", qdto.getPostdate());
-			jo.put("views", qdto.getViews());
-			jo.put("userid", qdto.getUserid());
-			ja.add(jo);
-		}
-		return ja.toJSONString();
-	}
-
 }

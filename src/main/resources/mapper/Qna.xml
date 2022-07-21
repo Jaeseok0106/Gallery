@@ -3,13 +3,87 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.human.gallery.domain.QnA.iQna">
-	<select id='qnalist' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
+	<select id='qnalist' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						  from board_post a, users b
+						  where categoryList=3
+						  and a.writer=b.userNum
+						  order by a.id) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id='listdate' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						   from board_post a, users b
+						   where categoryList=3
+							 and a.writer=b.userNum
+						   order by a.postdate) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id='descdate' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						   from board_post a, users b
+						   where categoryList=3
+							 and a.writer=b.userNum
+						   order by a.postdate desc) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id='listview' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						   from board_post a, users b
+						   where categoryList=3
+							 and a.writer=b.userNum
+						   order by a.views) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id='descview' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						   from board_post a, users b
+						   where categoryList=3
+							 and a.writer=b.userNum
+						   order by a.views desc) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id='listheart' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						   from board_post a, users b
+						   where categoryList=3
+							 and a.writer=b.userNum
+						   order by a.heart) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id='descheart' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.QnA.pageDTO">
+		select *
+		from	(select rownum as seq, c.*
+				 from	((select rownum as rn, a.*, b.id as userid
+						   from board_post a, users b
+						   where categoryList=3
+							 and a.writer=b.userNum
+						   order by a.heart desc) c)
+				 where rownum <![CDATA[<=]]> #{lastRow})
+		where seq <![CDATA[>=]]> #{firstRow}
+	</select>
+	<select id="getCount" parameterType="com.human.gallery.domain.QnA.pageDTO" resultType="int">
+		select count(*)
+		from board_post
 		where categoryList=3
-		and a.writer=b.userNum
-		and rownum between 1 and 10
-		order by a.id
 	</select>
 	<select id='selqna' resultType="com.human.gallery.domain.QnA.qnaDTO">
 		select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
@@ -57,47 +131,4 @@
 		set heart=heart+1
 		where id=#{param1}
 	</update>
-	<select id='listdate' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by postdate, id
-	</select>
-	<select id='descdate' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by postdate desc, id desc
-	</select>
-	<select id='listview' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by views, id
-	</select>
-	<select id='descview' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by views desc, id desc
-	</select>
-	<select id='listheart' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by heart, id
-	</select>
-	<select id='descheart' resultType="com.human.gallery.domain.QnA.qnaDTO">
-		select a.id, a.title, a.content, a.writer, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-		from board_post a, users b
-		where categoryList=3
-		  and a.writer=b.userNum
-		order by heart desc, id desc
-	</select>
-
 </mapper>
