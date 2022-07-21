@@ -214,13 +214,13 @@
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">주문 번호</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" id="staticOrderId" value="213123421421">
+            <input type="text" readonly class="form-control-plaintext" id="staticOrderId">
         </div>
     </div>
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">전시회 이름</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control-plaintext" id="staticExhibit" value ="따랄다다다다다단">
+            <input type="text" class="form-control-plaintext" id="staticExhibit">
         </div>
     </div>
     <div class="mb-3 row">
@@ -238,19 +238,19 @@
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">대표자 이름</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control-plaintext" id="representName" value ="따랄다다다다다단">
+            <input type="text" class="form-control-plaintext" id="representName" >
         </div>
     </div>
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">가격</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control-plaintext" id="price" value ="따랄다다다다다단">
+            <input type="text" class="form-control-plaintext" id="price" >
         </div>
     </div>
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">배송지 주소</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="sample6_address" value ="따랄다다다다다단" readonly>
+            <input type="text" class="form-control" id="sample6_address" readonly>
         </div>
     </div>
     <div class="mb-3 row">
@@ -262,7 +262,7 @@
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">우편 번호</label>
         <div class="col-sm-10">
-            <input type="text" stlye = "width:60%;" id="sample6_postcode" value ="따랄다다다다다단" readonly>
+            <input type="text" stlye = "width:60%;" id="sample6_postcode" readonly>
             <input type="button" onclick="sample6_execDaumPostcode()" value="배송지 변경"><br>
         </div>
     </div>
@@ -290,42 +290,6 @@
         </ul>
     </footer>
 </div>
-<script>
-    let clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
-    var tossPayments = TossPayments(clientKey)
-    var button = document.getElementById('payment-button')
-
-    button.addEventListener('click', function () {
-        console.log("amount = ", $("#price").val());
-        console.log("오더 이름 = ", $("#staticExhibit").val());
-        console.log("손님 이름 = ", $("#representName").val());
-        tossPayments.requestPayment('카드', {
-            amount : $("#price").val(),
-            orderId : $("#staticOrderId").val(),
-            orderName : $("#staticExhibit").val(),
-            customerName : $("#representName").val(),
-            successUrl : 'http://localhost:8080/success',
-            failUrl : 'http://localhost:8080/fail',
-        });
-    });
-</script>
-<%--<script>--%>
-<%--    var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'--%>
-<%--    var tossPayments = TossPayments(clientKey)--%>
-
-<%--    var button = document.getElementById('payment-button') // 결제하기 버튼--%>
-
-<%--    button.addEventListener('click', function () {--%>
-<%--        tossPayments.requestPayment('카드', {--%>
-<%--            amount: 15000,--%>
-<%--            orderId: 'Ifb3Bb-1fJGJSGRu5_wGj',--%>
-<%--            orderName: '토스 티셔츠 외 2건',--%>
-<%--            customerName: '박토스',--%>
-<%--            successUrl: 'http://localhost:8080/success',--%>
-<%--            failUrl: 'http://localhost:8080/fail',--%>
-<%--        })--%>
-<%--    })--%>
-<%--</script>--%>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -483,5 +447,59 @@
                 }
             }).open();
     }
+</script>
+<script>
+    let clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+    var tossPayments = TossPayments(clientKey)
+    var button = document.getElementById('payment-button')
+
+    button.addEventListener('click', function () {
+        console.log("amount = ", $("#price").val());
+        console.log("오더 이름 = ", $("#staticExhibit").val());
+        console.log("손님 이름 = ", $("#representName").val());
+        if ($("#price").val() == '' || $("#staticExhibit").val() == '' || $("#representName").val() == ''
+            || $("#pickReserveDate").val() == '' || $("#personNum").val() == '' || $("#sample6_postcode, #sample6_detailAddress, #sample6_address") == '') {
+            alert("에러 발생.");
+        } else {
+            $.ajax({
+                type : "POST",
+                url : "/reserve/add",
+                data :{
+                    orderId: $("#staticOrderId").val(),
+                    exhibitId : $("#exhibitId").val(),
+                    reserveDate : $("#pickReserveDate").val(),
+                    person : $("#personNum").val(),
+                    userId : $("#usernum").val(),
+                    amount : $("#price").val(),
+                    address :$("#sample6_address").val(),
+                    detailAddress :  $("#sample6_detailAddress").val(),
+                    postcode : $("#sample6_postcode").val()
+                },
+                success : function () {
+                    tossPayments.requestPayment('카드', {
+                        amount: $("#price").val(),
+                        orderId: $("#staticOrderId").val(),
+                        orderName: $("#staticExhibit").val(),
+                        customerName: $("#representName").val(),
+                        successUrl: 'http://localhost:8080/success',
+                        failUrl: 'http://localhost:8080/fail',
+                    })
+                        .catch(function (error) {
+                            if (error.code === 'USER_CANCEL') {
+                                console.log("유저가 결제를 취소했어요");
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/reserve/cancel",
+                                    data: {orderId: $("#staticOrderId").val()},
+                                    success: function () {
+                                        alert("결제를 다시 진행해주세요");
+                                    },
+                                })
+                            }
+                        });
+                }
+            })
+        }
+    });
 </script>
 </html>

@@ -2,6 +2,8 @@ package com.human.gallery.web.reserve;
 
 import com.human.gallery.domain.exhibit.Exhibit;
 import com.human.gallery.domain.exhibit.ExhibitRepository;
+import com.human.gallery.domain.reserve.Reserve;
+import com.human.gallery.domain.reserve.ReserveRepository;
 import com.human.gallery.domain.user.UserRepository;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ public class ReserveController {
 
     private final ExhibitRepository exhibitRepository;
     private final UserRepository userRepository;
-
+    private final ReserveRepository reserveRepository;
     @GetMapping("/reserve/exhibit/{exhibitId}")
     public String viewcheckPay(@SessionAttribute(name = "user", required = false) Users user,
                                Model model,
@@ -43,6 +45,8 @@ public class ReserveController {
         jO.put("name", exhibit.getName());
         jO.put("price", exhibit.getPrice());
         jO.put("total", exhibit.getTotal());
+        jO.put("exhibitId", exhibit.getId());
+
         jO.put("userName", userDetail.getUsername());
         jO.put("address", userDetail.getAddress());
         jO.put("postcode", userDetail.getPostcode());
@@ -50,5 +54,19 @@ public class ReserveController {
         jO.put("orderId", uuid);
         log.info("예약 화면으로 넘어갈 값 = {}", jO);
         return jO.toJSONString();
+    }
+
+    @PostMapping("/reserve/add")
+    @ResponseBody
+    public void doAddReserve(@ModelAttribute Reserve reserve) {
+
+        log.info("받은 값 = {}", reserve);
+        reserveRepository.addReserve(reserve);
+    }
+
+    @PostMapping("/reserve/cancel")
+    @ResponseBody
+    public void doDeleteReserve(@RequestParam("orderId") String orderId) {
+        reserveRepository.deleteById(orderId);
     }
 }
