@@ -147,86 +147,28 @@
             <h1>FAQ</h1>
         </div>
     </div>
-    <ul class="nav justify-content-center">
+    <ul class="nav justify-content-center" id="gry">
         <li class="nav-item col-1">
-            <a class="nav-link active" aria-current="page" href="#">관람</a>
+            <span class="nav-link" aria-current="page" id="pre" style="cursor:hand;" value="1">관람</span>
         </li>
         <li class="nav-item col-1">
-            <a class="nav-link" href="#">예약</a>
+            <span class="nav-link" aria-current="page" id="ord" style="cursor:hand;"value="2">예약</span>
         </li>
         <li class="nav-item col-1">
-            <a class="nav-link" href="#">홈페이지</a>
+            <span class="nav-link" aria-current="page" id="web" style="cursor:hand;"value="3">홈페이지</span>
         </li>
         <li class="nav-item col-1">
-            <a class="nav-link" href="#">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기타</a>
+            <span class="nav-link" aria-current="page" id="etc" style="cursor:hand;" value="4">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기타</span>
         </li>
     </ul>
     <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    갤러리 '누르'의 위치를 안내해주세요.
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <p>주소:<strong>충남 천안시 동남구 대흥로 215 7층</strong></p>
-                    <p>오시는 길: 1호선 천안역 하차 → 3번 출구 → 나와서 우측 방향으로 도보 5분</p>
-                    <p>좀 더 자세한 위치는</p>
-                    <p><strong>TEL:041-561-1122</strong></p>
-                    <p>문의 주시면 친절하고 자세 하게 안내 도와 드리 겠습니다.</p>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    미술관 관람 시간 및 휴관일은 어떻게 됩니까?
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <p>휴관일 안내</p>
-                    <p>1.주말(토요일,일요일)</p>
-                    <p>2.공휴일</p>
-                    <p>3.갤러리 '누르' 에서 지정한 날 </p>
-                    <p>전시 기간에는 휴관일과 관람 시간이 변경될 수 있으니 해당 페이지에서 별도로 확인하시기 바랍니다.</p>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    전시실의 작품 촬영이 가능 한가요?
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <p>작품이 전시되어 있는 전시장 내부에서는 삼각대 및 플래시를 사용한 사진촬영은 불가능합니다.</p>
-                    <p>다만, 언론사의 보도 및 공공기관의 공익사업, 교육기관의 학술적 연구를 목적으로 한 촬영은 가능합니다.</p>
-                    <p>사진 촬영을 원하실 경우 촬영 5일 전까지 일시, 촬영장소, 촬영내용, 촬영인원 등을 기재한 촬영신청서와 촬영각서를 작성 후 관련부서로 방문 및 우편, 전자메일로 신청한 후,</p>
-                    <p>구체적인 촬영계획을 협의(행정지원과 041-561-1122)하시기 바랍니다.</p>
-                    <br>
-                    <p><strong>* 촬영신청서 및 허가규정은 <code>알림참〮여 > 시설대관/복제신청</code>을 참고하시기 바랍니다.</strong></p>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    단체 관람을 가고 싶습니다. 신청을 어떻게 해야 하나요?
-                </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong><code>현재 코로나로 단체 예약은 없습니다.</code></strong>
-                </div>
-            </div>
-        </div>
+
     </div>
             <c:if test="${user.role=='관리자'}">
                 <div class = "text-center">
                     <button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
+                    <button type="button" id=btnupdate class="btn btn-outline-white btn-sm">수정</button>
+                    <button type="button" id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
                 </div>
             </c:if>
         </div>
@@ -258,8 +200,8 @@
 <script>
     $(document)
         .ready(function () {
+            list();
             console.log("시작 화면");
-            listfaq();
             $("#nav1").hover(function() {
                 $("#none1").css("display", "block");
                 $("#none2").css("display", "none");
@@ -296,21 +238,77 @@
         .on('click','#logo',function(){
             document.location.href='/';
         })
-    function listfaq(){
-        $.get('listfaq','',function(data){
-            for(let i=0; i<data.length; i++){
-                listfaq=data[i];
-                let str='<tr><td>'+listfaq['id']
-                    +'</td><td><a href="content?id='+listfaq['id']+'">' +listfaq['title']+
-                    '</a></td><td>'+listfaq['user_id']+'</td><td>'+listfaq['postdate']+
-                    '</td><td>'+listfaq['views']+'</td><td>'+listfaq['heart']+'</td></tr>';
-                $('#tbldata').append(str);
-            }
-        },'json');
-    }
     $(document)
         .on('click','#btnwrite',function(){
             document.location.href='/faqwrite';
         })
+        .on("click","#pre,#ord,#web,#etc",function(){
+            console.log($(this).attr('value'));
+            listcat($(this).attr('value'));
+        })
+</script>
+<script>
+    function list(){
+        $.ajax({
+            url:"/FAQ",
+            type:"POST",
+            datatype:"JSON",
+            data: {category : '1'},
+            beforeSend : function() {
+                $("#accordionExample").empty();
+            },
+            success:function(data){
+                for(let i=0; i < data.length; i++){
+                    let list = data[i];
+                    let str=`
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
+                                    \${list['question']}
+                                </button>
+                            </h2>
+                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    \${list['answer']}
+                                </div>
+                            </div>
+                        </div>`;
+                    $("#accordionExample").append(str);
+                }
+            }
+        })
+    }
+    function listcat(categoryid){
+        $.ajax({
+            url:"/FAQ",
+            type:"POST",
+            datatype:"JSON",
+            data: {category : categoryid},
+
+            beforeSend : function() {
+                $("#accordionExample").empty();
+            },
+            success:function(data){
+                console.log($("#gry option:selected").val());
+                for(let i=0; i < data.length; i++){
+                    let list = data[i];
+                    let str=`
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
+                                    \${list['question']}
+                                </button>
+                            </h2>
+                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    \${list['answer']}
+                                </div>
+                            </div>
+                        </div>`;
+                    $("#accordionExample").append(str);
+                }
+            }
+        })
+    }
 </script>
 </html>
