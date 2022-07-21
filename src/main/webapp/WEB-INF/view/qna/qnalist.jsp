@@ -53,6 +53,9 @@ a {
 	width: 30px;
 	height: 23px;
 }
+.pagination{
+	justify-content: center;
+}
 </style>
 <body>
 <div class="container">
@@ -159,29 +162,43 @@ a {
 					<th>조회&nbsp;&nbsp;<input type="button" id="btnView" value="▲"></th>
 					<th>추천순&nbsp;&nbsp;<input type="button" id="btnHeart" value="▲"></th>
 				</tr>
-<!-- 				<tr class = "p-5">
-
-				</tr> -->
+				<c:forEach items="${qnalist}" var="list">
+ 				<tr class = "text-center">
+					<td>${list.id}</td>
+					<td><a href="detail?id=${list.id}">${list.title}</a></td>
+					<td>${list.userid}</td>
+					<td>${list.postdate}</td>
+					<td>${list.views}</td>
+					<td>${list.heart}</td>
+				</tr>
+				</c:forEach>
 			</table>
-			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			<nav aria-label="Page navigation example">
-				<p></p>
-				<ul class="nav justify-content-center bg-light">
+			<p></p>
+			<nav aria-label="Page navigation example" id="navi">
+				<ul class="pagination">
 					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Previous">
+						<a class="page-link" href="qna?curPage=1" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
+						<li class="page-item"><a class="page-link" href="qna?curPage=${i}">
+							<c:if test="${i == paging.curPage}">
+								<span style="color:red">${i}</span>
+							</c:if>
+							<c:if test="${i != paging.curPage}">
+								${i}
+							</c:if>
+						</a></li>
+					</c:forEach>
 					<li class="page-item">
-						<a class="page-link" href="#" aria-label="Next">
+						<a class="page-link" href="qna?curPage=${paging.totalPageCount}" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
+		</div>
 			<p></p>
 			<div class = "col-2">
 				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
@@ -231,7 +248,6 @@ a {
 $(document)
 .ready(function () {
 	console.log("시작 화면");
-	qnalist();
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");
 		$("#none2").css("display", "none");
@@ -266,191 +282,72 @@ $(document)
 })
 		.on('click','#btnDate',function () {
 			if($('#btnDate').val()=='▲') {
-				listdate();
+				$('#qnatb tr:gt(0)').remove();
+				let str='<c:forEach items="${listdate}" var="list">'
+						+ '<tr class = "text-center"><td>${list.id}</td>'
+						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
+						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
+						+ '<td>${list.views}</td><td>${list.heart}</td>'
+						+ '</tr></c:forEach>';
+				$('#qnatb').append(str);
 				$('#btnDate').val('▼');
 			} else if($('#btnDate').val()=='▼') {
-				descdate();
+				$('#qnatb tr:gt(0)').remove();
+				let str='<c:forEach items="${descdate}" var="list">'
+						+ '<tr class = "text-center"><td>${list.id}</td>'
+						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
+						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
+						+ '<td>${list.views}</td><td>${list.heart}</td>'
+						+ '</tr></c:forEach>';
+				$('#qnatb').append(str);
 				$('#btnDate').val('▲');
 			}
 		})
 		.on('click','#btnView',function () {
 			if($('#btnView').val()=='▲') {
-				listview();
+				$('#qnatb tr:gt(0)').remove();
+				let str='<c:forEach items="${listview}" var="list">'
+						+ '<tr class = "text-center"><td>${list.id}</td>'
+						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
+						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
+						+ '<td>${list.views}</td><td>${list.heart}</td>'
+						+ '</tr></c:forEach>';
+				$('#qnatb').append(str);
 				$('#btnView').val('▼');
 			} else if($('#btnView').val()=='▼') {
-				descview();
+				$('#qnatb tr:gt(0)').remove();
+				let str='<c:forEach items="${descview}" var="list">'
+						+ '<tr class = "text-center"><td>${list.id}</td>'
+						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
+						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
+						+ '<td>${list.views}</td><td>${list.heart}</td>'
+						+ '</tr></c:forEach>';
+				$('#qnatb').append(str);
 				$('#btnView').val('▲');
 			}
 		})
 		.on('click','#btnHeart',function () {
 			if($('#btnHeart').val()=='▲') {
-				listheart();
+				$('#qnatb tr:gt(0)').remove();
+				let str='<c:forEach items="${listheart}" var="list">'
+						+ '<tr class = "text-center"><td>${list.id}</td>'
+						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
+						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
+						+ '<td>${list.views}</td><td>${list.heart}</td>'
+						+ '</tr></c:forEach>';
+				$('#qnatb').append(str);
 				$('#btnHeart').val('▼');
 			} else if($('#btnHeart').val()=='▼') {
-				descheart();
+				$('#qnatb tr:gt(0)').remove();
+				let str='<c:forEach items="${descheart}" var="list">'
+						+ '<tr class = "text-center"><td>${list.id}</td>'
+						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
+						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
+						+ '<td>${list.views}</td><td>${list.heart}</td>'
+						+ '</tr></c:forEach>';
+				$('#qnatb').append(str);
 				$('#btnHeart').val('▲');
 			}
 		})
-function qnalist(){
-	$.ajax({
-		url : 'qnalist',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
-function listdate(){
-	$.ajax({
-		url : 'listdate',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
-function descdate(){
-	$.ajax({
-		url : 'descdate',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
-function listview(){
-	$.ajax({
-		url : 'listview',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
-function descview(){
-	$.ajax({
-		url : 'descview',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
-function listheart(){
-	$.ajax({
-		url : 'listheart',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
-function descheart(){
-	$.ajax({
-		url : 'descheart',
-		data : '',
-		dataType : 'json',
-		type : 'get',
-		beforeSend:function(){
-			$('#qnatb tr:gt(0)').remove();
-		},
-		success : function(data) {
-			for (let i = 0; i < data.length; i++) {
-				list = data[i];
-				let str = '<tr><td>' + list['id']
-						+ '</td><td><a href="detail?id='+list['id']+'">' +list['title']
-						+ '</a></td><td>' + list['userid']
-						+ '</td><td>' + list['postdate']
-						+ '</td><td>' + list['views']
-						+ '</td><td>' + list['heart'] +'</td></tr>';
-				$('#qnatb').append(str);
-			}
-		}
-	});
-}
 </script>
 </html>

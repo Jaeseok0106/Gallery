@@ -50,7 +50,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <img src = "/logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -219,26 +219,18 @@
             document.location.href='/';
         })
     ClassicEditor.create( document.querySelector( '#editor' ) );
-    <%--$(document)--%>
-    <%--    .on('click','#logo',function(){--%>
-    <%--        document.location.href='../../..';--%>
-    <%--    })--%>
-    <%--$(document)--%>
-    <%--    .on('click','#clear',function(){--%>
-    <%--        if(confirm("정말 수정 완료 하시겠습니까?")) {--%>
-    <%--            console.log(CKEDITOR.instances.editor.getData());--%>
-    <%--            $.ajax({--%>
-    <%--                type:'post',datatype:'text',url:'/update',--%>
-    <%--                data : {title : $("#title").val(), content : $(".ck-content").text(), id : $("#id").val()},--%>
-    <%--                success:function(){--%>
-    <%--                    alert("게시물이 수정 되었습니다.");--%>
-    <%--                    document.location.href = "/content?id=${ndto.id}";--%>
-    <%--                }--%>
-    <%--            })--%>
-    <%--        }--%>
-
-    <%--        else {--%>
-    <%--        };--%>
-    <%--    })--%>
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='../../..';
+        })
+    $(document)
+        .on('click','#clear',function(){
+            if(confirm("정말 수정 완료 하시겠습니까?")) {
+                        alert("게시물이 수정 되었습니다.");
+                    }
+            else {
+                return false;
+            }
+        })
 </script>
 </html>

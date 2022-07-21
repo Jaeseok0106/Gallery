@@ -128,6 +128,7 @@ text-decoration-line:none;
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
+<input type = "hidden" id = "exhibitId" value = "${exhibit.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
@@ -170,7 +171,7 @@ text-decoration-line:none;
 					</dd>
 					<p></p>
 				</dl>
-				<button type="button" class="btn btn-primary">예매하기</button>
+				<button type="button" class="btn btn-primary" id = "reserveExhibit">예매하기</button>
 				<c:if test = "${user.role == '관리자'}">
 					<button type="button" class="btn btn-dark" onclick="location.href='/exhibit/modify/${exhibit.id}'">전시회 수정</button>
 					<button type="button" class="btn btn-danger" id = "deleteExhibit">전시회 삭제</button>
@@ -257,5 +258,10 @@ $(document)
 				})
 			}
 		})
+.on("click", "#reserveExhibit", function() {
+	if (confirm("예약 하시겠습니까?")) {
+		document.location.href = "/reserve/exhibit/"+$("#exhibitId").val();
+	}
+})
 </script>
 </html>

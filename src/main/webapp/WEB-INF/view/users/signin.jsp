@@ -115,7 +115,7 @@ a {
 					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
 						<c:if test = "${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="./login" id = "detail">Login</a>
+								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="./signin" id = "detail">Sign in</a>
@@ -123,7 +123,7 @@ a {
 						</c:if>
 						<c:if test = "${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="./logout" id = "detail">Logout</a>
+								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
 						<li class="nav-item">

@@ -26,14 +26,21 @@ public class CommentController {
         log.info("넘어온 값만 확인해봅시다 = {}", comment);
         if (comment.getId() == null || comment.getId().equals("")) {
             if (comment.getReparent() != null) {
-                Comment parentComment = commentRepository.findByParentId(comment.getReparent());
+                Comment parentComment = commentRepository.findById(comment.getReparent());
                 log.info("부모 댓글 = {}", parentComment);
-                int tempDepth = Integer.parseInt(parentComment.getRedepth()) + 1;
-                comment.setRedepth(String.valueOf(tempDepth));
-                int tempReOrder = Integer.parseInt(parentComment.getReorder()) + 1;
-                comment.setReorder(String.valueOf(tempReOrder));
+                int parentDepth = Integer.parseInt(parentComment.getRedepth())+1;
+                comment.setRedepth(String.valueOf(parentDepth));
+                int setOrder;
+                int tempReOrder = commentRepository.getMaxReorder(comment.getPostId(), comment.getRedepth(), comment.getReparent());
+                if (tempReOrder == 0) {
+                    setOrder = Integer.parseInt(parentComment.getReorder())+1;
+                } else {
+                    setOrder = tempReOrder + 1;
+                }
+                comment.setReorder(String.valueOf(setOrder));
                 log.info("부모 댓글과 비교해서 수정 후 = {}", comment);
-                commentRepository.updateParentById(parentComment.getPostId(), parentComment.getReorder());
+                log.info("max 값은 무엇인가 = {}", tempReOrder);
+                commentRepository.updateParentById(parentComment.getPostId(), String.valueOf(setOrder-1));
             } else {
                 Integer reorder = commentRepository.getOrder(comment.getPostId());
                 comment.setReorder(String.valueOf(reorder));
@@ -82,6 +89,9 @@ public class CommentController {
         // 답글이 안달린 댓글 삭제
         if (childrenCnt == 0 ) {
             log.info("여기서 답글이 안달린 댓글이 삭제된다.");
+            Comment comment = commentRepository.findById(id);
+            commentRepository.deleteById(comment.getId());
+            commentRepository.adjustReorder(comment.getPostId(), comment.getReorder());
         } else {
             log.info("여기는 답글이 달려있는 댓글이기때문에, update로 content만 수정할 예정이다.");
             LocalDate now = LocalDate.now();

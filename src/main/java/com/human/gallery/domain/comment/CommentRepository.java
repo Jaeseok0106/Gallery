@@ -13,7 +13,7 @@ public interface CommentRepository {
 
     ArrayList<Comment> findByPostId(String postId);
 
-    Comment findByParentId(String parentid);
+    Comment findById(String parentid);
     void updateParentById(String postId, String reorder);
 
     Integer findNumByPostId(String postId);
@@ -22,4 +22,9 @@ public interface CommentRepository {
     Integer findChildren(String id);
 
     void updateByIdWithDelete(String content, String id);
+
+    void deleteById(String id);
+    void adjustReorder(String postId, String reorder);
+
+    Integer getMaxReorder(String postId, String redepth, String reparent);
 }

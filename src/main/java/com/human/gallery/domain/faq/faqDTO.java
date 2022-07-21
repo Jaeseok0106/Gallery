@@ -5,15 +5,9 @@ import lombok.Data;
 @Data
 public class faqDTO {
     private int id;
-    private String title;
-    private String content;
-    private int writer;
-    private int categoryList;
-    private int heart;
-    private String postdate;
-    private int views;
-    private String userid;
-    private int next;
-    private int prev;
+    private int category;
+    private String question;
+    private String answer;
+
 
 }

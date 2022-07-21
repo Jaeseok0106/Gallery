@@ -17,4 +17,8 @@
 <insert id = "addDetail">
 	insert into userDetail values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7})
 </insert>
+<select id = "findDetailById" resultType="com.human.gallery.domain.user.Users">
+	select * from userDetail where id = #{param1}
+</select>
+
 </mapper>
