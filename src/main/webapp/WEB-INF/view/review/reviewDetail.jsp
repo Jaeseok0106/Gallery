@@ -14,7 +14,7 @@
     <title>${rdto.title}</title>
 </head>
 <style>
-    .commentJob {
+    #noneLoginForm, .commentJob {
         cursor : pointer;
     }
     .nav-item {

@@ -127,7 +127,7 @@ function getComment() {
                 let text = `<div id="comment">
                                     댓글 쓰기
                                 </div>
-                            <textarea id="commentForm" rows="3" cols="10"  placeholder = "로그인 후 입력이 가능합니다." style="width:90%; display: inline"></textarea>
+                            <textarea id="noneLoginForm" rows="3" cols="10"  placeholder = "로그인 후 입력이 가능합니다." style="width:90%; display: inline" readonly = "true" onclick="sendLoginForm()"></textarea>
                             <input type="button" id="" class="btn btn-outline-Dark" style="height:auto;" value = "댓글 등록"/>`
                 $("#writeComment").append(text);
             } else {
@@ -242,5 +242,10 @@ function doDelete(commentNumber) {
             }
         })
     }
+}
 
+function sendLoginForm() {
+    if (confirm("로그인 후 이용이 가능합니다. 로그인 하시겠습니까?")) {
+        document.location.href = "/login";
+    }
 }
