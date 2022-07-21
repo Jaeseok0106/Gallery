@@ -2,7 +2,7 @@ package com.human.gallery.web.QnA;
 
 import java.util.ArrayList;
 
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageInfo;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

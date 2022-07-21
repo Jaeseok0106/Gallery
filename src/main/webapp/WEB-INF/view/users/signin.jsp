@@ -148,7 +148,7 @@ a {
 	<main class="p-5">
 		<div class="container">
 			<div class="page-title">
-				<h1>My Page</h1>
+				<h1>회원가입</h1>
 			</div>
 		</div>
 		<main class="container text-center">

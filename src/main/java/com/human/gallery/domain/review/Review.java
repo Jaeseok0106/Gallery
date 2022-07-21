@@ -1,8 +1,10 @@
 package com.human.gallery.domain.review;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class Review {
 	private int id;
 	private String title;
@@ -16,6 +18,6 @@ public class Review {
 	private int next;
 	private int last;
 	private int userNum;
-	private int post_id;
-	private String heart_id;
+	private int postid;
+	private int heartid;
 }
