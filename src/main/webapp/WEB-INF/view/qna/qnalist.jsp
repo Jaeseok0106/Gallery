@@ -49,12 +49,16 @@ a {
 	text-decoration: none;
 	color:black;
 }
-#btnDate, #btnView, #btnHeart {
-	width: 30px;
-	height: 23px;
-}
 .pagination{
 	justify-content: center;
+}
+#selSort {
+	width: 70px;
+	height: 30px;
+	text-align: center;
+}
+#btnSearch {
+	margin-bottom: 3.5px;
 }
 </style>
 <body>
@@ -151,6 +155,30 @@ a {
 			<h1>Q&A</h1>
 		</div>
 	</div>
+	<form action="qna/qnalist" method="get">
+	<div class = "col-12 text-end">
+		<select size="1" id="selSort">
+			<option value="date">날짜순</option>
+			<option value="view">조회순</option>
+			<option value="heart">추천순</option>
+		</select>
+		<select size="1" id="type" name="type">
+			<option value="">검색조건</option>
+			<option value="tc">제목+내용</option>
+			<option value="t">제목</option>
+			<option value="c">내용</option>
+		</select>
+		<input style = "width:15%;" type="text" placeholder="검색어를 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="#{pageDTO.keyword}"/>
+		<input type="hidden" value="${paging.keyword}">
+		<button type="button" class="btn btn-outline-secondary" id="btnSearch">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+			</svg>
+			<span class="visually-hidden">Button</span>
+		</button>
+	</div>
+	</form>
+	<p></p>
 	<div class = "container" id = "boardList">
 		<div class = "row">
 			<table id='qnatb' class ="text-center">
@@ -158,31 +186,40 @@ a {
 					<th>번호</th>
 					<th>제목</th>
 					<th>글쓴이</th>
-					<th>날짜&nbsp;&nbsp;<input type="button" id="btnDate" value="▲"></th>
-					<th>조회&nbsp;&nbsp;<input type="button" id="btnView" value="▲"></th>
-					<th>추천순&nbsp;&nbsp;<input type="button" id="btnHeart" value="▲"></th>
+					<th>날짜</th>
+					<th>조회</th>
+					<th>추천</th>
 				</tr>
-				<c:forEach items="${qnalist}" var="list">
- 				<tr class = "text-center">
-					<td>${list.id}</td>
-					<td><a href="detail?id=${list.id}">${list.title}</a></td>
-					<td>${list.userid}</td>
-					<td>${list.postdate}</td>
-					<td>${list.views}</td>
-					<td>${list.heart}</td>
-				</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${!empty qnalist}">
+						<c:forEach items="${qnalist}" var="list">
+							<tr class = "text-center">
+								<td>${list.id}</td>
+								<td><a href="detail?id=${list.id}">${list.title}</a></td>
+								<td>${list.userid}</td>
+								<td>${list.postdate}</td>
+								<td>${list.views}</td>
+								<td>${list.heart}</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="5">조회된 게시글이 없습니다.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</table>
 			<p></p>
-			<nav aria-label="Page navigation example" id="navi">
+			<nav aria-label="Page navigation example">
 				<ul class="pagination">
 					<li class="page-item">
-						<a class="page-link" href="qna?curPage=1" aria-label="Previous">
+						<a class="page-link" href="qna?curPage=1&sort=${paging.sort}" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
-						<li class="page-item"><a class="page-link" href="qna?curPage=${i}">
+						<li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}">
 							<c:if test="${i == paging.curPage}">
 								<span style="color:red">${i}</span>
 							</c:if>
@@ -192,26 +229,14 @@ a {
 						</a></li>
 					</c:forEach>
 					<li class="page-item">
-						<a class="page-link" href="qna?curPage=${paging.totalPageCount}" aria-label="Next">
+						<a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 		</div>
-			<p></p>
-			<div class = "col-2">
-				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
-			</div>
-			<div class = "col-1 text-left">
-                <button type="button" class="btn btn-outline-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				  </svg>
-                  <span class="visually-hidden">Button</span>
-                </button>
-			</div>
-			<div class = "col-9 text-end">
+			<div class = "col-12 text-end">
 				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='new'">글쓰기</button>
 			</div>
 		</div>
@@ -280,74 +305,14 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
-		.on('click','#btnDate',function () {
-			if($('#btnDate').val()=='▲') {
-				$('#qnatb tr:gt(0)').remove();
-				let str='<c:forEach items="${listdate}" var="list">'
-						+ '<tr class = "text-center"><td>${list.id}</td>'
-						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
-						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
-						+ '<td>${list.views}</td><td>${list.heart}</td>'
-						+ '</tr></c:forEach>';
-				$('#qnatb').append(str);
-				$('#btnDate').val('▼');
-			} else if($('#btnDate').val()=='▼') {
-				$('#qnatb tr:gt(0)').remove();
-				let str='<c:forEach items="${descdate}" var="list">'
-						+ '<tr class = "text-center"><td>${list.id}</td>'
-						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
-						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
-						+ '<td>${list.views}</td><td>${list.heart}</td>'
-						+ '</tr></c:forEach>';
-				$('#qnatb').append(str);
-				$('#btnDate').val('▲');
-			}
-		})
-		.on('click','#btnView',function () {
-			if($('#btnView').val()=='▲') {
-				$('#qnatb tr:gt(0)').remove();
-				let str='<c:forEach items="${listview}" var="list">'
-						+ '<tr class = "text-center"><td>${list.id}</td>'
-						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
-						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
-						+ '<td>${list.views}</td><td>${list.heart}</td>'
-						+ '</tr></c:forEach>';
-				$('#qnatb').append(str);
-				$('#btnView').val('▼');
-			} else if($('#btnView').val()=='▼') {
-				$('#qnatb tr:gt(0)').remove();
-				let str='<c:forEach items="${descview}" var="list">'
-						+ '<tr class = "text-center"><td>${list.id}</td>'
-						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
-						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
-						+ '<td>${list.views}</td><td>${list.heart}</td>'
-						+ '</tr></c:forEach>';
-				$('#qnatb').append(str);
-				$('#btnView').val('▲');
-			}
-		})
-		.on('click','#btnHeart',function () {
-			if($('#btnHeart').val()=='▲') {
-				$('#qnatb tr:gt(0)').remove();
-				let str='<c:forEach items="${listheart}" var="list">'
-						+ '<tr class = "text-center"><td>${list.id}</td>'
-						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
-						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
-						+ '<td>${list.views}</td><td>${list.heart}</td>'
-						+ '</tr></c:forEach>';
-				$('#qnatb').append(str);
-				$('#btnHeart').val('▼');
-			} else if($('#btnHeart').val()=='▼') {
-				$('#qnatb tr:gt(0)').remove();
-				let str='<c:forEach items="${descheart}" var="list">'
-						+ '<tr class = "text-center"><td>${list.id}</td>'
-						+ '<td><a href="detail?id=${list.id}">${list.title}</a></td>'
-						+ '<td>${list.userid}</td><td>${list.postdate}</td>'
-						+ '<td>${list.views}</td><td>${list.heart}</td>'
-						+ '</tr></c:forEach>';
-				$('#qnatb').append(str);
-				$('#btnHeart').val('▲');
-			}
-		})
+	$('#btnSearch').click(function () {
+		if($('#selSort option:selected').val()=='date') {
+			location.href='qna?sort=date';
+		} else if($('#selSort option:selected').val()=='view') {
+			location.href='qna?sort=view';
+		} else if($('#selSort option:selected').val()=='heart') {
+			location.href='qna?sort=heart';
+		}
+	})
 </script>
 </html>
