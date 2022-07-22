@@ -7,7 +7,9 @@ import java.util.ArrayList;
 @Mapper
 public interface ifaq {
     ArrayList<faqDTO> list(String id);
-    void addfaq(int category, String question, String answer);
-    void faqdelete(String id);
+ void addfaq(int category, String question, String answer);
+    void faqdelete(int id);
+    void updatefaq(faqDTO faq);
+    faqDTO addlist(int id);
 
 }

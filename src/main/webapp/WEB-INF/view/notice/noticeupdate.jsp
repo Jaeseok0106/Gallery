@@ -204,14 +204,16 @@
             })
         })
 </script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace("editor")
+
+</script>
 <script>
     $(document)
         .on('click','#logo',function(){
             document.location.href='/';
         })
-    ClassicEditor.create( document.querySelector( '#editor' ) );
     $(document)
         .on('click','#logo',function(){
             document.location.href='../../..';
@@ -221,6 +223,16 @@
             if(confirm("정말 수정 완료 하시겠습니까?")) {
                         alert("게시물이 수정 되었습니다.");
                     }
+            else {
+                return false;
+            }
+        })
+    $(document)
+        .on('click','#reset',function(){
+            if(confirm("정말 수정을 취소 하시겠습니까?")) {
+                alert("게시물 수정이 취소 되었습니다.");
+                document.location.href='/content?id='+${ndto.id};
+            }
             else {
                 return false;
             }

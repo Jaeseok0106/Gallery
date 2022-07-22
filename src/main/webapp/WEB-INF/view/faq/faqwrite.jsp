@@ -213,34 +213,32 @@
             })
         })
 </script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
 <script>
-    ClassicEditor.create( document.querySelector( '#editorq' ) );
-    ClassicEditor.create( document.querySelector( '#editora' ) );
+    CKEDITOR.replace("editorq")
+    CKEDITOR.replace("editora")
 
     $(document)
         .on('click','#logo',function(){
             document.location.href='/';
         })
      $(document)
-        .on('click','#clear',function(){
-         if(confirm("작성을 완료 하시겠습니까?")){
-             let contentInput = CKEDITOR.instances.question.getData();
-             console.log(contentInput);
-             if(contentInput==""){
-                 alert("질문을 아직 완료하지 않았습니다.");
-                 return false;
+         .on('click','#clear',function() {
+             if(confirm("작성을 완료 하시겠습니까?")) {
+                 editorq = CKEDITOR.instances.editorq.getData();
+                 editora = CKEDITOR.instances.editora.getData();
+                 if (editorq != "" && editora != "") {
+                     alert("작성을 완료 하였습니다.");
+                     return true;
+                 } else {
+                     alert("작성을 완료 하지 않았습니다.");
+                     return false;
+                 }
              }
-             else {
-                 alert("작성이 완료 되었습니다.");
-                 return true;
-             }
-         }
-         else{
-
-         }
-     })
+                 else{
+                     return false;
+                 }
+         })
     $(document)
         .on('click','#reset',function(){
             if(confirm("작성을 취소 하시겠습니까?")){
