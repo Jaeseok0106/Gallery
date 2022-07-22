@@ -5,9 +5,17 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>글작성</title>
+
+    <title>Visit</title>
 </head>
 <style>
+    #info {
+        font-weight : bold;
+        margin-right : 1.5rem;
+    }
+    .detail {
+        display : inline-block;
+    }
     .nav-item{
         list-style-type:none;
         float:left;
@@ -19,6 +27,9 @@
         padding: 0 0.3125rem;
         font-size: 20px;
         font-size: 1.25rem;
+    }
+    #detail {
+        font-size: 0.7rem;
     }
     .page-title {
         border-top: 10px solid black;
@@ -32,6 +43,9 @@
     body {
         font-family : LeeSeoyun;
     }
+    h2 {
+        font-size : 25px;
+    }
     @font-face {
         font-family: 'LeeSeoyun';
         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
@@ -40,9 +54,6 @@
     }
     a {
         text-decoration-line:none;
-    }
-    .ck-editor__editable {
-        height : 600px;
     }
 </style>
 <body>
@@ -124,24 +135,48 @@
     </header>
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
+<input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>Review 작성</h5>
+    <div class = "page-title">
+        <h1>오시는길</h1>
     </div>
-    <div class = "row py-4">
-        <form action="insertReview" method="post">
-            <div class = "col">
-                <input class="form-control" type="text" name="title" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea name = "content" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
-                <input type = "hidden" id = "usernum" name="writer" value = "${user.userNum}">
+    <div class = "row mb-2" style = "height : 700px;">
+        <div class = "col-6">
+            <h2>
+                Gallery누르 <br>
+                오시는길
+            </h2>
+        </div>
+        <div class = "col-6">
+            <div id="daumRoughmapContainer1657160403018" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+            <div class = "container">
+                <dl class="row py-5">
+                    <dt class="col-sm-3">주소</dt>
+                    <dd class="col-sm-9">충남 천안시 동남구 대흥로 215 7층</dd>
+                    <dt class="col-sm-3">TEL</dt>
+                    <dd class="col-sm-9">
+                        <p>041-561-1122</p>
+                    </dd>
+                    <dt class="col-sm-3">오시는 길</dt>
+                    <dd class="col-sm-9">
+                        <p>전철 1호선 <br> 천안역 하차 -> 3번 출구 <br> 나와서 우측 방향으로 도보 5분</p>
+                    </dd>
+
+                    <dt class="col-sm-3">이용 시간</dt>
+                    <dd class="col-sm-9"><p>월요일 ~ 금요일<br>10 : 00 ~ 18 : 00</p></dd>
+
+                    <dt class="col-sm-3">휴관일</dt>
+                    <dd class="col-sm-9">
+                        <p>
+                            주말(토, 일요일) 및 공휴일<br>갤러리 누르에서 지정한 날<br>
+                            전시 기간에는 휴관일과 관람 시간이 변경될 수 있으니 해당 페이지에서 별도로 확인하시기 바랍니다.
+                        </p>
+                    </dd>
+                </dl>
             </div>
-            <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary" >작성 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='/review'">취소</button>
-            </div>
-        </form>
+        </div>
     </div>
 </main>
 
@@ -167,8 +202,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
     $(document)
         .on('click','#logo',function(){
@@ -209,17 +242,17 @@
                 $("#none3").css("display", "none");
             })
         })
-    $('#delete').click(function () {
-        if(!confirm('게시글을 삭제하시겠습니까?')) {
-            return false;
-        }
-    })
 </script>
-<%--<script src="editor/ckeditor.js"></script>
-<script src="editor/translations/ko.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>--%>
-<script>
-    ClassicEditor.create( document.querySelector( '#editor' ) );
+<!-- 2. 설치 스크립트 -->
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+<!-- 3. 실행 스크립트 -->
+<script charset="UTF-8">
+    new daum.roughmap.Lander({
+        "timestamp" : "1657160403018",
+        "key" : "2aviu",
+        "mapWidth" : "640",
+        "mapHeight" : "360"
+    }).render();
 </script>
 </html>

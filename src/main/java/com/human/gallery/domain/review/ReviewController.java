@@ -91,10 +91,10 @@ public class ReviewController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/review/like", method=RequestMethod.POST)
-	public int doLike(@RequestParam int postid, @RequestParam int heartid) {
-		int findLike=review.findLike(postid, heartid);
+	public int doLike(@RequestParam int postid, @RequestParam int userid) {
+		int findLike=review.findLike(postid, userid);
 		if(findLike == 0) {
-			review.insertLike(postid, heartid);
+			review.insertLike(postid, userid);
 			review.likeReview(postid);
 		}
 		return findLike;

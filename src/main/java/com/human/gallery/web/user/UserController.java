@@ -6,6 +6,7 @@ import com.human.gallery.domain.user.UsersLoginForm;
 import com.human.gallery.domain.user.UsersSignForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @Slf4j
+
 public class UserController {
 
 	private final UserService userService;
@@ -100,5 +102,4 @@ public class UserController {
 		model.addAttribute("user", usera);
 		return "redirect:/login";
 	}
-
 }

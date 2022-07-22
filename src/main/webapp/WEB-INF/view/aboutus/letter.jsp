@@ -5,9 +5,17 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>글작성</title>
+
+    <title>인사말</title>
 </head>
 <style>
+    #info {
+        font-weight : bold;
+        margin-right : 1.5rem;
+    }
+    .detail {
+        display : inline-block;
+    }
     .nav-item{
         list-style-type:none;
         float:left;
@@ -19,6 +27,9 @@
         padding: 0 0.3125rem;
         font-size: 20px;
         font-size: 1.25rem;
+    }
+    #detail {
+        font-size: 0.7rem;
     }
     .page-title {
         border-top: 10px solid black;
@@ -32,6 +43,9 @@
     body {
         font-family : LeeSeoyun;
     }
+    h2 {
+        font-size : 25px;
+    }
     @font-face {
         font-family: 'LeeSeoyun';
         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
@@ -41,8 +55,9 @@
     a {
         text-decoration-line:none;
     }
-    .ck-editor__editable {
-        height : 600px;
+    .left-area {
+        float:left;
+        width:500px;
     }
 </style>
 <body>
@@ -124,25 +139,38 @@
     </header>
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
+<input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
-<main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>Review 작성</h5>
+<%--<main class = "container p-5">--%>
+<div class="container">
+    <div class = "page-title">
+        <h1>director 인사말</h1>
     </div>
-    <div class = "row py-4">
-        <form action="insertReview" method="post">
-            <div class = "col">
-                <input class="form-control" type="text" name="title" placeholder="제목" aria-label="default input example"><br><br>
-                <textarea name = "content" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
-                <input type = "hidden" id = "usernum" name="writer" value = "${user.userNum}">
-            </div>
-            <div class = "col text-end">
-                <button type="submit" class="btn btn-outline-primary" >작성 완료</button>
-                <button type="button" class="btn btn-outline-danger" onclick="location.href='/review'">취소</button>
-            </div>
-        </form>
+    <div class="inner clearfix">
+        <section class="left-area" data-mh="matchArea" style = "height:700px;">
+            <img src = "director.png" id='director' style = "height:500px;"/>
+        </section>
+        <section class="right-area" data-mh="matchArea" style = "height:700px;">
+            <p>왜 또 아픈상처에 소금을 뿌리십니까 <br>
+                제게도 꿈이 있었습니다
+            </p>
+            <strong class="sign">선장</strong>
+        </section>
     </div>
+</div>
+<%--    <div class = "col-6" style="padding:0px;">--%>
+<%--        <div class = "container">
+            <img src = "director.png" id='director' style = "height:500px;"/>
+            <p align="right">왜 또 아픈상처에 소금을 뿌리십니까 <br>
+                제게도 꿈이 있었습니다
+            </p>
+            <strong class="sign">선장</strong>
+        </div>--%>
+        <%--<div class="container">
+
+        </div>--%>
+<%--    </div>--%>
 </main>
 
 <!-- 하단 -->
@@ -167,8 +195,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
     $(document)
         .on('click','#logo',function(){
@@ -209,17 +235,5 @@
                 $("#none3").css("display", "none");
             })
         })
-    $('#delete').click(function () {
-        if(!confirm('게시글을 삭제하시겠습니까?')) {
-            return false;
-        }
-    })
-</script>
-<%--<script src="editor/ckeditor.js"></script>
-<script src="editor/translations/ko.js"></script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>--%>
-<script>
-    ClassicEditor.create( document.querySelector( '#editor' ) );
 </script>
 </html>

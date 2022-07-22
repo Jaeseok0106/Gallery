@@ -37,9 +37,8 @@
 	<select id="findLike" resultType="int">
 		select count(*) from post_heart where post_id=#{param1} and heart_id=#{param2}
 	</select>
-	<update id="likeReview" parameterType="int">>
-		update board_post
-		set heart=heart+1 where id=#{param1}
+	<update id="likeReview" parameterType="int">
+		update board_post set heart=heart+1 where id=#{param1}
 	</update>
 	<insert id="insertLike">
 		insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
