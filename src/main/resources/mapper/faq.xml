@@ -7,4 +7,8 @@
         select question, answer, id from faq_table
         where category=#{param1}
     </select>
+    <insert id="addfaq">
+        insert into faq_table values (faq_table_seq.nextval, #{param1}, #{param2}, #{param3})
+    </insert>
+
 </mapper>
