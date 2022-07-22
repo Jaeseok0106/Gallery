@@ -69,20 +69,14 @@ a {
 		<div class="nav-scroller mb-7" id = "list">
 			<ul class="nav justify-content-center" style = "display:block;">
 				<li class="nav-item mx-5">
-					<a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
+					<a class="nav-link active p-7" aria-current="page" id = "nav1">About us</a>
 					<div>
 						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+								<a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">Link</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">Link</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id = "detail">Disabled</a>
+								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
 							</li>
 						</ul>
 					</div>
@@ -148,7 +142,7 @@ a {
 	<main class="p-5">
 		<div class="container">
 			<div class="page-title">
-				<h1>My Page</h1>
+				<h1>회원가입</h1>
 			</div>
 		</div>
 		<main class="container text-center">
@@ -156,7 +150,7 @@ a {
 				<div>
 					<p>
 						<label>ID</label> 
-						<form:input path ="id" class = "form-control" />
+						<form:input path ="id" class = "form-control" placeholder="ID를 입력해주세요."/>
 						<form:errors path = "id" class = "FieldError" />
 						<label class = "FieldError">${overlap} </label>
 					</p>
@@ -167,13 +161,13 @@ a {
 					</p>
 					<p>
 						<label>비밀번호 확인</label> 
-						<form:password path = "passwordCheck" class = "form-control" />
+						<form:password path = "passwordCheck" class = "form-control" placeholder="Password Check" />
 						<form:errors path = "passwordCheck" class = "FieldError"/>
 						<label class = "FieldError">${passwordError}</label>
 					</p>
 					<p>
 						<label>이름</label> 
-						<form:input path ="name" class = "form-control" />
+						<form:input path ="name" class = "form-control" placeholder="이름을 입력해주세요."/>
 						<form:errors path = "name" class = "FieldError" />
 					</p>
 					<p>
@@ -204,7 +198,7 @@ a {
 					</p>
 					<p>
 						<label>전화번호</label>
-						<form:input path = "mobile" class = "form-control"/> <br>
+						<form:input path = "mobile" class = "form-control" placeholder="'-' 를 포함한 전화번호를 입력해주세요."/> <br>
 						<form:errors path = "mobile" class = "FieldError"/>
 					</p>
 					<p class="w3-center">

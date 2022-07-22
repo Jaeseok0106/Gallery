@@ -34,13 +34,15 @@
 		set title=#{param1}, content=#{param2}, postdate=to_char(sysdate, 'YYYY-MM-DD')
 		where id=#{param3}
 	</update>
-<!--	<select id="findLike" resultType = "com.human.gallery.domain.review.Review">
-		select count(*) from post_heart where id=#{param1} and post_heart=#{param2}
+	<select id="findLike" resultType="int">
+		select count(*) from post_heart where post_id=#{param1} and heart_id=#{param2}
 	</select>
-	<update id="likeReview">
-		update board_post
-		set heart=heart+1 where id=#{param1}
-	</update>-->
+	<update id="likeReview" parameterType="int">
+		update board_post set heart=heart+1 where id=#{param1}
+	</update>
+	<insert id="insertLike">
+		insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
+	</insert>
 	<delete id="deleteReview">
 		delete from board_post where id=#{param1}
 	</delete>

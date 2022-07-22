@@ -77,16 +77,10 @@
                     <div>
                         <ul class="nav justify-content-end" style="display : none;" id="none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#" id="detail">Active</a>
+                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id="detail">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id="detail">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="detail">Disabled</a>
+                                <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
                             </li>
                         </ul>
                     </div>
@@ -183,7 +177,9 @@
             <c:if test="${ndto.last == 9999}"></c:if>
         </div>
         <div class="col-6 text-center">
-            <button type="button" class="btn btn-outline-Danger" id="btnLike">추천</button>
+            <c:if test = "${user.id != null and user.id != qdto.userid}">
+            <button type="button" class="btn btn-outline-Danger" onclick="updateLike(); return false;">추천</button>
+            </c:if>
             <button type="button" class="btn btn-outline-primary" onclick="location.href='/review'">목록</button>
         </div>
         <div class="col-3 text-end">
@@ -253,4 +249,71 @@
 ></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="/js/comment.js"></script>
+<script>
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='/';
+        })
+    $(document).ready(function () {
+        console.log("시작 화면");
+        $("#nav1").hover(
+            function () {
+                $("#none1").css("display", "block");
+                $("#none2").css("display", "none");
+                $("#none3").css("display", "none");
+            },
+            function () {}
+        );
+        $("#nav2").hover(function () {
+            $("#none1").css("display", "none");
+            $("#none2").css("display", "none");
+            $("#none3").css("display", "none");
+        });
+        $("#nav3").hover(function () {
+            $("#none1").css("display", "none");
+            $("#none2").css("display", "none");
+            $("#none3").css("display", "none");
+        });
+        $("#nav4").hover(function () {
+            $("#none1").css("display", "none");
+            $("#none2").css("display", "block");
+            $("#none3").css("display", "none");
+        });
+        $("#nav5").hover(function () {
+            $("#none1").css("display", "none");
+            $("#none2").css("display", "none");
+            $("#none3").css("display", "block");
+        });
+        $("#nav6").hover(function () {
+            $("#none1").css("display", "none");
+            $("#none2").css("display", "none");
+            $("#none3").css("display", "none");
+        });
+    });
+    $('#btnDel').click(function () {
+        if(!confirm('게시글을 삭제하시겠습니까?')) {
+            return false;
+        }
+    })
+    var postid=${rdto.id};
+    var userid=${user.userNum};
+    function updateLike() {
+        $.ajax({
+            type:"POST",
+            url:"/review/like",
+            dataType:"json",
+            data:{'postid' : postid, 'userid':userid},
+            success:function(findLike) {
+                if(findLike == 0){
+                    alert("추천이 완료되었습니다.");
+                    location.reload();
+                } else if (findLike == 1) {
+                    alert("이미 추천한 게시글입니다.");
+                    location.reload();
+                }
+            }
+        });
+    }
+
+</script>
 </html>

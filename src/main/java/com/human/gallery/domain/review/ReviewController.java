@@ -89,9 +89,14 @@ public class ReviewController {
 		review.deleteReview(id);
 		return "redirect:/review";
 	}
-/*	@RequestMapping("/findLike")
-	public String dofindLike(@RequestParam int id) {
-
-		return "redirect:/reviewDetail";
-	}*/
+	@ResponseBody
+	@RequestMapping(value="/review/like", method=RequestMethod.POST)
+	public int doLike(@RequestParam int postid, @RequestParam int userid) {
+		int findLike=review.findLike(postid, userid);
+		if(findLike == 0) {
+			review.insertLike(postid, userid);
+			review.likeReview(postid);
+		}
+		return findLike;
+	}
 }
