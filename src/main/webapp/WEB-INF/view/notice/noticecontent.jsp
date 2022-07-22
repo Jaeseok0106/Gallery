@@ -161,7 +161,6 @@
             <c:if test="${nepr.next!=9999}">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.next}'">이전</button>
             </c:if>
-            <c:if test="${nepr.next==9999}"></c:if>
         </div>
         <div class="col-6 text-center">
             <button type="button" class="btn btn-outline-Danger" id="heart">추천</button>
@@ -171,7 +170,6 @@
             <c:if test="${nepr.prev!=0}">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.prev}'">다음</button>
             </c:if>
-            <c:if test="${nepr.prev==0}"></c:if>
         </div>
     </div>
     <br>

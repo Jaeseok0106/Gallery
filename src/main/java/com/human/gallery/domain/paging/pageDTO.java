@@ -1,4 +1,4 @@
-package com.human.gallery.domain.QnA;
+package com.human.gallery.domain.paging;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Data
 @Slf4j
 public class pageDTO implements Serializable {
-    // 서칭
     private String sort; // 정렬 기준
     private String type; // 검색 타입
     private String keyword; // 검색 키워드

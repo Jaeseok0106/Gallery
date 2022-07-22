@@ -52,8 +52,13 @@ a {
 .pagination{
 	justify-content: center;
 }
-#selSort {
+#selSort{
 	width: 70px;
+	height: 30px;
+	text-align: center;
+}
+#type {
+	width: 90px;
 	height: 30px;
 	text-align: center;
 }
@@ -149,7 +154,7 @@ a {
 			<h1>Q&A</h1>
 		</div>
 	</div>
-	<form action="qna/qnalist" method="get">
+	<form id="serform">
 	<div class = "col-12 text-end">
 		<select size="1" id="selSort">
 			<option value="date">날짜순</option>
@@ -162,8 +167,7 @@ a {
 			<option value="t">제목</option>
 			<option value="c">내용</option>
 		</select>
-		<input style = "width:15%;" type="text" placeholder="검색어를 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="#{pageDTO.keyword}"/>
-		<input type="hidden" value="${paging.keyword}">
+		<input style = "width:15%;" type="text" placeholder="검색어를 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
 		<button type="button" class="btn btn-outline-secondary" id="btnSearch">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -189,7 +193,7 @@ a {
 						<c:forEach items="${qnalist}" var="list">
 							<tr class = "text-center">
 								<td>${list.id}</td>
-								<td><a href="detail?id=${list.id}">${list.title}</a></td>
+								<td><a href="detail?id=${list.id}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">${list.title}</a></td>
 								<td>${list.userid}</td>
 								<td>${list.postdate}</td>
 								<td>${list.views}</td>
@@ -208,12 +212,12 @@ a {
 			<nav aria-label="Page navigation example">
 				<ul class="pagination">
 					<li class="page-item">
-						<a class="page-link" href="qna?curPage=1&sort=${paging.sort}" aria-label="Previous">
+						<a class="page-link" href="qna?curPage=1&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
-						<li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}">
+						<li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">
 							<c:if test="${i == paging.curPage}">
 								<span style="color:red">${i}</span>
 							</c:if>
@@ -223,7 +227,7 @@ a {
 						</a></li>
 					</c:forEach>
 					<li class="page-item">
-						<a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}" aria-label="Next">
+						<a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
@@ -299,14 +303,29 @@ $(document)
 		$("#none3").css("display", "none");
 	})	
 })
-	$('#btnSearch').click(function () {
+	$('#btnSearch').click(function (e) {
+		e.preventDefault();
+		var url="/qna";
 		if($('#selSort option:selected').val()=='date') {
-			location.href='qna?sort=date';
+			url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
 		} else if($('#selSort option:selected').val()=='view') {
-			location.href='qna?sort=view';
+			url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
 		} else if($('#selSort option:selected').val()=='heart') {
-			location.href='qna?sort=heart';
+			url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
 		}
+		location.href=url;
+	})
+	$('#serform').keypress(function (e) {
+		e.preventDefault();
+		var url="/qna";
+		if($('#selSort option:selected').val()=='date') {
+			url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		} else if($('#selSort option:selected').val()=='view') {
+			url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		} else if($('#selSort option:selected').val()=='heart') {
+			url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		}
+		location.href=url;
 	})
 </script>
 </html>
