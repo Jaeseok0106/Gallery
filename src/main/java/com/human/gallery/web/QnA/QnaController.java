@@ -2,26 +2,19 @@ package com.human.gallery.web.QnA;
 
 
 import java.util.List;
-import java.util.ArrayList;
 
-import com.human.gallery.domain.QnA.pageDTO;
+import com.human.gallery.domain.paging.pageDTO;
 
 
 import com.human.gallery.domain.QnA.iQna;
 import com.human.gallery.domain.QnA.qnaDTO;
-import java.util.ArrayList;
 
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
-import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,12 +27,11 @@ public class QnaController {
 	public String Qnalist(@SessionAttribute(name = "user", required = false) Users user, Model model,
 						  @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
 						  @RequestParam(required = false, defaultValue = "tc") String type,
-						  @RequestParam(required = false) String keyword,
-						  @ModelAttribute("search") pageDTO search) {
+						  @RequestParam(required = false) String keyword) {
 		model.addAttribute("user",user);
-		model.addAttribute("search",search);
-		search.setType(type);
-		search.setKeyword(keyword);
+		model.addAttribute("paging", paging);
+		paging.setType(type);
+		paging.setKeyword(keyword);
 		int cnt=qna.getCount(paging);
 		paging.setTotalRowCount(cnt);
 		paging.pageSetting();
@@ -50,15 +42,25 @@ public class QnaController {
 
 	// 상세보기
 	@RequestMapping(value="/detail", produces="application/json;charset=utf-8")
-	public String doDetail(
-			@SessionAttribute(name = "user", required = false) Users user,
-			@RequestParam int id, Model model) {
+	public String doDetail(@SessionAttribute(name = "user", required = false) Users user, Model model,
+						   @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
+						   @RequestParam(required = false, defaultValue = "tc") String type,
+						   @RequestParam(required = false) String keyword,
+						   @RequestParam int id) {
 		model.addAttribute("user",user);
 		qnaDTO qdto=qna.selqna(id);
 		model.addAttribute("qdto",qdto);
 		qnaDTO nepr=qna.nepr(id);
 		model.addAttribute("nepr", nepr);
 		qna.viewcount(id);
+		model.addAttribute("paging", paging);
+		paging.setType(type);
+		paging.setKeyword(keyword);
+		int cnt=qna.getCount(paging);
+		paging.setTotalRowCount(cnt);
+		paging.pageSetting();
+		List<qnaDTO> qnalist=qna.qnalist(paging);
+		model.addAttribute("qnalist",qnalist);
 		return "qna/detail";
 	}
 

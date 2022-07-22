@@ -3,13 +3,68 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.human.gallery.domain.notice.inotice">
-    <select id="listnotice" resultType="com.human.gallery.domain.notice.noticeDTO">
-        select a.id, a.title, a.content, b.id as userid, a.categoryList, a.heart, a.postdate, a.views
-        from board_post a, users b
-        where categoryList=4
-          and a.writer=b.usernum
-        order by a.id desc
+    <!-- 리스트 출력 -->
+    <select id="listnotice" resultType="com.human.gallery.domain.notice.noticeDTO" parameterType="com.human.gallery.domain.paging.pageDTO">
+        select *
+        from	(select rownum as seq, c.*
+                 from	((select rownum as rn, a.*, b.id as userid
+                          from board_post a, users b
+                          where categoryList=4
+                          and a.writer=b.userNum
+                          <include refid='type'></include>
+                          order by a.<include refid='sort'/> desc) c)
+                 where rownum <![CDATA[<=]]> #{lastRow})
+        where seq <![CDATA[>=]]> #{firstRow}
     </select>
+
+    <sql id='sort'>
+        <if test='sort==null || sort==""'>
+            id
+        </if>
+        <if test='sort=="date"'>
+            postdate
+        </if>
+        <if test='sort=="view"'>
+            views
+        </if>
+        <if test='sort=="heart"'>
+            heart
+        </if>
+    </sql>
+
+    <sql id='type'>
+        <if test='type != null and type != ""'>
+            <if test='type=="tc" and keyword!=null and keyword!=""'>
+                and ((title like '%' || #{keyword} || '%') or (content like '%' || #{keyword} || '%'))
+            </if>
+            <if test='type=="t" and keyword!=null and keyword!=""'>
+                and title like '%' || #{keyword} || '%'
+            </if>
+            <if test='type=="c" and keyword!=null and keyword!=""'>
+                and content like '%' || #{keyword} || '%'
+            </if>
+        </if>
+    </sql>
+
+    <!-- 카테고리4의 게시글 개수 카운트 -->
+    <select id="getCount" parameterType="com.human.gallery.domain.paging.pageDTO" resultType="int">
+        select count(*)
+        from board_post
+        where categoryList=4
+        <if test='keyword != null and keyword != ""'>
+            <if test='type=="tc"'>
+                and ((title like '%' || #{keyword} || '%') or (content like '%' || #{keyword} || '%'))
+            </if>
+            <if test='type=="t"'>
+                and title like '%' || #{keyword} || '%'
+            </if>
+            <if test='type=="c"'>
+                and content like '%' || #{keyword} || '%'
+            </if>
+        </if>
+    </select>
+
+    <!-- 선택한 게시글 상세조회 -->
     <select id='noticecontent' resultType="com.human.gallery.domain.notice.noticeDTO">
         select a.id, a.title, a.content, b.id as user_id, a.categoryList, a.heart, a.postdate, a.views
         from board_post a, users b
@@ -17,41 +72,62 @@
           and a.writer=b.usernum
           and a.id=#{param1}
     </select>
-    <update id="count" parameterType="int">
-        update board_post set views=#{param1} where id=#{param2}
-    </update>
+
+    <!-- 이전글, 다음글 -->
     <select id='nepr' resultType="com.human.gallery.domain.notice.noticeDTO">
         select *
         from (select id,
-                     lead(id,1,9999) over(order by id) as next,
-           lag(id,1,0) over(order by id) as prev
-              from board_post
-              where categoryList=4)
+            lead(id,1,9999) over(order by id) as next,
+            lag(id,1,0) over(order by id) as prev
+            from board_post
+            where categoryList=4)
         where id=#{param1}
     </select>
-    <delete id="delete">
-        delete from board_post where id=#{param1}
-    </delete>
-    <insert id='addnotice'>
-        insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, 2, 4,
-                              0, to_char(sysdate, 'YYYY-MM-DD'), 0)
-    </insert>
-    <update id='updatenotice'>
-        update board_post set title=#{param1}, content=#{param2}, writer=2, categoryList=4,
-                               postdate=to_char(sysdate, 'YYYY-MM-DD') where id=#{param3}
+
+    <!-- 조회수 -->
+    <update id="count" parameterType="int">
+        update board_post
+        set views=#{param1}
+        where id=#{param2}
     </update>
-    <select id="pagingcount" resultType="com.human.gallery.domain.notice.noticeDTO" parameterType="int">
-        select count(id)
+
+    <!-- 새 공지 업로드 -->
+    <insert id='addnotice'>
+        insert into board_post
+        values(board_post_seq.nextval, #{param1}, #{param2}, 2, 4, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
+    </insert>
+
+    <!-- 공지 업데이트 -->
+    <update id='updatenotice'>
+        update board_post
+        set title=#{param1}, content=#{param2}, writer=2, categoryList=4, postdate=to_char(sysdate, 'YYYY-MM-DD')
+        where id=#{param3}
+    </update>
+
+    <!-- 공지 삭제 -->
+    <delete id="delete">
+        delete
         from board_post
-        where categorylist = 4;
+        where id=#{param1}
+    </delete>
+
+    <!-- 선택한 글의 추천 중복 체크 -->
+    <select id='findLike' resultType="int">
+        select count(*) as cnt
+        from post_heart
+        where post_id=#{param1}
+          and heart_id=#{param2}
     </select>
-    <select id="paging" resultType="com.human.gallery.domain.notice.noticeDTO">
-        select * from (
-                          select rownum as RN, a.*
-                          from (select *
-                                from board_post
-                                where categoryList = 4
-                                order by id desc) a)
-        where RN between 1 and 10;
-    </select>
+
+    <!-- 추천 테이블에 추천id add -->
+    <insert id="insertLike">
+        insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
+    </insert>
+
+    <!-- 추천+ -->
+    <update id="LikeNotice" parameterType="int">
+        update board_post
+        set heart=heart+1
+        where id=#{param1}
+    </update>
 </mapper>

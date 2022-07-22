@@ -52,6 +52,22 @@ body {
 a {
 text-decoration-line:none;
 }
+.pagination{
+	justify-content: center;
+}
+#selSort{
+	width: 70px;
+	height: 30px;
+	text-align: center;
+}
+#type {
+	width: 90px;
+	height: 30px;
+	text-align: center;
+}
+#btnSearch {
+	margin-bottom: 3.5px;
+}
 </style>
 <body>
 <div class="container">
@@ -141,6 +157,29 @@ text-decoration-line:none;
 			<h1>Review Board</h1>
 		</div>
 	</div>
+	<form id="serform">
+		<div class = "col-12 text-end">
+			<select size="1" id="selSort">
+				<option value="date">날짜순</option>
+				<option value="view">조회순</option>
+				<option value="heart">추천순</option>
+			</select>
+			<select size="1" id="type" name="type">
+				<option value="">검색조건</option>
+				<option value="tc">제목+내용</option>
+				<option value="t">제목</option>
+				<option value="c">내용</option>
+			</select>
+			<input style = "width:15%;" type="text" placeholder="검색어를 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
+			<button type="button" class="btn btn-outline-secondary" id="btnSearch">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+					<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+				</svg>
+				<span class="visually-hidden">Button</span>
+			</button>
+		</div>
+	</form>
+	<p></p>
 	<div class = "container" id = "boardList">
 		<div class = "row">
 			<table id=tblData class ="text-center">
@@ -152,27 +191,55 @@ text-decoration-line:none;
 					<th>조회</th>
 					<th>추천순</th>
 				</tr>
-	
+				<c:choose>
+					<c:when test="${!empty reviewlist}">
+						<c:forEach items="${reviewlist}" var="list">
+							<tr class = "text-center">
+								<td>${list.id}</td>
+								<td><a href="reviewDetail?id=${list.id}">${list.title}</a></td>
+								<td>${list.userid}</td>
+								<td>${list.postdate}</td>
+								<td>${list.views}</td>
+								<td>${list.heart}</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="5">조회된 게시글이 없습니다.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</table>
-			<!-- 여기에 이제 1페이지부터 클릭할 수 있는거 넣을 생각 -->
-			
 			<p></p>
-			<p></p>		
-			<p></p>
-			<div class = "col-2">
-				<input class="form-control form-control-sm" type="text" placeholder="글 제목 검색" aria-label=".form-control-sm example">
-			</div>
-			<div class = "col-1 text-left">
-                <button type="button" class="btn btn-outline-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-					  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-				  </svg>
-                  <span class="visually-hidden">Button</span>
-                </button>
-			</div>
-			<div class = "col-9 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>			</div>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item">
+						<a class="page-link" href="review?curPage=1&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
+						<li class="page-item"><a class="page-link" href="review?curPage=${i}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">
+							<c:if test="${i == paging.curPage}">
+								<span style="color:red">${i}</span>
+							</c:if>
+							<c:if test="${i != paging.curPage}">
+								${i}
+							</c:if>
+						</a></li>
+					</c:forEach>
+					<li class="page-item">
+						<a class="page-link" href="review?curPage=${paging.totalPageCount}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
+			<div class = "col-12 text-end">
+				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>			</div>
+			</div>
 	</div>
 </main>
 
@@ -203,63 +270,64 @@ text-decoration-line:none;
 			.on('click','#logo',function(){
 				document.location.href='/';
 			})
-$(document)
-.ready(function () {
-	showReview();
-	console.log("시작 화면");
-	$("#nav1").hover(function() {
-		$("#none1").css("display", "block");
-		$("#none2").css("display", "none");
-		$("#none3").css("display", "none");
-	}, function() {
+	$(document)
+			.ready(function () {
+				console.log("시작 화면");
+				$("#nav1").hover(function() {
+					$("#none1").css("display", "block");
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				}, function() {
+				})
+				$("#nav2").hover(function() {
+					$("#none1").css("display", "none");
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				})
+				$("#nav3").hover(function() {
+					$("#none1").css("display", "none");
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				})
+				$("#nav4").hover(function() {
+					$("#none1").css("display", "none");
+					$("#none2").css("display", "block");
+					$("#none3").css("display", "none");
+				})
+				$("#nav5").hover(function() {
+					$("#none1").css("display", "none")
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "block");
+				})
+				$("#nav6").hover(function() {
+					$("#none1").css("display", "none")
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				})
+			})
+	$('#btnSearch').click(function (e) {
+		e.preventDefault();
+		var url="/review";
+		if($('#selSort option:selected').val()=='date') {
+			url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		} else if($('#selSort option:selected').val()=='view') {
+			url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		} else if($('#selSort option:selected').val()=='heart') {
+			url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		}
+		location.href=url;
 	})
-	$("#nav2").hover(function() {
-		$("#none1").css("display", "none");
-		$("#none2").css("display", "none");
-		$("#none3").css("display", "none");
+	$('#serform').keypress(function (e) {
+		e.preventDefault();
+		var url="/review";
+		if($('#selSort option:selected').val()=='date') {
+			url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		} else if($('#selSort option:selected').val()=='view') {
+			url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		} else if($('#selSort option:selected').val()=='heart') {
+			url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+		}
+		location.href=url;
 	})
-	$("#nav3").hover(function() {
-		$("#none1").css("display", "none");
-		$("#none2").css("display", "none");
-		$("#none3").css("display", "none");
-	})
-	$("#nav4").hover(function() {
-		$("#none1").css("display", "none");
-		$("#none2").css("display", "block");
-		$("#none3").css("display", "none");
-	})
-	$("#nav5").hover(function() {
-		$("#none1").css("display", "none")
-		$("#none2").css("display", "none");
-		$("#none3").css("display", "block");
-	})
-	$("#nav6").hover(function() {
-		$("#none1").css("display", "none")
-		$("#none2").css("display", "none");
-		$("#none3").css("display", "none");
-	})
-	function showReview() {
-		$.ajax({
-			url:'reviewList',
-			data:'',
-			dataType:'json',
-			type:'get',
-			beforeSend:function() {
-				$('#tblData tr:gt(0)').remove();
-			},
-			success:function(data) {
-				for(let i=0; i<data.length; i++) {
-					reviewitem=data[i];
-					let str='<tr><td>'+reviewitem['id']+'</td><td><a href="reviewDetail?id='+reviewitem['id']+'">'+reviewitem['title']+
-							'</a></td><td>'+reviewitem['user_id']+'</td><td>'+reviewitem['postdate']+
-							'</td><td>'+reviewitem['views']+'</td><td>'+reviewitem['heart']+'</td></tr>';
-					$('#tblData').append(str);
-				}
-			},
-			error:function() { },
-			complete:function() { }
-		})
-	}
-})
 </script>
 </html>
