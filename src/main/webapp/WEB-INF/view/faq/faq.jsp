@@ -96,7 +96,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
+                            <a class="nav-link" aria-current="page" href="/visit" id = "detail">FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -118,9 +118,6 @@
                         </c:if>
                         <li class="nav-item">
                             <a class="nav-link" href="#" id = "detail">My page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
                         </li>
                     </ul>
                 </li>
@@ -236,13 +233,13 @@
             document.location.href='/faqwrite';
         })
         .on("click","#pre,#ord,#web,#etc",function(){
-            console.log($(this).attr('value'));
             listcat($(this).attr('value'));
         })
     $(document)
-    .on('click','#btnupdate',function(){
-        document.location.href='/faqupdate';
-    })
+        .on('click','#btnupdate',function(){
+            let id = $(this).attr('name')
+            document.location.href='/faqupdate/'+id;
+        })
 </script>
 <script>
     function list(){
@@ -269,8 +266,8 @@
                                 <div class="accordion-body">
                                     \${list['answer']}
                                 <br>
-                                <button type="button" id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
-                                <button type="button" id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
+                                <button type="button" name = \${list['id']} id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
+                                <button type="button" name = \${list['id']} id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
                                 </div>
                             </div>
                         </div>`;
@@ -306,7 +303,6 @@
                 $("#accordionExample").empty();
             },
             success:function(data){
-                console.log($("#gry option:selected").val());
                 for(let i=0; i < data.length; i++){
                     let list = data[i];
                     if ($("#role").val() == '관리자') {
@@ -321,8 +317,8 @@
                                 <div class="accordion-body">
                                     \${list['answer']}
                                 <br>
-                                <button type="button" id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
-                                <button type="button" id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
+                                <button type="button" name = \${list['id']} id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
+                                <button type="button" name = \${list['id']} id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
                                 </div>
                             </div>
                         </div>`;
@@ -349,12 +345,13 @@
     $(document)
         .on('click','#btndelete',function(){
             if(confirm("정말 삭제 하시겠습니까?")) {
+                id = $(this).attr('name')
                 $.ajax({
                     type:'get',datatype:'text',url:'faq/delete',
-                    data : {id : $("#id").val()},
+                    data : {id : id},
                     success:function(){
                         alert("게시물이 삭제 되었습니다.");
-                        document.location.href = "/FAQ";
+                        list();
                     }
                 })
             }

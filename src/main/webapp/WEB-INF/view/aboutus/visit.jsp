@@ -251,7 +251,7 @@
     new daum.roughmap.Lander({
         "timestamp" : "1657160403018",
         "key" : "2aviu",
-        "mapWidth" : "640",
+        "mapWidth" : "510",
         "mapHeight" : "360"
     }).render();
 </script>

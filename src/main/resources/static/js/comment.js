@@ -249,3 +249,4 @@ function sendLoginForm() {
         document.location.href = "/login";
     }
 }
+

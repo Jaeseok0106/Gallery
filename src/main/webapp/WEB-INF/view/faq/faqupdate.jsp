@@ -53,7 +53,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <img src = "logo.png" id="logo" style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -131,22 +131,23 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
+<input type = "hidden" id = "faqid" value = "${faq_table.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;" class="text-center">
         <h4>FAQ UPDATE</h4>
     </div>
-    <form calss="row py-4" id="add" method="POST" action="/faqwrite">
+    <form calss="row py-4" id="add" method="POST" action="/faqupdate/${fdto.id}">
         <div class = "col"><br><br>
             <h3>CATEGORY</h3><select name="category" size="1">
-                <option name="category" value="1">관람</option>
-                <option name="category" value="2">예약</option>
-                <option name="category" value="3">홈페이지</option>
-                <option name="category" value="4">기타</option>
+                <option id = "1" name="category" value="1">관람</option>
+                <option id = "2" name="category" value="2">예약</option>
+                <option id = "3" name="category" value="3">홈페이지</option>
+                <option id = "4" name="category" value="4">기타</option>
             </select><br><br>
-            <h3>QUESTION</h3><textarea name = "question" class="form-control" id="editorq" rows="30" cols = "50">${faq_table.question}</textarea> <br><br>
-            <h3>ANSWER</h3></div><textarea name = "answer" class="form-control" id="editora" rows="30" cols = "50">${faq_table.answer}</textarea> <br><br>
+            <h3>QUESTION</h3><textarea name = "question" class="form-control" id="editorq" rows="30" cols = "50">${fdto.question}</textarea> <br><br>
+            <h3>ANSWER</h3></div><textarea name = "answer" class="form-control" id="editora" rows="30" cols = "50">${fdto.answer}</textarea> <br><br>
         <div class = "col text-end">
         <button type="submit" class="btn btn-outline-primary" id="clear">수정 완료</button>
         <button type="button" class="btn btn-outline-danger" id="reset">취소</button>
@@ -212,6 +213,11 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
+            for (let i = 1; i < 5; i++) {
+                if (${fdto.category} == i) {
+                    $("#"+i).prop('selected', true);
+                }
+            }
         })
 </script>
 <script src="/editor/ckeditor.js"></script>
