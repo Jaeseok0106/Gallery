@@ -1,20 +1,17 @@
 package com.human.gallery.web.QnA;
 
 
-import java.util.List;
-
-import com.human.gallery.domain.paging.pageDTO;
-
-
 import com.human.gallery.domain.QnA.iQna;
 import com.human.gallery.domain.QnA.qnaDTO;
-
+import com.human.gallery.domain.paging.pageDTO;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,12 +42,16 @@ public class QnaController {
 	public String doDetail(@SessionAttribute(name = "user", required = false) Users user, Model model,
 						   @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
 						   @RequestParam(required = false, defaultValue = "tc") String type,
-						   @RequestParam(required = false) String keyword,
-						   @RequestParam int id) {
+						   @RequestParam(required = false, defaultValue = "") String keyword,
+						   @RequestParam String id) {
+		log.info("paging = {}", paging);
+		log.info("type = {}" , type);
+		log.info("keyword = {}", keyword);
+		log.info("sort = {}", sort);
 		model.addAttribute("user",user);
 		qnaDTO qdto=qna.selqna(id);
 		model.addAttribute("qdto",qdto);
-		qnaDTO nepr=qna.nepr(id);
+		qnaDTO nepr=qna.nepr(id,paging.getKeyword(), paging.getType(), paging.getSort());
 		model.addAttribute("nepr", nepr);
 		qna.viewcount(id);
 		model.addAttribute("paging", paging);
@@ -82,7 +83,7 @@ public class QnaController {
 	// 유저정보, 기존 글정보 받아오기
 	@RequestMapping("/up")
 	public String doUp(@SessionAttribute(name = "user", required = false) Users user,Model model,
-					   @RequestParam int id) {
+					   @RequestParam String id) {
 		log.info("수정으로 넘어옴");
 		model.addAttribute("user",user);
 		qnaDTO qdto=qna.selqna(id);
