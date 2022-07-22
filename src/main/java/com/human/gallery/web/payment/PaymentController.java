@@ -3,6 +3,8 @@ package com.human.gallery.web.payment;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.human.gallery.domain.payment.Payment;
+import com.human.gallery.domain.payment.PaymentRepository;
 import com.human.gallery.domain.reserve.Reserve;
 import com.human.gallery.domain.reserve.ReserveRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PaymentController {
 
+    private final PaymentRepository paymentRepository;
     private final ReserveRepository reserveRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -59,6 +62,14 @@ public class PaymentController {
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JsonNode successNode = responseEntity.getBody();
             log.info("successNode = {}", successNode);
+            Payment payment = new Payment();
+            payment.setOrderId(orderId);
+            payment.setPaymentKey(String.valueOf(successNode.get("paymentKey")));
+            payment.setPrice(Integer.parseInt(String.valueOf(successNode.get("totalAmount"))));
+            payment.setPaymentDate(String.valueOf(successNode.get("approvedAt")));
+            payment.setPaymentMethod("토스");
+            reserveRepository.updatePaymentById(orderId);
+            paymentRepository.addState(payment);
             return "payment/success";
         } else {
             JsonNode failNode = responseEntity.getBody();
