@@ -22,4 +22,23 @@
     <select id ="findById" resultType="com.human.gallery.domain.reserve.Reserve">
         select * from reserve where orderId = #{param1}
     </select>
+
+    <update id = "updatePaymentById">
+        update reserve set isPayment = 'Y' where orderId = #{param1}
+    </update>
+
+    <select id = "findByUserId" resultType="com.human.gallery.domain.reserve.Reserve">
+        select a.* , b.name as exhibitName, c.username as userName
+        from reserve a, exhibition b, userDetail c
+        where a.userId = #{param1} and a.exhibit_id = b.id and a.userId = c.id
+    </select>
+    <select id = "findByIdWithUserId" resultType="com.human.gallery.domain.reserve.Reserve">
+        select a.* , b.name as exhibitName, c.username as userName
+        from reserve a, exhibition b, userDetail c
+        where a.orderId = #{param1} and a.userId = #{param2} and a.exhibit_id = b.id and a.userId = c.id
+    </select>
+
+    <update id = "updateStateByOrderId">
+        update reserve set isPayment = 'N' where orderId = #{param1}
+    </update>
 </mapper>

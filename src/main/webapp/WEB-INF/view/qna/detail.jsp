@@ -59,7 +59,7 @@ prefix="c" %> <%@ page session="false" %>
       </div>
       <br><br><br>
       <div class="nav-scroller mb-7" id = "list">
-        <ul class="nav justify-content-center" style = "display:block;">
+        <ul class="nav justify-content-center">
           <li class="nav-item mx-5">
             <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
             <div>
@@ -156,7 +156,7 @@ prefix="c" %> <%@ page session="false" %>
       </div>
       <div class = "col-3 text-start">
         <c:if test="${nepr.next!=9999}">
-          <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.next}'">이전</button>
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.next}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}'">이전</button>
         </c:if>
       </div>
       <div class = "col-6 text-center">
@@ -170,7 +170,7 @@ prefix="c" %> <%@ page session="false" %>
       </div>
       <div class = "col-3 text-end">
         <c:if test="${nepr.prev!=0}">
-          <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.prev}'">다음</button>
+          <button type="button" class="btn btn-outline-primary" onclick="location.href='detail?id=${nepr.prev}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}'">다음</button>
         </c:if>
       </div>
       <br><br>

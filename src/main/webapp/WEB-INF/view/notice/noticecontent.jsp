@@ -69,8 +69,9 @@
             </div>
         </div>
         <br><br><br>
-        <div class="nav-scroller mb-7" id = "list">
-            <ul class="nav justify-content-center" style = "display:block;">
+
+        <div class="nav-scroller mb-7" id = "list1">
+            <ul class="nav justify-content-center">
                 <li class="nav-item mx-5">
                     <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
                     <div>
@@ -100,7 +101,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/FAQ" id = "detail">FAQ</a>
+                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -171,7 +172,6 @@
             <c:if test="${nepr.next!=9999}">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.next}'">이전</button>
             </c:if>
-            <c:if test="${nepr.next==9999}"></c:if>
         </div>
         <div class="col-6 text-center">
             <button type="button" class="btn btn-outline-Danger" id="heart">추천</button>
@@ -181,7 +181,6 @@
             <c:if test="${nepr.prev!=0}">
                 <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.prev}'">다음</button>
             </c:if>
-            <c:if test="${nepr.prev==0}"></c:if>
         </div>
     </div>
     <br>

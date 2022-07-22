@@ -1,8 +1,8 @@
 package com.human.gallery.domain.QnA;
 
+import com.human.gallery.domain.paging.pageDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
