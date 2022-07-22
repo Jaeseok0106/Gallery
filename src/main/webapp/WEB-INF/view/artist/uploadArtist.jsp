@@ -53,7 +53,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:80px;"/>
+				<img src = "/logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -223,25 +223,21 @@ $(document)
 		$("#none3").css("display", "none");
 	})
 	$("#artistSend").click(function() {
-		if ($("#name", "#formFile").val() == '') {
+		if ($("#name").val() == '') {
 			alert("이름을 입력해주세요.");
 			return false;
 		}
-		if ($(".ck-content").text() == '') {
-			alert("안에를 채워주세요");
+		if ($("#formFile").val() == '') {
+			alert("사진을 입력해주세요");
+			console.log(ADA);
 			return false;
-		} else {
-			return true;
 		}
 	})
 })
 </script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
 <script>
-ClassicEditor.create( document.querySelector( '#editor')
-);
-ClassicEditor.create( document.querySelector( '#editor2')
-);
+CKEDITOR.replace("editor")
+CKEDITOR.replace("editor2")
 </script>
 </html>
