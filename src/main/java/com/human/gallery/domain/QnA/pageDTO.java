@@ -8,6 +8,11 @@ import java.io.Serializable;
 @Data
 @Slf4j
 public class pageDTO implements Serializable {
+    // 서칭
+    private String sort; // 정렬 기준
+    private String type; // 검색 타입
+    private String keyword; // 검색 키워드
+
     //입력받는 데이터
     private int curPage=1; // 현재 페이지 번호 (시작=1)
     private int rowSizePerPage=10;   // 한 페이지당 레코드 수(기본10)
