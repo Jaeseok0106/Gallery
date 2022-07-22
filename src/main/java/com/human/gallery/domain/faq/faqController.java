@@ -1,9 +1,5 @@
 package com.human.gallery.domain.faq;
-
 import java.util.ArrayList;
-
-
-import com.human.gallery.domain.notice.noticeDTO;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
@@ -11,11 +7,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -48,4 +41,27 @@ public class faqController {
         }
         return ja;
     }
+    @GetMapping("/faqwrite")
+    public String dofaqwrite(@SessionAttribute(name = "user", required = false) Users user,Model model ) {
+        model.addAttribute("user", user);
+        return "faq/faqwrite";
+    }
+    @PostMapping("/faqwrite")
+    public String dofaqwrite2(@RequestParam(value = "category", required = false) int category,
+                              @RequestParam("question") String question,
+                              @RequestParam("answer") String answer){
+        faq_table.addfaq(category, question, answer);
+        return "redirect:/FAQ";
+    }
+    @GetMapping("/faqupdate")
+    public String dofaqupdate(@SessionAttribute(name = "user", required = false) Users user,Model model ) {
+        model.addAttribute("user", user);
+        return "faq/faqupdate";
+    }
+    /*@RequestMapping("/faq/delete")
+    public String dodelete(@RequestParam("id") String id) {
+        log.info("넘어온 값 = {}" , id);
+        faq_table.faqdelete(id);
+        return "redirect:/faq";
+    }*/
 }

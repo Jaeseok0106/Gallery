@@ -20,14 +20,8 @@
     font-size: 20px;
     font-size: 1.25rem;
   }
-  .page-title {
-    border-top: 10px solid black;
-    border-bottom : 10px solid black;
-    margin-bottom : 4rem;
-  }
-  .page-title h1{
-    padding : 2rem;
-    text-align : center;
+  #detail {
+    font-size: 0.7rem;
   }
   body {
     font-family : LeeSeoyun;
@@ -40,6 +34,15 @@
   }
   a {
     text-decoration-line:none;
+  }
+  .page-title h1{
+    padding : 2rem;
+    text-align : center;
+  }
+  .page-title {
+    border-top: 10px solid black;
+    border-bottom : 10px solid black;
+    margin-bottom : 4rem;
   }
   .ck-editor__editable {
     height : 600px;
@@ -91,10 +94,7 @@
               <a class="nav-link" href="/qna" id = "detail">Q&A</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id = "detail">Disabled</a>
+              <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
             </li>
           </ul>
         </li>

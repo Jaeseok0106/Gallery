@@ -5,13 +5,9 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>FAQ</title>
+    <title>FAQ UPDATE</title>
 </head>
 <style>
-    table {
-        border-collapse: separate;
-        border-spacing: 0 10px;
-    }
     .nav-item{
         list-style-type:none;
         float:left;
@@ -27,18 +23,6 @@
     #detail {
         font-size: 0.7rem;
     }
-    #detail {
-        font-size: 0.7rem;
-    }
-    .page-title {
-        border-top: 10px solid black;
-        border-bottom : 10px solid black;
-        margin-bottom : 2rem;
-    }
-    .page-title h1{
-        padding : 2rem;
-        text-align : center;
-    }
     body {
         font-family : LeeSeoyun;
     }
@@ -49,11 +33,19 @@
         font-style: normal;
     }
     a {
-        text-decoration: none;
-        color:black;
-    }
-    a {
         text-decoration-line:none;
+    }
+    .page-title h1{
+        padding : 2rem;
+        text-align : center;
+    }
+    .page-title {
+        border-top: 10px solid black;
+        border-bottom : 10px solid black;
+        margin-bottom : 4rem;
+    }
+    .ck-editor__editable {
+        height : 100px;
     }
 </style>
 <body>
@@ -102,7 +94,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
+                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -139,38 +131,27 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<input type = "hidden" id = "faqid" value = "${faq_table.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div class = "container">
-        <div class = "page-title">
-            <h1>FAQ</h1>
-        </div>
+    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;" class="text-center">
+        <h4>FAQ UPDATE</h4>
     </div>
-    <ul class="nav justify-content-center" id="gry">
-        <li class="nav-item col-1">
-            <span class="nav-link" aria-current="page" id="pre" style="cursor:hand;" value="1">관람</span>
-        </li>
-        <li class="nav-item col-1">
-            <span class="nav-link" aria-current="page" id="ord" style="cursor:hand;"value="2">예약</span>
-        </li>
-        <li class="nav-item col-1">
-            <span class="nav-link" aria-current="page" id="web" style="cursor:hand;"value="3">홈페이지</span>
-        </li>
-        <li class="nav-item col-1">
-            <span class="nav-link" aria-current="page" id="etc" style="cursor:hand;" value="4">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기타</span>
-        </li>
-    </ul>
-    <div class="accordion" id="accordionExample">
-
+    <form calss="row py-4" id="add" method="POST" action="/faqwrite">
+        <div class = "col"><br><br>
+            <h3>CATEGORY</h3><select name="category" size="1">
+                <option name="category" value="1">관람</option>
+                <option name="category" value="2">예약</option>
+                <option name="category" value="3">홈페이지</option>
+                <option name="category" value="4">기타</option>
+            </select><br><br>
+            <h3>QUESTION</h3><textarea name = "question" class="form-control" id="editorq" rows="30" cols = "50">${faq_table.question}</textarea> <br><br>
+            <h3>ANSWER</h3></div><textarea name = "answer" class="form-control" id="editora" rows="30" cols = "50">${faq_table.answer}</textarea> <br><br>
+        <div class = "col text-end">
+        <button type="submit" class="btn btn-outline-primary" id="clear">수정 완료</button>
+        <button type="button" class="btn btn-outline-danger" id="reset">취소</button>
     </div>
-            <c:if test="${user.role=='관리자'}">
-                <div class = "text-center">
-                    <button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
-                </div>
-            </c:if>
-        </div>
+    </form>
     </div>
 </main>
 
@@ -199,7 +180,6 @@
 <script>
     $(document)
         .ready(function () {
-            list();
             console.log("시작 화면");
             $("#nav1").hover(function() {
                 $("#none1").css("display", "block");
@@ -233,140 +213,38 @@
                 $("#none3").css("display", "none");
             })
         })
+</script>
+<script src="/editor/ckeditor.js"></script>
+<script src="/editor/translations/ko.js"></script>
+<script>
+    ClassicEditor.create( document.querySelector( '#editorq' ) );
+    ClassicEditor.create( document.querySelector( '#editora' ) );
+
     $(document)
         .on('click','#logo',function(){
             document.location.href='/';
         })
     $(document)
-        .on('click','#btnwrite',function(){
-            document.location.href='/faqwrite';
-        })
-        .on("click","#pre,#ord,#web,#etc",function(){
-            console.log($(this).attr('value'));
-            listcat($(this).attr('value'));
+        .on('click','#clear',function(){
+            if(confirm("수정을 완료 하시겠습니까?")){
+                alert("수정이 완료 되었습니다.");
+                return true;
+            }
+            else{
+            }
         })
     $(document)
-    .on('click','#btnupdate',function(){
-        document.location.href='/faqupdate';
-    })
+        .on('click','#reset',function(){
+            if(confirm("수정을 취소 하시겠습니까?")){
+                alert("수정을 취소 하셨습니다.");
+                document.location.href='/FAQ';
+            }
+            else{
+
+            }
+        })
 </script>
 <script>
-    function list(){
-        $.ajax({
-            url:"/FAQ",
-            type:"POST",
-            datatype:"JSON",
-            data: {category : '1'},
-            beforeSend : function() {
-                $("#accordionExample").empty();
-            },
-            success:function(data){
-                for(let i=0; i < data.length; i++){
-                    let list = data[i];
-                    if ($("#role").val() == '관리자') {
-                        let str = `
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
-                                    \${list['question']}
-                                </button>
-                            </h2>
-                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    \${list['answer']}
-                                <br>
-                                <button type="button" id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
-                                <button type="button" id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
-                                </div>
-                            </div>
-                        </div>`;
-                        $("#accordionExample").append(str);
-                    } else {
-                        let str = `
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
-                                    \${list['question']}
-                                </button>
-                            </h2>
-                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    \${list['answer']}
-                                </div>
-                            </div>
-                        </div>`;
-                        $("#accordionExample").append(str);
-                    }
-                }
-            }
-        })
-    }
-    function listcat(categoryid){
-        $.ajax({
-            url:"/FAQ",
-            type:"POST",
-            datatype:"JSON",
-            data: {category : categoryid},
 
-            beforeSend : function() {
-                $("#accordionExample").empty();
-            },
-            success:function(data){
-                console.log($("#gry option:selected").val());
-                for(let i=0; i < data.length; i++){
-                    let list = data[i];
-                    if ($("#role").val() == '관리자') {
-                    let str=`
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
-                                    \${list['question']}
-                                </button>
-                            </h2>
-                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    \${list['answer']}
-                                <br>
-                                <button type="button" id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
-                                <button type="button" id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
-                                </div>
-                            </div>
-                        </div>`;
-                    $("#accordionExample").append(str);
-                } else {
-                        let str = `
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
-                                    \${list['question']}
-                                </button>
-                            </h2>
-                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    \${list['answer']}
-                                </div>
-                            </div>
-                        </div>`;
-                    }
-                }
-            }
-        })
-    }
-    $(document)
-        .on('click','#btndelete',function(){
-            if(confirm("정말 삭제 하시겠습니까?")) {
-                $.ajax({
-                    type:'get',datatype:'text',url:'faq/delete',
-                    data : {id : $("#id").val()},
-                    success:function(){
-                        alert("게시물이 삭제 되었습니다.");
-                        document.location.href = "/FAQ";
-                    }
-                })
-            }
-
-            else {
-            };
-        })
 </script>
 </html>
