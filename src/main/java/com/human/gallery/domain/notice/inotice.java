@@ -7,6 +7,11 @@ import java.util.List;
 
 @Mapper
 public interface inotice {
+
+
+    public void pagingcount(int id);
+    ArrayList<noticeDTO> paging();
+    void heartDelete(String id);
     public List<noticeDTO> listnotice(pageDTO paging); // notice 테이블 리스트
     public int getCount(pageDTO paging); // 레코드 개수
     noticeDTO noticecontent(int id); // 선택한 글

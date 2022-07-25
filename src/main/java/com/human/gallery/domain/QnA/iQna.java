@@ -19,4 +19,6 @@ public interface iQna {
 	public int heart(int postid, int heartid); // 추천리스트 카운트 조회
 	int addheart(int postid, int heartid); // 추천테이블에 add
 	public void plusheart(int id); // 추천+
+	void heartDelete(int id);
+	void commentDelete(int id);
 	}

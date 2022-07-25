@@ -36,12 +36,15 @@ dependencies {
 	implementation group: 'javax.mail', name: 'mail', version: '1.4.7'
 	implementation group: 'org.springframework', name: 'spring-context-support', version: '5.3.18'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
+	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.6.3'
 
 	// 오라클 클라우드 연동
 	implementation group: 'com.oracle.database.jdbc', name: 'ojdbc10', version: '19.15.0.0.1'
 	implementation group: 'com.oracle.database.security', name: 'osdt_cert', version: '21.5.0.0'
 	implementation group: 'com.oracle.database.security', name: 'osdt_core', version: '21.5.0.0'
 	implementation group: 'com.oracle.database.security', name: 'oraclepki', version: '21.5.0.0'
+
 
 	compileOnly("org.springframework.boot:spring-boot-devtools")
 

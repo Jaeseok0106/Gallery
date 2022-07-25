@@ -9,6 +9,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ReviewRepository {
+
+	public void count(int id);
+	void heartDelete(int id);
+
+	void commentDelete(int id);
+
 	public List<Review> reviewList(pageDTO paging); // 리뷰 테이블 리스트
 	public int getCount(pageDTO paging); // 레코드 개수
 	Review selView(int id); // 선택한 글

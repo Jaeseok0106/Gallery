@@ -87,6 +87,8 @@ public class ReviewController {
 	// 게시글 삭제
 	@RequestMapping("/deleteReview")
 	public String doDelete(@RequestParam int id) {
+		review.commentDelete(id);
+		review.heartDelete(id);
 		review.deleteReview(id);
 		return "redirect:/review";
 	}

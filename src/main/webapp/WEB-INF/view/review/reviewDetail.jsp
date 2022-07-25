@@ -103,9 +103,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="detail">Disabled</a>
-                        </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
@@ -126,9 +123,6 @@
                         </c:if>
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="detail">My page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="detail">Disabled</a>
                         </li>
                     </ul>
                 </li>

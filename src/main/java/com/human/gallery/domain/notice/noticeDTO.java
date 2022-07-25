@@ -15,5 +15,6 @@ public class noticeDTO {
 	private String userid;
 	private int next;
 	private int prev;
-
+	private int postid;
+	private int heartid;
 }
