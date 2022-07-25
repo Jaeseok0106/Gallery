@@ -17,20 +17,37 @@
 		where seq <![CDATA[>=]]> #{firstRow}
 	</select>
 
-	<sql id='sort'>
+	<sql id="sort">
 		<if test='sort==null || sort==""'>
 			id
 		</if>
 		<if test='sort=="date"'>
-			postdate
+			postdate desc, a.id
 		</if>
 		<if test='sort=="view"'>
-			views
+			views desc, a.id
 		</if>
 		<if test='sort=="heart"'>
-			heart
+			heart desc, a. id
+		</if>
+
+	</sql>
+
+	<sql id="sort2">
+		<if test='sort2==null || sort2==""'>
+			id
+		</if>
+		<if test='sort2=="date"'>
+			postdate, id
+		</if>
+		<if test='sort2=="view"'>
+			views ,id
+		</if>
+		<if test='sort2=="heart"'>
+			heart, id
 		</if>
 	</sql>
+
 
 	<sql id='type'>
 		<if test='type != null and type != ""'>
@@ -74,11 +91,11 @@
 	</select>
 
 	<!-- 이전글, 다음글 -->
-	<select id='nepr' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="com.human.gallery.domain.paging.pageDTO">
+	<select id='nepr' resultType="com.human.gallery.domain.QnA.qnaDTO" parameterType="String">
 		select *
 		from (select id,
-			lead(id,1,9999) over(order by <include refid='sort'/>) as next,
-           	lag(id,1,0) over(order by <include refid='sort'/>) as prev
+			lead(id,1,9999) over(order by <include refid="sort2"/>) as next,
+           	lag(id,1,0) over(order by <include refid="sort2"/>) as prev
 			from board_post
 			where categoryList=3
 			<if test='keyword != null and keyword != ""'>
@@ -91,12 +108,13 @@
 				<if test='type=="c"'>
 					and content like '%' || #{keyword} || '%'
 				</if>
-			</if>)
-		where id=#{param1}
+			</if>
+			)
+		where id=#{id}
 	</select>
 
 	<!-- 조회수 -->
-	<update id="viewcount" parameterType="int">
+	<update id="viewcount" parameterType="String">
 		update board_post
 		set views=views+1
 		where id=#{param1}
