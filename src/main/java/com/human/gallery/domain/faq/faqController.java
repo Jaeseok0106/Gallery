@@ -1,17 +1,15 @@
 package com.human.gallery.domain.faq;
-import java.util.ArrayList;
 
-import com.human.gallery.domain.notice.noticeDTO;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
 
 
 
@@ -20,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class faqController {
 
-    private static final Logger logger = LoggerFactory.getLogger(faqController.class);
     private final ifaq faq_table;
     @GetMapping("/FAQ")
     public String faq(@SessionAttribute(name = "user", required = false) Users user,Model model ) {

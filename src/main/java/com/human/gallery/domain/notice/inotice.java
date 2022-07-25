@@ -9,7 +9,6 @@ import java.util.List;
 public interface inotice {
 
 
-    public void pagingcount(int id);
     ArrayList<noticeDTO> paging();
     void heartDelete(String id);
     public List<noticeDTO> listnotice(pageDTO paging); // notice 테이블 리스트
