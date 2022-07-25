@@ -250,3 +250,32 @@ function sendLoginForm() {
     }
 }
 
+let str = `
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
+                                    \${list['question']}
+                                </button>
+                            </h2>
+                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    \${list['answer']}
+                                </div>
+                            </div>
+                        </div>`;
+let str = `
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
+                                    \${list['question']}
+                                </button>
+                            </h2>
+                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    \${list['answer']}
+                                <br>
+                                <button type="button" name = \${list['id']} id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
+                                <button type="button" name = \${list['id']} id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
+                                </div>
+                            </div>
+                        </div>`;

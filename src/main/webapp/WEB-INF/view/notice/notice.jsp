@@ -320,7 +320,7 @@ $('#btnSearch').click(function (e) {
 	}
 	location.href=url;
 })
-$('#serform').keypress(function (e) {
+/*$('#serform').keypress(function (e) {
 	e.preventDefault();
 	var url="/notice";
 	if($('#selSort option:selected').val()=='date') {
@@ -331,6 +331,6 @@ $('#serform').keypress(function (e) {
 		url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
 	}
 	location.href=url;
-})
+})*/
 </script>
 </html>
