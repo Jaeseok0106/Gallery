@@ -14,9 +14,9 @@ table {
 }
 .nav-item{
 list-style-type:none;
-float:left;
 font-size: 55px;
 }
+
 .nav-link {
     font-weight: 600;
     color: #000000;
@@ -48,23 +48,16 @@ body {
 a {
 text-decoration-line:none;
 }
-.input-group-addon,.input-group-text {
-    border-left: 0 none;
-    padding: 4px 9px 4px 9px;
-}
+
 .input-group-addon .glyphicon-calendar:before, .input-group-text .datePicker-calendar:before{
     content: " ";
-    background: url(/assets/images/buttons/btn_calendar.png) center center no-repeat;
     width: 18px;
     height: 18px;
     display: block;
     overflow: hidden;
 }
 div {white-space: nowrap;}
-#btn01{
-    height:auto;
-    vertical-align: middle;
-}
+
 #date1,#date2{
     width:130px;
     height:38px;
@@ -73,7 +66,7 @@ div {white-space: nowrap;}
     border-radius: 4px;
     color: rgb(117, 117, 117);
 }
-#detail {
+#history {
     background-color: white;
 }
 #tb1 {
@@ -88,26 +81,26 @@ div {white-space: nowrap;}
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:80px;"/>
+				<img src = "/logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
 		<div class="nav-scroller mb-7" id = "list">
-			<ul class="nav justify-content-center" style = "display:block;">
+			<ul class="nav justify-content-center">
 				<li class="nav-item mx-5">
 					<a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
 					<div>
 						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
-							<li class="nav-item">
+							<li class="nav-item1">
 								<a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
 							</li>
-							<li class="nav-item">
+							<li class="nav-item1">
 								<a class="nav-link" href="#" id = "detail">Link</a>
 							</li>
-							<li class="nav-item">
+							<li class="nav-item1">
 								<a class="nav-link" href="#" id = "detail">Link</a>
 							</li>
-							<li class="nav-item">
+							<li class="nav-item1">
 								<a class="nav-link" id = "detail">Disabled</a>
 							</li>
 						</ul>
@@ -180,18 +173,18 @@ div {white-space: nowrap;}
     <div class="col-6 col-sm-3">
         <h3>내역조회</h3>
         조회기간&nbsp;&nbsp;
-        <button type="button" class="btn btn-outline-secondary" id="btn01">오늘</button>&nbsp;
-        <button type="button" class="btn btn-outline-secondary" id="btn01">이번주</button>&nbsp;
-        <button type="button" class="btn btn-outline-secondary" id="btn01">이번달</button>&nbsp;
-        <button type="button" class="btn btn-outline-secondary" id="btn01">3개월</button>&nbsp;&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnToday" value = "오늘"></input>&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnWeek" value = "이번주"></input>&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnMonth" value = "이번달"></input>&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnThird" value = "3개월"></input>&nbsp;&nbsp;
         <input type="date" id="date1">~
         <input type="date" id="date2">&nbsp;
-        <button type="submit" class="btn btn-outline-secondary" id="btn01" style="font-weight: bold;">조회</button>
+        <input type="button" class="btn btn-outline-secondary" id="selectPayment" style="font-weight: bold;" value = "조회"></input>
     </div>
     <br><br>
 	<div class = "container" id = "boardList">
 		<div class = "row">
-			<table>
+			<table id = "paymentTable">
 				<tr class ="text-center">
 					<th>예매번호</th>
 					<th>제목</th>
@@ -199,70 +192,16 @@ div {white-space: nowrap;}
 					<th>상태</th>
 					<th>확인/신청</th>
 				</tr>
-				<tr class = "p-5">
-					<td class = "text-center">03453523</td>
-					<td class = "text-center">asdf작가의 dfadasdad</td>
-                    <td class = "text-center">2022-05-07</td>
-					<td class = "text-center">예매취소</td>
-					<td class = "text-center"><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
-				</tr>
-				<tr>
-					<td class = "text-center">14522454</td>
-					<td class = "text-center">ㅇㅇㅇ의 ㅁㅁㅁ전시회</td>
-                    <td class = "text-center">2022-06-24</td>
-					<td class = "text-center">예매완료</td>
-					<td class = "text-center"><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
-				</tr>
-                <tr>
-					<td class = "text-center">23431334</td>
-					<td class = "text-center">ㅁㅁ으로 알아보는 gfgofaiaf</td>
-                    <td class = "text-center">2022-07-01</td>
-					<td class = "text-center">예매완료</td>
-					<td class = "text-center"><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
-				</tr>
 			</table>
 			<p></p>
 			<p></p>		
 			<p></p>
 		</div>
 	</div>
-    <div id="detail" style="display: none;" align="center">
+    <div id="history" style="display: none;" align="center">
     <p style="margin-top: 40px;"></p>
     <h2>예매내역</h2><br>
-    <table align="center" id="tb1" class="table table-striped">
-    <tr>
-        <th>예매번호</th>
-        <td align="left">03453523</td>
-    </tr>
-    <tr>
-        <th>제목</th>
-        <td align="left">asdf작가의 dfadasdad</td>
-    </tr>
-    <tr>
-        <th>날짜</th>
-        <td align="left">2022-05-07</td>
-    </tr>
-    <tr>
-        <th>이름</th>
-        <td align="left">김김김</td>
-    </tr>
-    <tr>
-        <th>인원</th>
-        <td align="left">4</td>
-    </tr>
-    <tr>
-        <th>상태</th>
-        <td align="left">예매완료</td>
-    </tr>
-    <tr style="display: none;">
-    </tr>
-    <tr>
-        <td colspan="2" align="center">
-            <p style="margin-top: 100px;"></p>
-            <button type="button" class="btn btn-outline-dark" id="btnC">취소하기</button>
-            <button type="button" class="btn btn-outline-dark" id="btnCancel">닫기</button>
-        </td>
-    </tr>
+    <table id="tb1" class="table table-striped text-center">
     </table>
     </div>
 </main>
@@ -286,8 +225,46 @@ div {white-space: nowrap;}
   </footer>
 </div>
 </body>
+<script src = /js/account.js></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script>
+	$(document)
+			.ready(function () {
+				console.log("시작 화면");
+				$("#nav1").hover(function() {
+					$("#none1").css("display", "block");
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				}, function() {
+				})
+				$("#nav2").hover(function() {
+					$("#none1").css("display", "none");
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				})
+				$("#nav3").hover(function() {
+					$("#none1").css("display", "none");
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				})
+				$("#nav4").hover(function() {
+					$("#none1").css("display", "none");
+					$("#none2").css("display", "block");
+					$("#none3").css("display", "none");
+				})
+				$("#nav5").hover(function() {
+					$("#none1").css("display", "none")
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "block");
+				})
+				$("#nav6").hover(function() {
+					$("#none1").css("display", "none")
+					$("#none2").css("display", "none");
+					$("#none3").css("display", "none");
+				})
+			})
+</script>
 <script>
 	$(document)
 			.on('click','#logo',function(){
@@ -295,25 +272,89 @@ div {white-space: nowrap;}
 			})
 $(document)
 .ready(function() {
-    $('#detail').dialog({
+	getPaymentHistory();
+    $('#history').dialog({
         autoOpen:false,
         width:600,
         height:800,
         open: function() {
-        
+
         },
         close: function() {
         }
     })
 })
 .on('click','#btnDetail',function() {
-    $('#detail').dialog('open');
+	let id = $(this).parent().parent().find('td:eq(0)').attr('id');
+	console.log("오픈할 id = " + id);
+	$.ajax({
+		type : 'POST',
+		url : '/history/reserve/detail/' + id,
+		data : {userId : $("#usernum").val()},
+		dataType : 'JSON',
+		beforeSend : function () {
+			$("#tb1").empty();
+		},
+		success : function (data) {
+			console.log("성공 " + data['orderId']);
+			let str = `
+	 <tr>
+		<th>예매번호</th>
+		<td id = orderId>\${data['orderId']}</td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td>\${data['exhibitionName']}</td>
+	</tr>
+	<tr>
+		<th>날짜</th>
+		<td>\${data['reserveDate']}</td>
+	</tr>
+	<tr>
+		<th>이름</th>
+		<td>\${data['representName']}</td>
+	</tr>
+	<tr>
+		<th>인원</th>
+		<td>\${data['person']}</td>
+	</tr>
+	<tr>
+		<th>상태</th>
+		<td>예매완료</td>
+	</tr>
+	<tr style="display: none;">
+	</tr>
+	<tr>
+		<td colspan="2">
+			<p style="margin-top: 100px;"></p>
+			<button type="button" class="btn btn-outline-dark" id="btnC">취소하기</button>
+			<button type="button" class="btn btn-outline-dark" id="btnCancel">닫기</button>
+		</td>
+	</tr>`
+			$("#tb1").append(str);
+		}
+	})
+	$('#history').dialog('open');
 })
 .on('click','#btnCancel',function() {
-    $('#detail').dialog('close');
+    $('#history').dialog('close');
 })
 .on('click','#btnC',function() {
-    if(!confirm('예매를 취소하시겠습니까?')) return false;
+    if(!confirm('예매를 취소하시겠습니까?'))  {
+		return false;
+	}
+	else {
+		$.ajax({
+			type : 'POST',
+			url : '/history/reserve/delete/'+$("#orderId").text(),
+			data : '',
+			dataType : 'JSON',
+			success : function() {
+				$('#history').dialog('close');
+				getPaymentHistory();
+			}
+		})
+	}
 })
 </script>
 </html>

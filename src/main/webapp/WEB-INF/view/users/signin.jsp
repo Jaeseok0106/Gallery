@@ -67,7 +67,7 @@ a {
 		</div>
 		<br><br><br>
 		<div class="nav-scroller mb-7" id = "list">
-			<ul class="nav justify-content-center" style = "display:block;">
+			<ul class="nav justify-content-center">
 				<li class="nav-item mx-5">
 					<a class="nav-link active p-7" aria-current="page" id = "nav1">About us</a>
 					<div>

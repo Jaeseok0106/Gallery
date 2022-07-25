@@ -58,7 +58,7 @@
     </div>
     <br><br><br>
     <div class="nav-scroller mb-7" id = "list">
-      <ul class="nav justify-content-center" style = "display:block;">
+      <ul class="nav justify-content-center">
         <li class="nav-item mx-5">
           <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
           <div>
@@ -135,7 +135,7 @@
     <form>
       <div class = "col">
         <input class="form-control" type="text" id="title" placeholder="제목" aria-label="default input example"><br><br>
-        <textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
+        <textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea><br><br>
       </div>
       <div class = "col text-end">
         <button type="button" class="btn btn-outline-primary" id="clear">작성 완료</button>
@@ -204,10 +204,10 @@
             })
           })
 </script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
 <script>
-  ClassicEditor.create( document.querySelector( '#editor' ) );
+  CKEDITOR.replace("editor")
+
   $(document)
           .on('click','#reset',function(){
             if(confirm("정말 작성을 취소 하시겠습니까?")){
@@ -217,20 +217,28 @@
 
             }
           })
-  $(document)
           .on('click','#clear',function(){
             if(confirm("정말 작성 완료 하시겠습니까?")){
-              $.ajax({
-                type:'post',datatype:'text',url:'write',
-                data : {title:$("#title").val(),content:$(".ck-content").text()},
-                success:function(){
-                  alert("게시물이 등록이 완료 되었습니다.");
-                  document.location.href = "/notice";
-                }
-              })
+              editor = CKEDITOR.instances.editor.getData();
+              if(editor != "" && $("#title").val() != ""){
+                $.ajax({
+                  type:'POST',
+                  datatype:'text',
+                  url:'write',
+                  data:{title:$("title").val(),content:editor},
+                  success:function(){
+                    alert("작성이 완료 되었습니다.");
+                    document.location.href = "/notice";
+                  }
+                })
+              }
+              else {
+                alert("작성을 완료 하지 않았습니다.");
+                return false;
+              }
             }
             else{
-
+              return false;
             }
           })
   $(document)

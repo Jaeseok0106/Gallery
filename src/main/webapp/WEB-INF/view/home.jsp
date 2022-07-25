@@ -17,7 +17,6 @@ height:568px;
 }
 .nav-item{
 list-style-type:none;
-float:left;
 font-size: 55px;
 }
 .nav-link {
@@ -36,12 +35,12 @@ font-size: 55px;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:80px;"/>
+				<img src = "/logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
 		<div class="nav-scroller mb-7" id = "list">
-			<ul class="nav justify-content-center" style = "display:block;">
+			<ul class="nav justify-content-center">
 				<li class="nav-item mx-5">
 					<a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
 					<div>
@@ -95,7 +94,7 @@ font-size: 55px;
 							<a class="nav-link" href="#" id = "detail">My page</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
+							<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
 						</li>
 					</ul>
 				</li>

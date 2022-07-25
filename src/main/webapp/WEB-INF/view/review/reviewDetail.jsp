@@ -163,12 +163,11 @@
             </p>
         </div>
         <div class="col-3 text-start">
-            <c:if test="${ndto.last != 9999}">
+            <c:if test="${ndto.next != 9999}">
                 <button type="button" class="btn btn-outline-primary"
-                        onclick="location.href='reviewDetail?id=${ndto.last}'">이전
+                        onclick="location.href='reviewDetail?id=${ndto.next}'">이전
                 </button>
             </c:if>
-            <c:if test="${ndto.last == 9999}"></c:if>
         </div>
         <div class="col-6 text-center">
             <c:if test = "${user.id != null and user.id != qdto.userid}">
@@ -177,12 +176,11 @@
             <button type="button" class="btn btn-outline-primary" onclick="location.href='/review'">목록</button>
         </div>
         <div class="col-3 text-end">
-            <c:if test="${ndto.next != 9999}">
+            <c:if test="${ndto.last != 0}">
                 <button type="button" class="btn btn-outline-primary"
-                        onclick="location.href='reviewDetail?id=${ndto.next}'">다음
+                        onclick="location.href='reviewDetail?id=${ndto.last}'">다음
                 </button>
             </c:if>
-            <c:if test="${ndto.next == 9999}"></c:if>
         </div>
     </div>
     <br>
