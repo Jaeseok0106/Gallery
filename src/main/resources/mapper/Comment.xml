@@ -51,4 +51,13 @@
     <select id = "getMaxReorder" resultType="Integer">
         select NVL(max(reorder), 0) from post_comment where post_id = #{param1} and redepth = #{param2} and reparent = #{param3}
     </select>
+
+    <select id = "findByIdWithPaging" resultType="com.human.gallery.domain.comment.Comment">
+        SELECT a.*,  b.id as writeName
+        FROM (
+        SELECT rownum as rn, id, post_id, writer, content, postdate, reparent, redepth, reorder, isDelete
+        FROM (select id, post_id, writer, content, postdate, reparent, redepth, reorder, isDelete
+        FROM post_comment where post_id = #{postId} order by reorder)) a, users b
+        <![CDATA[where rn >= ((#{pageNumber}-1) * 15 + 1) and rownum < 16 and a.writer = b.usernum]]>
+    </select>
 </mapper>

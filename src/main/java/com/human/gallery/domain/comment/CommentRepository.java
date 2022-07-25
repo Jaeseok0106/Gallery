@@ -2,6 +2,7 @@ package com.human.gallery.domain.comment;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
@@ -27,4 +28,6 @@ public interface CommentRepository {
     void adjustReorder(String postId, String reorder);
 
     Integer getMaxReorder(String postId, String redepth, String reparent);
+    ArrayList<Comment> findByIdWithPaging(@Param("postId") String postId,
+                                          @Param("pageNumber") String pageNumber);
 }
