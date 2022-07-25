@@ -49,77 +49,74 @@
 </style>
 <body>
 <div class="container">
-    <header class="blog-header py-3" style = "height : 230px;">
+    <header class="blog-header py-3" style="height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id="logo" style = "height:80px;"/>
+                <img src = "/logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
-        <div class="nav-scroller mb-7" id = "list1">
-            <ul class="nav justify-content-center" style = "display:block;">
+        <div class="nav-scroller mb-7" id="list">
+            <ul class="nav justify-content-center" style="display:block;">
                 <li class="nav-item mx-5">
-                    <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
+                    <a class="nav-link active p-7" aria-current="page" href="#" id="nav1">About us</a>
                     <div>
-                        <ul class="nav justify-content-end" style = "display : none;" id = "none1">
+                        <ul class="nav justify-content-end" style="display : none;" id="none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id = "detail">Disabled</a>
+                                <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/artist" id = "nav3">artist</a>
+                    <a class="nav-link" href="/artist" id="nav3">artist</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" id = "nav4">Post</a>
-                    <ul class="nav justify-content-end" style = "display : none;" id = "none2">
+                    <a class="nav-link" id="nav4">Post</a>
+                    <ul class="nav justify-content-end" style="display : none;" id="none2">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+                            <a class="nav-link" aria-current="page" href="/review" id="detail">Review</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item mx-5">
-                    <a class="nav-link" aria-current="page" href="#" id = "nav5">Member</a>
-                    <ul class="nav justify-content-end" style = "display : none;" id = "none3">
-                        <c:if test = "${user.id == null}">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/signin" id = "detail">Sign in</a>
-                            </li>
-                        </c:if>
-                        <c:if test = "${user.id != null }">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
-                            </li>
-                        </c:if>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id = "detail">My page</a>
+                            <a class="nav-link" href="/qna" id="detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
+                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" aria-current="page" href="/notice" id = "nav6">Notice</a>
+                    <a class="nav-link" aria-current="page" href="#" id="nav5">Member</a>
+                    <ul class="nav justify-content-end" style="display : none;" id="none3">
+                        <c:if test="${user.id == null}">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/signin" id="detail">Sign in</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${user.id != null }">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
+                            </li>
+                        </c:if>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="detail">My page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="detail">Disabled</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
                 </li>
             </ul>
         </div>
@@ -127,7 +124,7 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<input type = "hidden" id = "id" value = "${ndto.id}">
+<input type = "hidden" id = "postId" value = "${ndto.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
@@ -164,8 +161,8 @@
             <c:if test="${nepr.next==9999}"></c:if>
         </div>
         <div class="col-6 text-center">
-            <button type="button" class="btn btn-outline-Danger" id="heart">추천</button>
-            <button type="button" class="btn btn-outline-primary" id="list">목록</button>
+            <button type="button" class="btn btn-outline-Danger" onclick="updateLike(); return false;">추천</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='/notice'">목록</button>
         </div>
         <div class="col-3 text-end">
             <c:if test="${nepr.prev!=0}">
@@ -182,7 +179,6 @@
     </div>
     </c:if>
 </main>
-
 <!-- 하단 -->
 <div class="container-fluid">
     <footer
@@ -195,7 +191,7 @@
                 class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
         >
             <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
+                <use xlink:href="#bootstrap"/>
             </svg>
         </a>
 
@@ -225,6 +221,7 @@
         crossorigin="anonymous"
 ></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="/js/comment.js"></script>
 <script>
     $(document).ready(function () {
         console.log("시작 화면");
@@ -263,10 +260,6 @@
         });
     });
     $(document)
-        .on('click','#list',function(){
-            document.location.href='/notice';
-        })
-    $(document)
         .on('click','#logo',function(){
             document.location.href='../../..';
         })
@@ -286,9 +279,29 @@
             else {
             };
         })
+
     $(document)
     .on('click','#update',function(){
         document.location.href='/update/${ndto.id}';
     })
+    var postid=${ndto.id};
+    var userid=${user.userNum};
+    function updateLike() {
+        $.ajax({
+            type: "POST",
+            url: "/notice/like",
+            dataType: "json",
+            data: {'postid': postid, 'userid': userid},
+            success: function (findLike) {
+                if (findLike == 0) {
+                    alert("추천이 완료되었습니다.");
+                    location.reload();
+                } else if (findLike == 1) {
+                    alert("이미 추천한 게시글입니다.");
+                    location.reload();
+                }
+            }
+        });
+    }
 </script>
 </html>

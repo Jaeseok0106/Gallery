@@ -86,6 +86,8 @@ public class ReviewController {
 	}
 	@RequestMapping("/deleteReview")
 	public String doDelete(@RequestParam int id) {
+		review.commentDelete(id);
+		review.heartDelete(id);
 		review.deleteReview(id);
 		return "redirect:/review";
 	}

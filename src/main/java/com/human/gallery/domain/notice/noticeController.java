@@ -82,6 +82,7 @@ public class noticeController {
 	@RequestMapping("/content/delete")
 	public String dodelete(@RequestParam("id") String id) {
 		log.info("넘어온 값 = {}" , id);
+		board_post.heartDelete(id);
 		board_post.delete(id);
 		return "redirect:/notice";
 	}
@@ -98,6 +99,16 @@ public class noticeController {
 		noticeDTO ndto=board_post.noticecontent(id);
 		model.addAttribute("ndto",ndto);
 		return "notice/noticeupdate";
+	}
+	@ResponseBody
+	@RequestMapping(value="/notice/like", method=RequestMethod.POST)
+	public int doLike(@RequestParam int postid, @RequestParam int userid) {
+		int findLike=board_post.findLike(postid, userid);
+		if(findLike == 0) {
+			board_post.insertLike(postid, userid);
+			board_post.likeNotice(postid);
+		}
+		return findLike;
 	}
 
 }

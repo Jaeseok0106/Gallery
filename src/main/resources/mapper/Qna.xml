@@ -127,4 +127,12 @@
 		set heart=heart+1
 		where id=#{param1}
 	</update>
+
+	<!-- 댓글, 추천삭제 -->
+	<delete id="commentDelete">
+		delete from post_comment where post_id=#{param1}
+	</delete>
+	<delete id="heartDelete">
+		delete from post_heart where post_id=#{param1}
+	</delete>
 </mapper>

@@ -90,9 +90,6 @@ text-decoration-line:none;
 						<li class="nav-item">
 							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
-						</li>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">

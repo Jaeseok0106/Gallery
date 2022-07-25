@@ -18,4 +18,8 @@ public interface inotice {
     public void pagingcount(int id);
 
     ArrayList<noticeDTO> paging();
+    public void likeNotice(int id); // 추천 +1
+    public int findLike(int postid, int heartid);
+    int insertLike(int postid, int heartid);
+    void heartDelete(String id);
 }

@@ -98,6 +98,8 @@ public class QnaController {
 	// 게시글 삭제
 	@RequestMapping("/delqna")
 	public String doDelete(@RequestParam int id) {
+		qna.commentDelete(id);
+		qna.heartDelete(id);
 		qna.delqna(id);
 		return "redirect:/qna";
 	}

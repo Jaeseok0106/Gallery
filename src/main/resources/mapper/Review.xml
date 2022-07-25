@@ -43,6 +43,12 @@
 	<insert id="insertLike">
 		insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
 	</insert>
+	<delete id="commentDelete">
+		delete from post_comment where post_id=#{param1}
+	</delete>
+	<delete id="heartDelete">
+		delete from post_heart where post_id=#{param1}
+	</delete>
 	<delete id="deleteReview">
 		delete from board_post where id=#{param1}
 	</delete>

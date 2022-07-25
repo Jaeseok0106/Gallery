@@ -55,6 +55,10 @@
     a {
         text-decoration-line:none;
     }
+    .left-area {
+        float:left;
+        width:500px;
+    }
 </style>
 <body>
 <div class="container">
@@ -97,9 +101,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
                         </li>
                     </ul>
                 </li>
@@ -251,8 +252,8 @@
     new daum.roughmap.Lander({
         "timestamp" : "1657160403018",
         "key" : "2aviu",
-        "mapWidth" : "640",
-        "mapHeight" : "360"
+        "mapWidth" : "450",
+        "mapHeight" : "300"
     }).render();
 </script>
 </html>

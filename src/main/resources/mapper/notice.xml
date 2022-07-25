@@ -29,6 +29,9 @@
               where categoryList=4)
         where id=#{param1}
     </select>
+    <delete id="heartDelete">
+        delete from post_heart where post_id=#{param1}
+    </delete>
     <delete id="delete">
         delete from board_post where id=#{param1}
     </delete>
@@ -54,4 +57,13 @@
                                 order by id desc) a)
         where RN between 1 and 10;
     </select>
+    <insert id="insertLike">
+        insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
+    </insert>
+    <select id="findLike" resultType="int">
+        select count(*) from post_heart where post_id=#{param1} and heart_id=#{param2}
+    </select>
+    <update id="likeNotice" parameterType="int">
+        update board_post set heart=heart+1 where id=#{param1}
+    </update>
 </mapper>
