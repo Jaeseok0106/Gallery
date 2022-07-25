@@ -22,13 +22,13 @@
 			id
 		</if>
 		<if test='sort=="date"'>
-			postdate
+			postdate, a.id
 		</if>
 		<if test='sort=="view"'>
-			views
+			views, a.id
 		</if>
 		<if test='sort=="heart"'>
-			heart
+			heart, a.id
 		</if>
 	</sql>
 
