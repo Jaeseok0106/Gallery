@@ -314,17 +314,17 @@ $(document)
 		}
 		location.href=url;
 	})
-	$('#serform').keypress(function (e) {
-		e.preventDefault();
-		var url="/qna";
-		if($('#selSort option:selected').val()=='date') {
-			url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-		} else if($('#selSort option:selected').val()=='view') {
-			url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-		} else if($('#selSort option:selected').val()=='heart') {
-			url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-		}
-		location.href=url;
-	})
+	// $('#serform').keypress(function (e) {
+	// 	e.preventDefault();
+	// 	var url="/qna";
+	// 	if($('#selSort option:selected').val()=='date') {
+	// 		url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+	// 	} else if($('#selSort option:selected').val()=='view') {
+	// 		url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+	// 	} else if($('#selSort option:selected').val()=='heart') {
+	// 		url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+	// 	}
+	// 	location.href=url;
+	// })
 </script>
 </html>

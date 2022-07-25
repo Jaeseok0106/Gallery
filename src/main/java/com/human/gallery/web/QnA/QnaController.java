@@ -62,6 +62,10 @@ public class QnaController {
 		paging.pageSetting();
 		List<qnaDTO> qnalist=qna.qnalist(paging);
 		model.addAttribute("qnalist",qnalist);
+		qnaDTO qdto=qna.selqna(id);
+		model.addAttribute("qdto",qdto);
+		qnaDTO nepr=qna.nepr(id);
+		model.addAttribute("nepr", nepr);
 		return "qna/detail";
 	}
 
