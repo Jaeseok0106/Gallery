@@ -12,9 +12,13 @@
     <title>NOTICE CONTENT</title>
 </head>
 <style>
-    .nav-item {
-        list-style-type: none;
-        float: left;
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+    .nav-item{
+        list-style-type:none;
+        float:left;
         font-size: 55px;
     }
     .nav-link {
@@ -24,27 +28,36 @@
         font-size: 20px;
         font-size: 1.25rem;
     }
+    #detail {
+        font-size: 0.7rem;
+    }
+    #detail {
+        font-size: 0.7rem;
+    }
     .page-title {
         border-top: 10px solid black;
-        border-bottom: 10px solid black;
-        margin-bottom: 4rem;
+        border-bottom : 10px solid black;
+        margin-bottom : 2rem;
     }
-    .page-title h1 {
-        padding: 2rem;
-        text-align: center;
+    .page-title h1{
+        padding : 2rem;
+        text-align : center;
     }
     body {
-        font-family: LeeSeoyun;
+        font-family : LeeSeoyun;
     }
     @font-face {
-        font-family: "LeeSeoyun";
-        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+        font-family: 'LeeSeoyun';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
         font-weight: normal;
         font-style: normal;
     }
     a {
-        text-decoration-line: none;
+        text-decoration: none;
+        color:black;
+    }
+    a {
+        text-decoration-line:none;
     }
 </style>
 <body>
@@ -52,27 +65,22 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id="logo" style = "height:80px;"/>
+                <img src = "logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
+
         <div class="nav-scroller mb-7" id = "list1">
-            <ul class="nav justify-content-center" style = "display:block;">
+            <ul class="nav justify-content-center">
                 <li class="nav-item mx-5">
                     <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
                     <div>
                         <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id = "detail">Disabled</a>
+                                <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
                             </li>
                         </ul>
                     </div>
@@ -87,10 +95,13 @@
                     <a class="nav-link" id = "nav4">Post</a>
                     <ul class="nav justify-content-end" style = "display : none;" id = "none2">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+                            <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
+                            <a class="nav-link" href="/qna" id = "detail">Q&A</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -127,7 +138,7 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<input type = "hidden" id = "id" value = "${ndto.id}">
+<input type = "hidden" id = "id" value = "${ndto.id}"
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
@@ -225,7 +236,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
     $(document).ready(function () {
-        console.log("시작 화면");
         $("#nav1").hover(
             function () {
                 $("#none1").css("display", "block");

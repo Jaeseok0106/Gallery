@@ -10,7 +10,6 @@
 <style>
 .nav-item{
 list-style-type:none;
-float:left;
 font-size: 55px;
 }
 h2 {
@@ -58,7 +57,7 @@ text-decoration-line:none;
 		</div>
 		<br><br><br>
 		<div class="nav-scroller mb-7" id = "list">
-			<ul class="nav justify-content-center" style = "display:block;">
+			<ul class="nav justify-content-center">
 				<li class="nav-item mx-5">
 					<a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
 					<div>
@@ -85,13 +84,10 @@ text-decoration-line:none;
 							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
+							<a class="nav-link" href="/FAQ" id = "detail">FAQ</a>
 						</li>
 					</ul>
 				</li>

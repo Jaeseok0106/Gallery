@@ -1,5 +1,7 @@
 package com.human.gallery.domain.faq;
 import java.util.ArrayList;
+
+import com.human.gallery.domain.notice.noticeDTO;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
@@ -53,15 +55,23 @@ public class faqController {
         faq_table.addfaq(category, question, answer);
         return "redirect:/FAQ";
     }
-    @GetMapping("/faqupdate")
-    public String dofaqupdate(@SessionAttribute(name = "user", required = false) Users user,Model model ) {
+    @GetMapping("/faqupdate/{id}")
+    public String dofaqupdate(@SessionAttribute(name = "user", required = false) Users user,Model model, @PathVariable int id) {
         model.addAttribute("user", user);
+        faqDTO fdto=faq_table.addlist(id);
+        model.addAttribute("fdto",fdto);
         return "faq/faqupdate";
     }
-    /*@RequestMapping("/faq/delete")
-    public String dodelete(@RequestParam("id") String id) {
+    @PostMapping("/faqupdate/{id}")
+    public String dofaqupdate(@ModelAttribute("faq") faqDTO faq,
+                           @PathVariable("id") int id){
+        faq_table.updatefaq(faq);
+        return "redirect:/FAQ";
+    }
+    @RequestMapping("/faq/delete")
+    public String dodelete(@RequestParam("id") int id) {
         log.info("넘어온 값 = {}" , id);
         faq_table.faqdelete(id);
-        return "redirect:/faq";
-    }*/
+        return "redirect:/FAQ";
+    }
 }

@@ -18,7 +18,6 @@
     }
     .nav-item{
         list-style-type:none;
-        float:left;
         font-size: 55px;
     }
     .nav-link {
@@ -66,7 +65,7 @@
         </div>
         <br><br><br>
         <div class="nav-scroller mb-7" id = "list">
-            <ul class="nav justify-content-center" style = "display:block;">
+            <ul class="nav justify-content-center">
                 <li class="nav-item mx-5">
                     <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
                     <div>
@@ -150,7 +149,7 @@
             </h2>
         </div>
         <div class = "col-6">
-            <div id="daumRoughmapContainer1657160403018" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+            <div id="daumRoughmapContainer1657160403018" class="root_daum_roughmap root_daum_roughmap_landing" style = "width:100%;"></div>
             <div class = "container">
                 <dl class="row py-5">
                     <dt class="col-sm-3">주소</dt>
@@ -251,8 +250,6 @@
     new daum.roughmap.Lander({
         "timestamp" : "1657160403018",
         "key" : "2aviu",
-        "mapWidth" : "640",
-        "mapHeight" : "360"
     }).render();
 </script>
 </html>

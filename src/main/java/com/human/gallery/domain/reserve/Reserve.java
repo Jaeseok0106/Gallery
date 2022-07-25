@@ -14,4 +14,6 @@ public class Reserve {
     private String postcode;
     private String detailAddress;
     private String isPayment;
+    private String exhibitName;
+    private String userName;
 }
