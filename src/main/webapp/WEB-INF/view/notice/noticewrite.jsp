@@ -135,7 +135,7 @@
     <form>
       <div class = "col">
         <input class="form-control" type="text" id="title" placeholder="제목" aria-label="default input example"><br><br>
-        <textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea> <br><br>
+        <textarea name = "text" class="form-control" id="editor" rows="30" cols = "50"></textarea><br><br>
       </div>
       <div class = "col text-end">
         <button type="button" class="btn btn-outline-primary" id="clear">작성 완료</button>
