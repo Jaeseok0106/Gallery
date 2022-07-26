@@ -1,6 +1,5 @@
 package com.human.gallery.domain.review;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.human.gallery.domain.paging.pageDTO;
@@ -20,7 +19,7 @@ public class ReviewController {
 	private ReviewRepository review;
 	
 	// 리스트 불러오기
-	@GetMapping("/review")
+	@RequestMapping("/review")
 	public String viewReview(@SessionAttribute(name = "user", required = false) Users user, Model model,
 							 @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
 							 @RequestParam(required = false, defaultValue = "tc") String type,
@@ -38,15 +37,26 @@ public class ReviewController {
 	}
 
 	// 상세보기
-	@GetMapping("/reviewDetail")
-	public String doDetail(@SessionAttribute(name = "user", required = false) Users user,
-						   @RequestParam int id, Model model) {
-		Review rdto=review.selView(id);
-		Review ndto=review.movePage(id);
-		review.count(id);
-		model.addAttribute("rdto", rdto);
-		model.addAttribute("ndto", ndto);
+	@RequestMapping(value="/reviewDetail", produces="application/json;charset=utf-8")
+	public String doDetail(@SessionAttribute(name = "user", required = false) Users user, Model model,
+						   @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
+						   @RequestParam(required = false, defaultValue = "tc") String type,
+						   @RequestParam(required = false, defaultValue = "") String keyword,
+						   @RequestParam String id) {
 		model.addAttribute("user",user);
+		Review rdto=review.selView(id);
+		model.addAttribute("rdto", rdto);
+		Review ndto=review.movePage(id, paging.getKeyword(), paging.getType(), paging.getSort());
+		model.addAttribute("ndto", ndto);
+		review.count(id);
+		model.addAttribute("paging", paging);
+		paging.setType(type);
+		paging.setKeyword(keyword);
+		int cnt=review.getCount(paging);
+		paging.setTotalRowCount(cnt);
+		paging.pageSetting();
+		List<Review> reviewlist=review.reviewList(paging);
+		model.addAttribute("reviewlist", reviewlist);
 		return "review/reviewDetail";
 	}
 
@@ -68,7 +78,7 @@ public class ReviewController {
 	// 유저정보, 기존 글정보 받아오기
 	@RequestMapping("/reviewUpdate")
 	public String doUpdateReview(@SessionAttribute(name = "user", required = false) Users user,
-								 Model model, @RequestParam int id) {
+								 Model model, @RequestParam String id) {
 		Review rdto=review.selView(id);
 		model.addAttribute("user", user);
 		model.addAttribute("rdto", rdto);
@@ -84,6 +94,18 @@ public class ReviewController {
 		return "redirect:/review";
 	}
 
+	// 추천수
+	@ResponseBody
+	@RequestMapping(value="/review/like", method=RequestMethod.POST)
+	public int doLike(@RequestParam int postid, @RequestParam int userid) {
+		int findLike=review.findLike(postid, userid);
+		if(findLike == 0) {
+			review.likeReview(postid);
+			review.insertLike(postid, userid);
+		}
+		return findLike;
+	}
+
 	// 게시글 삭제
 	@RequestMapping("/deleteReview")
 	public String doDelete(@RequestParam int id) {
@@ -91,17 +113,5 @@ public class ReviewController {
 		review.heartDelete(id);
 		review.deleteReview(id);
 		return "redirect:/review";
-	}
-
-	// 추천수
-	@ResponseBody
-	@RequestMapping(value="/review/like", method=RequestMethod.POST)
-	public int doLike(@RequestParam int postid, @RequestParam int userid) {
-		int findLike=review.findLike(postid, userid);
-		if(findLike == 0) {
-			review.insertLike(postid, userid);
-			review.likeReview(postid);
-		}
-		return findLike;
 	}
 }

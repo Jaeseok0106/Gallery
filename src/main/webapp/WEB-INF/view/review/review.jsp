@@ -73,7 +73,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:80px;"/>
+				<img src = "/logo.png" id='logo' style = "height:80px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -128,12 +128,25 @@ text-decoration-line:none;
 								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
-						<li class="nav-item">
-							<a class="nav-link" href="#" id = "detail">My page</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
-						</li>
+						<c:if test="${user.role == '유저'}">
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">My page</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+							</li>
+						</c:if>
+						<c:if test="${user.role == '관리자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="listuser" id = "detail">회원관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">예약관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">게시판관리</a>
+							</li>
+						</c:if>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
@@ -192,7 +205,7 @@ text-decoration-line:none;
 						<c:forEach items="${reviewlist}" var="list">
 							<tr class = "text-center">
 								<td>${list.id}</td>
-								<td><a href="reviewDetail?id=${list.id}">${list.title}</a></td>
+								<td><a href="reviewDetail?id=${list.id}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">${list.title}</a></td>
 								<td>${list.userid}</td>
 								<td>${list.postdate}</td>
 								<td>${list.views}</td>
@@ -202,7 +215,7 @@ text-decoration-line:none;
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
+							<td colspan="6">조회된 게시글이 없습니다.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -234,8 +247,9 @@ text-decoration-line:none;
 			</nav>
 		</div>
 			<div class = "col-12 text-end">
-				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>			</div>
+				<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/writeReview'">글쓰기</button>
 			</div>
+		</div>
 	</div>
 </main>
 
@@ -313,17 +327,5 @@ text-decoration-line:none;
 		}
 		location.href=url;
 	})
-	// $('#serform').keypress(function (e) {
-	// 	e.preventDefault();
-	// 	var url="/review";
-	// 	if($('#selSort option:selected').val()=='date') {
-	// 		url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-	// 	} else if($('#selSort option:selected').val()=='view') {
-	// 		url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-	// 	} else if($('#selSort option:selected').val()=='heart') {
-	// 		url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-	// 	}
-	// 	location.href=url;
-	// })
 </script>
 </html>

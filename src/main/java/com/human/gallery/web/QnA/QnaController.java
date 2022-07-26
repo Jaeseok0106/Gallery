@@ -40,18 +40,14 @@ public class QnaController {
 	// 상세보기
 	@RequestMapping(value="/detail", produces="application/json;charset=utf-8")
 	public String doDetail(@SessionAttribute(name = "user", required = false) Users user, Model model,
-						   @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
+					 	   @ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
 						   @RequestParam(required = false, defaultValue = "tc") String type,
 						   @RequestParam(required = false, defaultValue = "") String keyword,
 						   @RequestParam String id) {
-		log.info("paging = {}", paging);
-		log.info("type = {}" , type);
-		log.info("keyword = {}", keyword);
-		log.info("sort = {}", sort);
 		model.addAttribute("user",user);
 		qnaDTO qdto=qna.selqna(id);
 		model.addAttribute("qdto",qdto);
-		qnaDTO nepr=qna.nepr(id,paging.getKeyword(), paging.getType(), paging.getSort());
+		qnaDTO nepr=qna.nepr(id, paging.getKeyword(), paging.getType(), paging.getSort());
 		model.addAttribute("nepr", nepr);
 		qna.viewcount(id);
 		model.addAttribute("paging", paging);
@@ -67,7 +63,7 @@ public class QnaController {
 
 	// 글 작성 탭으로 정보 받아오기
 	@RequestMapping("/new")
-	public String doNew(@SessionAttribute(name = "user", required = false) Users user,Model model) {
+	public String doNew(@SessionAttribute(name = "user", required = false) Users user, Model model) {
 		log.info("글쓰기에 넘어옴");
 		model.addAttribute("user",user);
 		return "qna/qnawrite";
@@ -82,7 +78,7 @@ public class QnaController {
 
 	// 유저정보, 기존 글정보 받아오기
 	@RequestMapping("/up")
-	public String doUp(@SessionAttribute(name = "user", required = false) Users user,Model model,
+	public String doUp(@SessionAttribute(name = "user", required = false) Users user, Model model,
 					   @RequestParam String id) {
 		log.info("수정으로 넘어옴");
 		model.addAttribute("user",user);
@@ -98,15 +94,6 @@ public class QnaController {
 		return "redirect:/qna";
 	}
 
-	// 게시글 삭제
-	@RequestMapping("/delqna")
-	public String doDelete(@RequestParam int id) {
-		qna.commentDelete(id);
-		qna.heartDelete(id);
-		qna.delqna(id);
-		return "redirect:/qna";
-	}
-
 	// 추천수
 	@ResponseBody
 	@PostMapping("/qna/like")
@@ -117,5 +104,14 @@ public class QnaController {
 			qna.addheart(postid, userid);
 		}
 		return heartcheck;
+	}
+
+	// 게시글 삭제
+	@RequestMapping("/delqna")
+	public String doDelete(@RequestParam int id) {
+		qna.commentDelete(id);
+		qna.heartDelete(id);
+		qna.delqna(id);
+		return "redirect:/qna";
 	}
 }

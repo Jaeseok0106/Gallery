@@ -91,17 +91,11 @@ div {white-space: nowrap;}
 					<a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
 					<div>
 						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
-							<li class="nav-item1">
-								<a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+							<li class="nav-item">
+								<a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
 							</li>
-							<li class="nav-item1">
-								<a class="nav-link" href="#" id = "detail">Link</a>
-							</li>
-							<li class="nav-item1">
-								<a class="nav-link" href="#" id = "detail">Link</a>
-							</li>
-							<li class="nav-item1">
-								<a class="nav-link" id = "detail">Disabled</a>
+							<li class="nav-item">
+								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
 							</li>
 						</ul>
 					</div>
@@ -124,9 +118,6 @@ div {white-space: nowrap;}
 						<li class="nav-item">
 							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
-						</li>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
@@ -145,12 +136,25 @@ div {white-space: nowrap;}
 								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
-						<li class="nav-item">
-							<a class="nav-link" href="#" id = "detail">My page</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
-						</li>
+						<c:if test="${user.role == '유저'}">
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">My page</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+							</li>
+						</c:if>
+						<c:if test="${user.role == '관리자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="listuser" id = "detail">회원관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">예약관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">게시판관리</a>
+							</li>
+						</c:if>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">

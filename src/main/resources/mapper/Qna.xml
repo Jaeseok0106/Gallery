@@ -28,26 +28,9 @@
 			views desc, a.id
 		</if>
 		<if test='sort=="heart"'>
-			heart desc, a. id
-		</if>
-
-	</sql>
-
-	<sql id="sort2">
-		<if test='sort2==null || sort2==""'>
-			id
-		</if>
-		<if test='sort2=="date"'>
-			postdate, id
-		</if>
-		<if test='sort2=="view"'>
-			views ,id
-		</if>
-		<if test='sort2=="heart"'>
-			heart, id
+			heart desc, a.id
 		</if>
 	</sql>
-
 
 	<sql id='type'>
 		<if test='type != null and type != ""'>
@@ -113,6 +96,21 @@
 		where id=#{id}
 	</select>
 
+	<sql id="sort2">
+		<if test='sort2==null || sort2==""'>
+			id
+		</if>
+		<if test='sort2=="date"'>
+			postdate, id
+		</if>
+		<if test='sort2=="view"'>
+			views, id
+		</if>
+		<if test='sort2=="heart"'>
+			heart, id
+		</if>
+	</sql>
+
 	<!-- 조회수 -->
 	<update id="viewcount" parameterType="String">
 		update board_post
@@ -131,11 +129,6 @@
 		set title=#{param1}, content=#{param2}, postdate=to_char(sysdate, 'YYYY-MM-DD')
 		where id=#{param3}
 	</update>
-
-	<!-- 게시글 삭제 -->
-	<delete id='delqna'>
-		delete from board_post where id=#{param1}
-	</delete>
 
 	<!-- 선택한 글의 추천 중복 체크 -->
 	<select id='heart' resultType="int">
@@ -157,11 +150,14 @@
 		where id=#{param1}
 	</update>
 
-	<!-- 댓글, 추천삭제 -->
+	<!-- 댓글, 추천, 게시글 동시삭제 -->
 	<delete id="commentDelete">
 		delete from post_comment where post_id=#{param1}
 	</delete>
 	<delete id="heartDelete">
 		delete from post_heart where post_id=#{param1}
+	</delete>
+	<delete id='delqna'>
+		delete from board_post where id=#{param1}
 	</delete>
 </mapper>
