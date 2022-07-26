@@ -203,6 +203,20 @@
     <div class="container">
         <div id="writeComment" class="mb-3">
         </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item" id = "previous">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" id = "next">
+                    <span class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            </ul>
+        </nav>`;
         </div>
     </div>
 </main>
@@ -296,9 +310,10 @@
             return false;
         }
     })
-    var postid=${rdto.id};
-    var userid=${user.userNum};
+
     function updateLike() {
+        let postid=$("#postId").val();
+        let userid=$("#usernum").val();
         $.ajax({
             type:"POST",
             url:"/review/like",

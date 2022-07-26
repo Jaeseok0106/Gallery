@@ -174,13 +174,12 @@ div {white-space: nowrap;}
 			<h1>결제내역</h1>
 		</div>
 	</div>
-    <div class="col-6 col-sm-3">
+    <div class="col-12 col-sm-12 text-center">
         <h3>내역조회</h3>
         조회기간&nbsp;&nbsp;
         <input type="button" class="btn btn-outline-secondary" id="btnToday" value = "오늘"></input>&nbsp;
         <input type="button" class="btn btn-outline-secondary" id="btnWeek" value = "이번주"></input>&nbsp;
         <input type="button" class="btn btn-outline-secondary" id="btnMonth" value = "이번달"></input>&nbsp;
-        <input type="button" class="btn btn-outline-secondary" id="btnThird" value = "3개월"></input>&nbsp;&nbsp;
         <input type="date" id="date1">~
         <input type="date" id="date2">&nbsp;
         <input type="button" class="btn btn-outline-secondary" id="selectPayment" style="font-weight: bold;" value = "조회"></input>
@@ -189,13 +188,7 @@ div {white-space: nowrap;}
 	<div class = "container" id = "boardList">
 		<div class = "row">
 			<table id = "paymentTable">
-				<tr class ="text-center">
-					<th>예매번호</th>
-					<th>제목</th>
-                    <th>예매일자</th>
-					<th>상태</th>
-					<th>확인/신청</th>
-				</tr>
+
 			</table>
 			<p></p>
 			<p></p>		
@@ -229,9 +222,9 @@ div {white-space: nowrap;}
   </footer>
 </div>
 </body>
-<script src = /js/account.js></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src = /js/account.js></script>
 <script>
 	$(document)
 			.ready(function () {
@@ -268,97 +261,5 @@ div {white-space: nowrap;}
 					$("#none3").css("display", "none");
 				})
 			})
-</script>
-<script>
-	$(document)
-			.on('click','#logo',function(){
-				document.location.href='/';
-			})
-$(document)
-.ready(function() {
-	getPaymentHistory();
-    $('#history').dialog({
-        autoOpen:false,
-        width:600,
-        height:800,
-        open: function() {
-
-        },
-        close: function() {
-        }
-    })
-})
-.on('click','#btnDetail',function() {
-	let id = $(this).parent().parent().find('td:eq(0)').attr('id');
-	console.log("오픈할 id = " + id);
-	$.ajax({
-		type : 'POST',
-		url : '/history/reserve/detail/' + id,
-		data : {userId : $("#usernum").val()},
-		dataType : 'JSON',
-		beforeSend : function () {
-			$("#tb1").empty();
-		},
-		success : function (data) {
-			console.log("성공 " + data['orderId']);
-			let str = `
-	 <tr>
-		<th>예매번호</th>
-		<td id = orderId>\${data['orderId']}</td>
-	</tr>
-	<tr>
-		<th>제목</th>
-		<td>\${data['exhibitionName']}</td>
-	</tr>
-	<tr>
-		<th>날짜</th>
-		<td>\${data['reserveDate']}</td>
-	</tr>
-	<tr>
-		<th>이름</th>
-		<td>\${data['representName']}</td>
-	</tr>
-	<tr>
-		<th>인원</th>
-		<td>\${data['person']}</td>
-	</tr>
-	<tr>
-		<th>상태</th>
-		<td>예매완료</td>
-	</tr>
-	<tr style="display: none;">
-	</tr>
-	<tr>
-		<td colspan="2">
-			<p style="margin-top: 100px;"></p>
-			<button type="button" class="btn btn-outline-dark" id="btnC">취소하기</button>
-			<button type="button" class="btn btn-outline-dark" id="btnCancel">닫기</button>
-		</td>
-	</tr>`
-			$("#tb1").append(str);
-		}
-	})
-	$('#history').dialog('open');
-})
-.on('click','#btnCancel',function() {
-    $('#history').dialog('close');
-})
-.on('click','#btnC',function() {
-    if(!confirm('예매를 취소하시겠습니까?'))  {
-		return false;
-	}
-	else {
-		$.ajax({
-			type : 'POST',
-			url : '/history/reserve/delete/'+$("#orderId").text(),
-			data : '',
-			dataType : 'JSON',
-			success : function() {
-				$('#history').dialog('close');
-				getPaymentHistory();
-			}
-		})
-	}
-})
 </script>
 </html>

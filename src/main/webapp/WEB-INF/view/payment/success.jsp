@@ -83,9 +83,6 @@ text-decoration-line:none;
 							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/qna" id = "detail">Q&A</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
 						</li>
 					</ul>

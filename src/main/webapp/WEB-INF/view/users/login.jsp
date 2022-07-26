@@ -64,7 +64,9 @@ body {
 </style>
 <body class="text-center">
 <main class= "form-signin">
-
+<form action="./kakaologin.do" method="post" name="lfrm" hidden>
+    <input type="text" name="kakaoemail" id="kakaoemail" value="" />
+</form>
 <form:form id = "frmAdd" action = "./login" method = "POST" modelAttribute = "user">
 	<h1 class="h3 mb-3 fw-normal">로그인</h1>
 
@@ -79,7 +81,16 @@ body {
       <label for="floatingPassword">비밀번호를 입력하세요</label>
     </div>
     <label class = "FieldError">${loginFail}</label>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" >로그인</button>
+    <div class="form-floating">
+        <div><b>or</b></div>
+    </div>
+    <div class="form-floating" id="kakaologin">
+        <div class="kakaobtn">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=11afdf6f295b3f272c88971d1ea73cdd&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code">
+                <img src="/loginButton.png" width="300px" height="47px"/>
+            </a>
+    </div>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
 </div>
 </form:form>
