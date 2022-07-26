@@ -91,17 +91,11 @@ div {white-space: nowrap;}
 					<a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
 					<div>
 						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
-							<li class="nav-item1">
-								<a class="nav-link" aria-current="page" href="#" id = "detail">Active</a>
+							<li class="nav-item">
+								<a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
 							</li>
-							<li class="nav-item1">
-								<a class="nav-link" href="#" id = "detail">Link</a>
-							</li>
-							<li class="nav-item1">
-								<a class="nav-link" href="#" id = "detail">Link</a>
-							</li>
-							<li class="nav-item1">
-								<a class="nav-link" id = "detail">Disabled</a>
+							<li class="nav-item">
+								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
 							</li>
 						</ul>
 					</div>
@@ -123,9 +117,6 @@ div {white-space: nowrap;}
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
 						</li>
 					</ul>
 				</li>

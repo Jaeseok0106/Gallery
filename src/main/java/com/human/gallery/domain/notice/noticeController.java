@@ -1,20 +1,16 @@
 package com.human.gallery.domain.notice;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.human.gallery.domain.paging.pageDTO;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 
 
@@ -96,21 +92,6 @@ public class noticeController {
 	}
 
 	// 게시글 삭제
-	@RequestMapping("/content/delete")
-	public String dodelete(@RequestParam("id") String id) {
-		board_post.delete(id);
-		return "redirect:/notice";
-	}
-	@ResponseBody
-	@RequestMapping(value="/notice/like", method=RequestMethod.POST)
-	public int doLike(@RequestParam int postid, @RequestParam int userid) {
-		int findLike=board_post.findLike(postid, userid);
-		if(findLike == 0) {
-			board_post.insertLike(postid, userid);
-			board_post.likeNotice(postid);
-		}
-		return findLike;
-	}
 
 	// 추천수
 	@ResponseBody
