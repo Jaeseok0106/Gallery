@@ -86,7 +86,7 @@ text-decoration-line:none;
 					<a class="nav-link" href="/artist" id = "nav3">artist</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" id = "nav4">Post</a>
+					<a class="nav-link" href="#" id = "nav4">Post</a>
 					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
@@ -117,7 +117,7 @@ text-decoration-line:none;
 						</c:if>
 						<c:if test="${user.role == '유저'}">
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">My page</a>
+								<a class="nav-link" href="/mypage" id = "detail">My page</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>

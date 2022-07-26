@@ -5,9 +5,13 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>FAQ UPDATE</title>
+    <title>MY PAGE</title>
 </head>
 <style>
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
     .nav-item{
         list-style-type:none;
         font-size: 55px;
@@ -22,6 +26,18 @@
     #detail {
         font-size: 0.7rem;
     }
+    #detail {
+        font-size: 0.7rem;
+    }
+    .page-title {
+        border-top: 10px solid black;
+        border-bottom : 10px solid black;
+        margin-bottom : 2rem;
+    }
+    .page-title h1{
+        padding : 2rem;
+        text-align : center;
+    }
     body {
         font-family : LeeSeoyun;
     }
@@ -32,19 +48,11 @@
         font-style: normal;
     }
     a {
+        text-decoration: none;
+        color:black;
+    }
+    a {
         text-decoration-line:none;
-    }
-    .page-title h1{
-        padding : 2rem;
-        text-align : center;
-    }
-    .page-title {
-        border-top: 10px solid black;
-        border-bottom : 10px solid black;
-        margin-bottom : 4rem;
-    }
-    .ck-editor__editable {
-        height : 100px;
     }
 </style>
 <body>
@@ -52,7 +60,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "/logo.png" id='logo' style = "height:80px;"/>
+                <img src = "logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -87,7 +95,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
+                            <a class="nav-link" aria-current="page" href="/FAQ" id = "detail">FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -107,25 +115,9 @@
                                 <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
                             </li>
                         </c:if>
-                        <c:if test="${user.role == '유저'}">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/mypage" id="detail">My page</a>
-                              </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id = "detail" href = "/history">결제 내역</a>
-                            </li>
-                        </c:if>
-                        <c:if test="${user.role == '관리자'}">
-                            <li class="nav-item">
-                                <a class="nav-link" href="listuser" id = "detail">회원관리</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">예약관리</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">게시판관리</a>
-                            </li>
-                        </c:if>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/mypage" id = "detail">My page</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
@@ -137,28 +129,30 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<input type = "hidden" id = "faqid" value = "${faq_table.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;" class="text-center">
-        <h4>FAQ UPDATE</h4>
+    <div class = "container">
+        <div class = "page-title">
+            <h1>${user.id}(${user.role})님의 MY PAGE</h1>
+        </div>
     </div>
-    <form calss="row py-4" id="add" method="POST" action="/faqupdate/${fdto.id}">
-        <div class = "col"><br><br>
-            <h3>CATEGORY</h3><select name="category" size="1">
-                <option id = "1" name="category" value="1">관람</option>
-                <option id = "2" name="category" value="2">예약</option>
-                <option id = "3" name="category" value="3">홈페이지</option>
-                <option id = "4" name="category" value="4">기타</option>
-            </select><br><br>
-            <h3>QUESTION</h3><textarea name = "question" class="form-control" id="editorq" rows="30" cols = "50">${fdto.question}</textarea> <br><br>
-            <h3>ANSWER</h3></div><textarea name = "answer" class="form-control" id="editora" rows="30" cols = "50">${fdto.answer}</textarea> <br><br>
-        <div class = "col text-end">
-        <button type="submit" class="btn btn-outline-primary" id="clear">수정 완료</button>
-        <button type="button" class="btn btn-outline-danger" id="reset">취소</button>
+    <ul class="nav justify-content-center" id="gry">
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;" value="1">예매 내역</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;"value="2">개인 정보 관리</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;"value="3">회원 탈퇴</span>
+        </li>
+    </ul>
+    <div  id="acc">
+
     </div>
-    </form>
+
+    </div>
     </div>
 </main>
 
@@ -175,7 +169,7 @@
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQ</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
         </ul>
     </footer>
@@ -187,6 +181,7 @@
 <script>
     $(document)
         .ready(function () {
+
             console.log("시작 화면");
             $("#nav1").hover(function() {
                 $("#none1").css("display", "block");
@@ -219,44 +214,20 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
-            for (let i = 1; i < 5; i++) {
-                if (${fdto.category} == i) {
-                    $("#"+i).prop('selected', true);
-                }
-            }
         })
-</script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
-<script>
-    ClassicEditor.create( document.querySelector( '#editorq' ) );
-    ClassicEditor.create( document.querySelector( '#editora' ) );
-
     $(document)
         .on('click','#logo',function(){
             document.location.href='/';
         })
-    $(document)
-        .on('click','#clear',function(){
-            if(confirm("수정을 완료 하시겠습니까?")){
-                alert("수정이 완료 되었습니다.");
-                return true;
-            }
-            else{
-            }
-        })
-    $(document)
-        .on('click','#reset',function(){
-            if(confirm("수정을 취소 하시겠습니까?")){
-                alert("수정을 취소 하셨습니다.");
-                document.location.href='/FAQ';
-            }
-            else{
-
-            }
-        })
 </script>
 <script>
+    $(document)
+        .on('click','#mmt',function(){
+            $("#acc").empty();
+            $("#acc").attr("style","height: 500px; background-color: lightgrey");
+            let str = `ID:<input type="text" id="id"></input>`;
+            $("#acc").append(str);
+        })
 
 </script>
 </html>
