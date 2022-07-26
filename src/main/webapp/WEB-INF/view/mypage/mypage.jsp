@@ -5,9 +5,13 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>아티스트 수정</title>
+    <title>MY PAGE</title>
 </head>
 <style>
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
     .nav-item{
         list-style-type:none;
         font-size: 55px;
@@ -19,10 +23,16 @@
         font-size: 20px;
         font-size: 1.25rem;
     }
+    #detail {
+        font-size: 0.7rem;
+    }
+    #detail {
+        font-size: 0.7rem;
+    }
     .page-title {
         border-top: 10px solid black;
         border-bottom : 10px solid black;
-        margin-bottom : 4rem;
+        margin-bottom : 2rem;
     }
     .page-title h1{
         padding : 2rem;
@@ -38,10 +48,11 @@
         font-style: normal;
     }
     a {
-        text-decoration-line:none;
+        text-decoration: none;
+        color:black;
     }
-    .ck-editor__editable {
-        height : 500px;
+    a {
+        text-decoration-line:none;
     }
 </style>
 <body>
@@ -49,7 +60,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "/logo.png" id='logo' style = "height:70px;"/>
+                <img src = "logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -84,10 +95,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
+                            <a class="nav-link" aria-current="page" href="/FAQ" id = "detail">FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -110,9 +118,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/mypage" id = "detail">My page</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
-                        </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
@@ -127,34 +132,27 @@
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;">
-        <h5>아티스트 수정</h5>
-    </div>
     <div class = "container">
-        <div class = "row mb-2 py-4">
-            <form class = "row mb-2" id = "frmAdd" method = "POST" action = "/artist/modify/${artist.id}" enctype="multipart/form-data">
-                <div class = "col-6">
-                    <input class="form-control" id = "name" name = "name" type="text"
-                           placeholder="아티스트 이름" aria-label="default input example"
-                            value = ${artist.name}>
-                    <br><br>
-                    <textarea name = "career" class="form-control" id = "editor2" rows = "3" cols = "5" placeholder="아티스트 커리어">
-                        ${artist.career}
-                    </textarea> <br><br>
-                    <textarea name = "direction" class="form-control" id="editor" rows="30" cols = "50" placeholder="아티스트의 방향성에 대해 입력해주세요">
-                        ${artist.direction}
-                    </textarea> <br><br>
-                    <div class = "text-end">
-                        <button type="submit" id = "artistSend" class="btn btn-outline-primary">작성 완료</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="location.href='/artist/detail/${artist.id}'">취소</button>
-                    </div>
-                </div>
-                <div class = "col-6">
-                    <label for="formFile" class="form-label">아티스트의 사진을 업로드해주세요</label>
-                    <input class="form-control" type="file" id="formFile" name = "file">
-                </div>
-            </form>
+        <div class = "page-title">
+            <h1>${user.id}(${user.role})님의 MY PAGE</h1>
         </div>
+    </div>
+    <ul class="nav justify-content-center" id="gry">
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;" value="1">예매 내역</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;"value="2">개인 정보 관리</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;"value="3">회원 탈퇴</span>
+        </li>
+    </ul>
+    <div  id="acc">
+
+    </div>
+
+    </div>
     </div>
 </main>
 
@@ -171,7 +169,7 @@
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQ</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
         </ul>
     </footer>
@@ -182,11 +180,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
     $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
-    $(document)
         .ready(function () {
+
             console.log("시작 화면");
             $("#nav1").hover(function() {
                 $("#none1").css("display", "block");
@@ -219,26 +214,20 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
-            $("#artistSend").click(function() {
-                if ($("#name").val() == '') {
-                    alert("이름을 입력해주세요.");
-                    return false;
-                }
-                if ($(".ck-content").text() == '') {
-                    alert("안에를 채워주세요");
-                    return false;
-                } else {
-                    return true;
-                }
-            })
+        })
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='/';
         })
 </script>
-<script src="${classpath}/editor/ckeditor.js"></script>
-<script src="${classpath}/editor/translations/ko.js"></script>
 <script>
-    ClassicEditor.create( document.querySelector( '#editor')
-    );
-    ClassicEditor.create( document.querySelector( '#editor2')
-    );
+    $(document)
+        .on('click','#mmt',function(){
+            $("#acc").empty();
+            $("#acc").attr("style","height: 500px; background-color: lightgrey");
+            let str = `ID:<input type="text" id="id"></input>`;
+            $("#acc").append(str);
+        })
+
 </script>
 </html>
