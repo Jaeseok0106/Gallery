@@ -136,12 +136,25 @@ div {white-space: nowrap;}
 								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
-						<li class="nav-item">
-							<a class="nav-link" href="#" id = "detail">My page</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
-						</li>
+						<c:if test="${user.role == '유저'}">
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">My page</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+							</li>
+						</c:if>
+						<c:if test="${user.role == '관리자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="listuser" id = "detail">회원관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">예약관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">게시판관리</a>
+							</li>
+						</c:if>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">

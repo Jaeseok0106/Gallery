@@ -18,7 +18,6 @@
     }
     .nav-item{
         list-style-type:none;
-        float:left;
         font-size: 55px;
     }
     .nav-link {
@@ -27,9 +26,6 @@
         padding: 0 0.3125rem;
         font-size: 20px;
         font-size: 1.25rem;
-    }
-    #detail {
-        font-size: 0.7rem;
     }
     #detail {
         font-size: 0.7rem;
@@ -62,20 +58,19 @@
 </style>
 <body>
 <div class="container">
-    <header class="blog-header py-3" style="height : 230px;">
+    <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <img src = "/logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
-
-        <div class="nav-scroller mb-7" id = "list1">
+        <div class="nav-scroller mb-7" id = "list">
             <ul class="nav justify-content-center">
                 <li class="nav-item mx-5">
-                    <a class="nav-link active p-7" aria-current="page" href="#" id="nav1">About us</a>
+                    <a class="nav-link active p-7" aria-current="page" href="#" id = "nav1">About us</a>
                     <div>
-                        <ul class="nav justify-content-end" style="display : none;" id="none1">
+                        <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
                             </li>
@@ -86,14 +81,14 @@
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/artist" id="nav3">artist</a>
+                    <a class="nav-link" href="/artist" id = "nav3">artist</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" id="nav4">Post</a>
-                    <ul class="nav justify-content-end" style="display : none;" id="none2">
+                    <a class="nav-link" id = "nav4">Post</a>
+                    <ul class="nav justify-content-end" style = "display : none;" id = "none2">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
                         </li>
@@ -106,31 +101,44 @@
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" aria-current="page" href="#" id="nav5">Member</a>
-                    <ul class="nav justify-content-end" style="display : none;" id="none3">
-                        <c:if test="${user.id == null}">
+                    <a class="nav-link" aria-current="page" href="#" id = "nav5">Member</a>
+                    <ul class="nav justify-content-end" style = "display : none;" id = "none3">
+                        <c:if test = "${user.id == null}">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
+                                <a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/signin" id="detail">Sign in</a>
-                            </li>
-                        </c:if>
-                        <c:if test="${user.id != null }">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
+                                <a class="nav-link" href="/signin" id = "detail">Sign in</a>
                             </li>
                         </c:if>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="detail">My page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="detail">Disabled</a>
-                        </li>
+                        <c:if test = "${user.id != null }">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${user.role == '유저'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id = "detail">My page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${user.role == '관리자'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="listuser" id = "detail">회원관리</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id = "detail">예약관리</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id = "detail">게시판관리</a>
+                            </li>
+                        </c:if>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
+                    <a class="nav-link" aria-current="page" href="/notice" id = "nav6">Notice</a>
                 </li>
             </ul>
         </div>
@@ -159,7 +167,7 @@
             <p class="text-start">
                 ${ndto.userid}
                 <span style="float: right">
-              조회수 : ${ndto.views}  추천수 : ${ndto.heart}  댓글 : 222
+              조회수 : ${ndto.views+1}  추천수 : ${ndto.heart}
             </span>
             </p>
         </div>
@@ -170,7 +178,7 @@
         </div>
         <div class="col-3 text-start">
             <c:if test="${nepr.next!=9999}">
-                <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.next}'">이전</button>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.next}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}'">이전</button>
             </c:if>
         </div>
         <div class="col-6 text-center">
@@ -179,7 +187,7 @@
         </div>
         <div class="col-3 text-end">
             <c:if test="${nepr.prev!=0}">
-                <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.prev}'">다음</button>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='content?id=${nepr.prev}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}'">다음</button>
             </c:if>
         </div>
     </div>

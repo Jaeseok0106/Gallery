@@ -17,18 +17,18 @@
 		where seq <![CDATA[>=]]> #{firstRow}
 	</select>
 
-	<sql id='sort'>
+	<sql id="sort">
 		<if test='sort==null || sort==""'>
 			id
 		</if>
 		<if test='sort=="date"'>
-			postdate, a.id
+			postdate desc, a.id
 		</if>
 		<if test='sort=="view"'>
-			views, a.id
+			views desc, a.id
 		</if>
 		<if test='sort=="heart"'>
-			heart, a.id
+			heart desc, a.id
 		</if>
 	</sql>
 
@@ -74,16 +74,45 @@
 	</select>
 
 	<!-- 이전글, 다음글 -->
-	<select id="movePage" resultType="com.human.gallery.domain.review.Review">
-		select * from(SELECT id, LEAD(id,1,9999) OVER(ORDER BY id) AS next,
-        LAG(id,1,0) OVER(ORDER BY id) AS last
-					  FROM board_post
-					  where categoryList=2)
-		WHERE id = #{param1}
+	<select id='movePage' resultType="com.human.gallery.domain.review.Review" parameterType="String">
+		select *
+		from (select id,
+		lead(id,1,9999) over(order by <include refid="sort2"/>) as next,
+		lag(id,1,0) over(order by <include refid="sort2"/>) as last
+		from board_post
+		where categoryList=2
+		<if test='keyword != null and keyword != ""'>
+			<if test='type=="tc"'>
+				and ((title like '%' || #{keyword} || '%') or (content like '%' || #{keyword} || '%'))
+			</if>
+			<if test='type=="t"'>
+				and title like '%' || #{keyword} || '%'
+			</if>
+			<if test='type=="c"'>
+				and content like '%' || #{keyword} || '%'
+			</if>
+		</if>
+		)
+		where id=#{id}
 	</select>
 
+	<sql id="sort2">
+		<if test='sort2==null || sort2==""'>
+			id
+		</if>
+		<if test='sort2=="date"'>
+			postdate, id
+		</if>
+		<if test='sort2=="view"'>
+			views, id
+		</if>
+		<if test='sort2=="heart"'>
+			heart, id
+		</if>
+	</sql>
+
 	<!-- 조회수 -->
-	<update id="count" parameterType="int">
+	<update id="count" parameterType="String">
 		update board_post
 		set views=views+1
 		where id=#{param1}
@@ -101,11 +130,6 @@
 		where id=#{param3}
 	</update>
 
-	<!-- 게시글 삭제 -->
-	<delete id="deleteReview">
-		delete from board_post where id=#{param1}
-	</delete>
-
 	<!-- 선택한 글의 추천 중복 체크 -->
 	<select id="findLike" resultType="int">
 		select count(*)
@@ -118,12 +142,6 @@
 	<insert id="insertLike">
 		insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
 	</insert>
-	<delete id="commentDelete">
-		delete from post_comment where post_id=#{param1}
-	</delete>
-	<delete id="heartDelete">
-		delete from post_heart where post_id=#{param1}
-	</delete>
 
 	<!-- 추천+ -->
 	<update id="likeReview" parameterType="int">
@@ -131,4 +149,15 @@
 		set heart=heart+1
 		where id=#{param1}
 	</update>
+
+	<!-- 댓글, 추천, 게시글 동시삭제 -->
+	<delete id="commentDelete">
+		delete from post_comment where post_id=#{param1}
+	</delete>
+	<delete id="heartDelete">
+		delete from post_heart where post_id=#{param1}
+	</delete>
+	<delete id="deleteReview">
+		delete from board_post where id=#{param1}
+	</delete>
 </mapper>
