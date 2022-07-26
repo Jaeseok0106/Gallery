@@ -157,9 +157,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id = "detail">Disabled</a>
-                        </li>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
