@@ -41,4 +41,16 @@
     <update id = "updateStateByOrderId">
         update reserve set isPayment = 'N' where orderId = #{param1}
     </update>
+    <select id = "findByDateWithUserId" resultType="com.human.gallery.domain.reserve.Reserve">
+        select a.*, b.name as exhibitName from reserve a, exhibition b
+                                          where a.userId = #{param1} and a.reservedate = #{param2}
+                                            and a.exhibit_id = b.id
+    </select>
+
+    <select id = "findWeekByDateWithUserId" resultType="com.human.gallery.domain.reserve.Reserve" parameterType="String">
+        select distinct a.*, b.name as exhibitName from reserve a, exhibition b
+                                          where a.userId = #{userId} and a.exhibit_id = b.id
+                                            and <![CDATA[a.reservedate >= #{startDate}
+                                            and a.reservedate <= #{endDate}]]>
+    </select>
 </mapper>

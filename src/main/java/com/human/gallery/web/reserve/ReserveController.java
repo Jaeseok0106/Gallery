@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -119,5 +120,37 @@ public class ReserveController {
         log.info("여긴가?");
         reserveRepository.updateStateByOrderId(orderId);
         return "true";
+    }
+
+    @PostMapping("/history/reserve/today")
+    @ResponseBody
+    public Object returnTodayReserve(@RequestParam("userId") String userId,
+                                     @RequestParam("date") String today) {
+        log.info("받은 값 = {} {}", userId, today);
+        Reserve reserve = reserveRepository.findByDateWithUserId(userId, today);
+        log.info("검색 후 넘어온 값 = {}", reserve);
+        return reserve;
+    }
+
+    @PostMapping("/history/reserve/thisWeek")
+    @ResponseBody
+    public Object returnWeekReserve(@RequestParam("userId") String userId,
+                                    @RequestParam("startDate") String start,
+                                    @RequestParam("endDate") String end) {
+
+        log.info("입력받은 값 = {}, {}", start, end);
+        ArrayList<Reserve> reserve = reserveRepository.findWeekByDateWithUserId(userId, start, end);
+        log.info("넘어온 값 = {}", reserve);
+        return reserve;
+    }
+    @PostMapping("/history/reserve/thisMonth")
+    @ResponseBody
+    public Object returnMonthReserve(@RequestParam("userId") String userId,
+                                     @RequestParam("startDate") String start,
+                                     @RequestParam("endDate") String end) {
+
+        ArrayList<Reserve> reserve = reserveRepository.findWeekByDateWithUserId(userId, start, end);
+        return reserve;
+
     }
 }

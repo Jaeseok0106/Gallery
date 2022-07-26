@@ -54,10 +54,12 @@ public class CommentController {
             commentRepository.updateById(comment.getContent(), comment.getId());
         }
     }
-    @PostMapping("/getComment")
-    public String returnComment(@RequestParam("postId") String postId) {
+    @GetMapping("/getComment")
+    public String returnComment(@RequestParam("postId") String postId,
+                                @RequestParam("pageNumber") String pageNumber) {
 
-        List<Comment> commentList = commentRepository.findByPostId(postId);
+//        List<Comment> commentList = commentRepository.findByPostId(postId);
+        List<Comment> commentList = commentRepository.findByIdWithPaging(postId, pageNumber);
         JSONArray jA = new JSONArray();
         for (int i = 0; i < commentList.size(); i++) {
             Comment comment = commentList.get(i);

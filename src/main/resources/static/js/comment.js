@@ -115,9 +115,9 @@ function reply_click(commentNumber) {
 function getComment() {
     $.ajax({
         url : "/getComment",
-        type : "POST",
+        type : "GET",
         dataType : "JSON",
-        data : {postId : $("#postId").val()},
+        data : {postId : $("#postId").val(), pageNumber : 1},
         beforeSend : function() {
             $("#writeComment").empty();
         },
@@ -188,8 +188,9 @@ function getComment() {
                 $("#writeComment").append(str);
                 let temp = comment['redepth'];
                 $(".reply"+i).css("margin-left", temp*20);
-                getCommentNum();
             }
+            getCommentNum();
+            commentPaging();
         }
     })
 }
@@ -203,7 +204,6 @@ function getCommentNum() {
             console.log("댓글 개수 " + data);
             $("#commentNum").text("댓글 : " + data);
         }
-
     })
 }
 function updateComment(commentNumber) {
@@ -250,32 +250,29 @@ function sendLoginForm() {
     }
 }
 
-let str = `
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
-                                    \${list['question']}
-                                </button>
-                            </h2>
-                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    \${list['answer']}
-                                </div>
-                            </div>
-                        </div>`;
-let str = `
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse\${list['id']}" aria-expanded="false" aria-controls="collapseFour">
-                                    \${list['question']}
-                                </button>
-                            </h2>
-                            <div id="collapse\${list['id']}" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    \${list['answer']}
-                                <br>
-                                <button type="button" name = \${list['id']} id=btnupdate class="btn btn-outline-danger btn-sm">수정</button>
-                                <button type="button" name = \${list['id']} id=btndelete class="btn btn-outline-dark btn-sm">삭제</button>
-                                </div>
-                            </div>
-                        </div>`;
+function commentPaging() {
+    let RowsPerPage = 15;
+    let pageList;
+    let commentCount;
+    console.log("페이징 호출여부");
+    $.ajax({
+        type : "GET",
+        url : "/getCommentNum",
+        dataType : "text",
+        data : {postId: $("#postId").val()},
+        success : function (data) {
+            commentCount = data;
+            console.log("댓글 -> ", commentCount);
+            pageList = Math.ceil(commentCount / RowsPerPage) + 1;
+            console.log("페이지 리스트 -> ", pageList);
+            for (let i = 1; i <pageList; i++) {
+                let str = `<li class="page-item">
+                    <span class="page-link" href="/getComment?postId=${$("#postId").val()}&pageNumber=${i}">
+                    ${i}
+                    </span>
+                 </li>`;
+                $("#previous").after(str);
+            }
+        }
+    })
+}
