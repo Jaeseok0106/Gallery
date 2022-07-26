@@ -5,9 +5,13 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>FAQ UPDATE</title>
+    <title>예약 관리</title>
 </head>
 <style>
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
     .nav-item{
         list-style-type:none;
         font-size: 55px;
@@ -22,6 +26,15 @@
     #detail {
         font-size: 0.7rem;
     }
+    .page-title {
+        border-top: 10px solid black;
+        border-bottom : 10px solid black;
+        margin-bottom : 2rem;
+    }
+    .page-title h1{
+        padding : 2rem;
+        text-align : center;
+    }
     body {
         font-family : LeeSeoyun;
     }
@@ -32,19 +45,24 @@
         font-style: normal;
     }
     a {
-        text-decoration-line:none;
+        text-decoration: none;
+        color:black;
     }
-    .page-title h1{
-        padding : 2rem;
-        text-align : center;
+    .pagination{
+        justify-content: center;
     }
-    .page-title {
-        border-top: 10px solid black;
-        border-bottom : 10px solid black;
-        margin-bottom : 4rem;
+    #selSort{
+        width: 70px;
+        height: 30px;
+        text-align: center;
     }
-    .ck-editor__editable {
-        height : 100px;
+    #type {
+        width: 90px;
+        height: 30px;
+        text-align: center;
+    }
+    #btnSearch {
+        margin-bottom: 3.5px;
     }
 </style>
 <body>
@@ -78,7 +96,7 @@
                     <a class="nav-link" href="/artist" id = "nav3">artist</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="#" id = "nav4">Post</a>
+                    <a class="nav-link" id = "nav4">Post</a>
                     <ul class="nav justify-content-end" style = "display : none;" id = "none2">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
@@ -109,8 +127,8 @@
                         </c:if>
                         <c:if test="${user.role == '유저'}">
                             <li class="nav-item">
-                                <a class="nav-link" href="/mypage" id="detail">My page</a>
-                              </li>
+                                <a class="nav-link" href="#" id = "detail">My page</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" id = "detail" href = "/history">결제 내역</a>
                             </li>
@@ -137,28 +155,98 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<input type = "hidden" id = "faqid" value = "${faq_table.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;" class="text-center">
-        <h4>FAQ UPDATE</h4>
+    <div class = "container">
+        <div class = "page-title">
+            <h1>Q&A</h1>
+        </div>
     </div>
-    <form calss="row py-4" id="add" method="POST" action="/faqupdate/${fdto.id}">
-        <div class = "col"><br><br>
-            <h3>CATEGORY</h3><select name="category" size="1">
-                <option id = "1" name="category" value="1">관람</option>
-                <option id = "2" name="category" value="2">예약</option>
-                <option id = "3" name="category" value="3">홈페이지</option>
-                <option id = "4" name="category" value="4">기타</option>
-            </select><br><br>
-            <h3>QUESTION</h3><textarea name = "question" class="form-control" id="editorq" rows="30" cols = "50">${fdto.question}</textarea> <br><br>
-            <h3>ANSWER</h3></div><textarea name = "answer" class="form-control" id="editora" rows="30" cols = "50">${fdto.answer}</textarea> <br><br>
-        <div class = "col text-end">
-        <button type="submit" class="btn btn-outline-primary" id="clear">수정 완료</button>
-        <button type="button" class="btn btn-outline-danger" id="reset">취소</button>
-    </div>
+    <form id="serform">
+        <div class = "col-12 text-end">
+            <select size="1" id="selSort">
+                <option value="date">날짜순</option>
+                <option value="view">조회순</option>
+                <option value="heart">추천순</option>
+            </select>
+            <select size="1" id="type" name="type">
+                <option value="">검색조건</option>
+                <option value="tc">제목+내용</option>
+                <option value="t">제목</option>
+                <option value="c">내용</option>
+            </select>
+            <input style = "width:15%;" type="text" placeholder="검색어를 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
+            <button type="button" class="btn btn-outline-secondary" id="btnSearch">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+                <span class="visually-hidden">Button</span>
+            </button>
+        </div>
     </form>
+    <p></p>
+    <div class = "container" id = "boardList">
+        <div class = "row">
+            <table id='qnatb' class ="text-center">
+                <tr class ="text-center">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>날짜</th>
+                    <th>조회</th>
+                    <th>추천</th>
+                </tr>
+                <c:choose>
+                    <c:when test="${!empty qnalist}">
+                        <c:forEach items="${qnalist}" var="list">
+                            <tr class = "text-center">
+                                <td>${list.id}</td>
+                                <td><a href="detail?id=${list.id}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">${list.title}</a></td>
+                                <td>${list.userid}</td>
+                                <td>${list.postdate}</td>
+                                <td>${list.views}</td>
+                                <td>${list.heart}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <td colspan="6">조회된 게시글이 없습니다.</td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
+            </table>
+            <p></p>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="qna?curPage=1&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
+                        <li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">
+                            <c:if test="${i == paging.curPage}">
+                                <span style="color:red">${i}</span>
+                            </c:if>
+                            <c:if test="${i != paging.curPage}">
+                                ${i}
+                            </c:if>
+                        </a></li>
+                    </c:forEach>
+                    <li class="page-item">
+                        <a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class = "col-12 text-end">
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='new'">글쓰기</button>
+        </div>
+    </div>
     </div>
 </main>
 
@@ -185,6 +273,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='/';
+        })
     $(document)
         .ready(function () {
             console.log("시작 화면");
@@ -219,44 +311,18 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
-            for (let i = 1; i < 5; i++) {
-                if (${fdto.category} == i) {
-                    $("#"+i).prop('selected', true);
-                }
-            }
         })
-</script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
-<script>
-    ClassicEditor.create( document.querySelector( '#editorq' ) );
-    ClassicEditor.create( document.querySelector( '#editora' ) );
-
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
-    $(document)
-        .on('click','#clear',function(){
-            if(confirm("수정을 완료 하시겠습니까?")){
-                alert("수정이 완료 되었습니다.");
-                return true;
-            }
-            else{
-            }
-        })
-    $(document)
-        .on('click','#reset',function(){
-            if(confirm("수정을 취소 하시겠습니까?")){
-                alert("수정을 취소 하셨습니다.");
-                document.location.href='/FAQ';
-            }
-            else{
-
-            }
-        })
-</script>
-<script>
-
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+        var url="/qna";
+        if($('#selSort option:selected').val()=='date') {
+            url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+        } else if($('#selSort option:selected').val()=='view') {
+            url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+        } else if($('#selSort option:selected').val()=='heart') {
+            url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
+        }
+        location.href=url;
+    })
 </script>
 </html>

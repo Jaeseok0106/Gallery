@@ -1,6 +1,7 @@
 package com.human.gallery.domain.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,5 +49,7 @@ public class UserService {
 		String address = user.getAddress() + " " + user.getRefAddress();
 		userRepository.addDetail(number, user.getName(),user.getMobile(), address ,user.getDtaddress(), user.getEmail(), user.getPostcode());
 	}
-	
+
+	public void login(User user) {
+	}
 }

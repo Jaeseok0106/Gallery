@@ -5,9 +5,13 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>FAQ UPDATE</title>
+    <title>회원 관리</title>
 </head>
 <style>
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
     .nav-item{
         list-style-type:none;
         font-size: 55px;
@@ -22,6 +26,18 @@
     #detail {
         font-size: 0.7rem;
     }
+    #detail {
+        font-size: 0.7rem;
+    }
+    .page-title {
+        border-top: 10px solid black;
+        border-bottom : 10px solid black;
+        margin-bottom : 2rem;
+    }
+    .page-title h1{
+        padding : 2rem;
+        text-align : center;
+    }
     body {
         font-family : LeeSeoyun;
     }
@@ -32,19 +48,14 @@
         font-style: normal;
     }
     a {
+        text-decoration: none;
+        color:black;
+    }
+    a {
         text-decoration-line:none;
     }
-    .page-title h1{
-        padding : 2rem;
-        text-align : center;
-    }
-    .page-title {
-        border-top: 10px solid black;
-        border-bottom : 10px solid black;
-        margin-bottom : 4rem;
-    }
-    .ck-editor__editable {
-        height : 100px;
+    .pagination{
+        justify-content: center;
     }
 </style>
 <body>
@@ -78,7 +89,7 @@
                     <a class="nav-link" href="/artist" id = "nav3">artist</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="#" id = "nav4">Post</a>
+                    <a class="nav-link" id = "nav4">Post</a>
                     <ul class="nav justify-content-end" style = "display : none;" id = "none2">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/review" id = "detail">Review</a>
@@ -109,8 +120,8 @@
                         </c:if>
                         <c:if test="${user.role == '유저'}">
                             <li class="nav-item">
-                                <a class="nav-link" href="/mypage" id="detail">My page</a>
-                              </li>
+                                <a class="nav-link" href="#" id = "detail">My page</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" id = "detail" href = "/history">결제 내역</a>
                             </li>
@@ -137,28 +148,69 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<input type = "hidden" id = "faqid" value = "${faq_table.id}">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
-    <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;" class="text-center">
-        <h4>FAQ UPDATE</h4>
+    <div class = "container">
+        <div class = "page-title">
+            <h1>회원목록</h1>
+        </div>
     </div>
-    <form calss="row py-4" id="add" method="POST" action="/faqupdate/${fdto.id}">
-        <div class = "col"><br><br>
-            <h3>CATEGORY</h3><select name="category" size="1">
-                <option id = "1" name="category" value="1">관람</option>
-                <option id = "2" name="category" value="2">예약</option>
-                <option id = "3" name="category" value="3">홈페이지</option>
-                <option id = "4" name="category" value="4">기타</option>
-            </select><br><br>
-            <h3>QUESTION</h3><textarea name = "question" class="form-control" id="editorq" rows="30" cols = "50">${fdto.question}</textarea> <br><br>
-            <h3>ANSWER</h3></div><textarea name = "answer" class="form-control" id="editora" rows="30" cols = "50">${fdto.answer}</textarea> <br><br>
-        <div class = "col text-end">
-        <button type="submit" class="btn btn-outline-primary" id="clear">수정 완료</button>
-        <button type="button" class="btn btn-outline-danger" id="reset">취소</button>
+    <p></p>
+    <div class = "container" id = "boardList">
+        <div class = "row">
+            <table id='qnatb' class ="text-center">
+                <tr class ="text-center">
+                    <th style="width: 20%;">아이디</th>
+                    <th style="width: 20%;">이름</th>
+                    <th style="width: 20%;">모바일</th>
+                    <th style="width: 20%;">이메일</th>
+                    <th style="width: 20%;">변경</th>
+                </tr>
+                <c:choose>
+                    <c:when test="${!empty listuser}">
+                        <c:forEach items="${listuser}" var="list">
+                            <tr class = "text-center">
+                                <td>${list.id}</td>
+                                <td>${list.username}</td>
+                                <td>${list.mobile}</td>
+                                <td>${list.email}</td>
+                                <td><button type="button" class="btn btn-danger"><a href="">삭제</a></button></td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                </c:choose>
+            </table>
+            <p></p>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="qna?curPage=1&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
+                        <li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">
+                            <c:if test="${i == paging.curPage}">
+                                <span style="color:red">${i}</span>
+                            </c:if>
+                            <c:if test="${i != paging.curPage}">
+                                ${i}
+                            </c:if>
+                        </a></li>
+                    </c:forEach>
+                    <li class="page-item">
+                        <a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class = "col-12 text-end">
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/signin'">새 데이터 추가</button>
+        </div>
     </div>
-    </form>
     </div>
 </main>
 
@@ -185,6 +237,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
+    $(document)
+        .on('click','#logo',function(){
+            document.location.href='/';
+        })
     $(document)
         .ready(function () {
             console.log("시작 화면");
@@ -219,44 +275,6 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
-            for (let i = 1; i < 5; i++) {
-                if (${fdto.category} == i) {
-                    $("#"+i).prop('selected', true);
-                }
-            }
         })
-</script>
-<script src="/editor/ckeditor.js"></script>
-<script src="/editor/translations/ko.js"></script>
-<script>
-    ClassicEditor.create( document.querySelector( '#editorq' ) );
-    ClassicEditor.create( document.querySelector( '#editora' ) );
-
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
-    $(document)
-        .on('click','#clear',function(){
-            if(confirm("수정을 완료 하시겠습니까?")){
-                alert("수정이 완료 되었습니다.");
-                return true;
-            }
-            else{
-            }
-        })
-    $(document)
-        .on('click','#reset',function(){
-            if(confirm("수정을 취소 하시겠습니까?")){
-                alert("수정을 취소 하셨습니다.");
-                document.location.href='/FAQ';
-            }
-            else{
-
-            }
-        })
-</script>
-<script>
-
 </script>
 </html>

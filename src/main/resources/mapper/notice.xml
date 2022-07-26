@@ -17,7 +17,7 @@
         where seq <![CDATA[>=]]> #{firstRow}
     </select>
 
-    <sql id='sort'>
+    <sql id="sort">
         <if test='sort==null || sort==""'>
             id
         </if>
@@ -74,31 +74,53 @@
     </select>
 
     <!-- 이전글, 다음글 -->
-    <select id='nepr' resultType="com.human.gallery.domain.notice.noticeDTO">
+    <select id='nepr' resultType="com.human.gallery.domain.notice.noticeDTO" parameterType="String">
         select *
         from (select id,
-            lead(id,1,9999) over(order by id) as next,
-            lag(id,1,0) over(order by id) as prev
-            from board_post
-            where categoryList=4)
-        where id=#{param1}
+        lead(id,1,9999) over(order by <include refid="sort2"/>) as next,
+        lag(id,1,0) over(order by <include refid="sort2"/>) as prev
+        from board_post
+        where categoryList=4
+        <if test='keyword != null and keyword != ""'>
+            <if test='type=="tc"'>
+                and ((title like '%' || #{keyword} || '%') or (content like '%' || #{keyword} || '%'))
+            </if>
+            <if test='type=="t"'>
+                and title like '%' || #{keyword} || '%'
+            </if>
+            <if test='type=="c"'>
+                and content like '%' || #{keyword} || '%'
+            </if>
+        </if>
+        )
+        where id=#{id}
     </select>
-    <delete id="heartDelete">
-        delete from post_heart where post_id=#{param1}
-    </delete>
 
+    <sql id="sort2">
+        <if test='sort2==null || sort2==""'>
+            id
+        </if>
+        <if test='sort2=="date"'>
+            postdate, id
+        </if>
+        <if test='sort2=="view"'>
+            views, id
+        </if>
+        <if test='sort2=="heart"'>
+            heart, id
+        </if>
+    </sql>
 
     <!-- 조회수 -->
-    <update id="count" parameterType="int">
+    <update id="count" parameterType="String">
         update board_post
-        set views=#{param1}
-        where id=#{param2}
+        set views=views+1
+        where id=#{param1}
     </update>
 
     <!-- 새 공지 업로드 -->
     <insert id='addnotice'>
-        insert into board_post
-        values(board_post_seq.nextval, #{param1}, #{param2}, 2, 4, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
+        insert into board_post values(board_post_seq.nextval, #{param1}, #{param2}, 2, 4, 0, to_char(sysdate, 'YYYY-MM-DD'), 0)
     </insert>
 
     <!-- 공지 업데이트 -->
@@ -108,24 +130,31 @@
         where id=#{param3}
     </update>
 
-    <!-- 공지 삭제 -->
-    <delete id="delete">
-        delete
-        from board_post
-        where id=#{param1}
-    </delete>
-
     <!-- 선택한 글의 추천 중복 체크 -->
     <select id='findLike' resultType="int">
         select count(*) as cnt
         from post_heart
         where post_id=#{param1}
-          and heart_id=#{param2}
+        and heart_id=#{param2}
     </select>
+
+    <!-- 추천 테이블에 추천id add -->
     <insert id="insertLike">
         insert into post_heart values(post_heart_seq.nextval, #{param1}, #{param2})
     </insert>
+
+    <!-- 추천+ -->
     <update id="likeNotice" parameterType="int">
-        update board_post set heart=heart+1 where id=#{param1}
+        update board_post
+        set heart=heart+1
+        where id=#{param1}
     </update>
+
+    <!-- 공지 추천, 게시글 삭제 -->
+    <delete id="heartDelete">
+        delete from post_heart where post_id=#{param1}
+    </delete>
+    <delete id="delete">
+        delete from board_post where id=#{param1}
+    </delete>
 </mapper>

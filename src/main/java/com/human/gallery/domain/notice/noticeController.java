@@ -42,15 +42,25 @@ public class noticeController {
 
 	// 상세보기
 	@RequestMapping(value="/content", produces="application/json;charset=utf-8")
-	public String docontent(@SessionAttribute(name = "user", required = false) Users user,
-							@RequestParam int id, Model model) {
+	public String docontent(@SessionAttribute(name = "user", required = false) Users user, Model model,
+							@ModelAttribute("paging") pageDTO paging, @ModelAttribute("sort") String sort,
+							@RequestParam(required = false, defaultValue = "tc") String type,
+							@RequestParam(required = false, defaultValue = "") String keyword,
+							@RequestParam String id) {
+		model.addAttribute("user",user);
 		noticeDTO ndto=board_post.noticecontent(id);
 		model.addAttribute("ndto",ndto);
-		int views = ndto.getViews() + 1;
-		board_post.count(views,id);
-		noticeDTO nepr=board_post.nepr(id);
+		noticeDTO nepr=board_post.nepr(id, paging.getKeyword(), paging.getType(), paging.getSort());
 		model.addAttribute("nepr",nepr);
-		model.addAttribute("user",user);
+		board_post.count(id);
+		model.addAttribute("paging", paging);
+		paging.setType(type);
+		paging.setKeyword(keyword);
+		int cnt=board_post.getCount(paging);
+		paging.setTotalRowCount(cnt);
+		paging.pageSetting();
+		List<noticeDTO> listnotice=board_post.listnotice(paging);
+		model.addAttribute("listnotice", listnotice);
 		return "notice/noticecontent";
 	}
 
@@ -67,15 +77,10 @@ public class noticeController {
 		board_post.addnotice(notice.getTitle(),notice.getContent());
 		return "notice/noticewrite";
 	}
-	@RequestMapping("/content/delete")
-	public String dodelete(@RequestParam("id") String id) {
-		log.info("넘어온 값 = {}" , id);
-		board_post.heartDelete(id);
-		board_post.delete(id);
-		return "redirect:/notice";
-}
+
+	// 유저정보, 기존 글정보 받아오기
 	@GetMapping("/update/{id}")
-	public String doupno(@SessionAttribute(name = "user", required = false) Users user,Model model, @PathVariable int id){
+	public String doupno(@SessionAttribute(name = "user", required = false) Users user,Model model, @PathVariable String id){
 		model.addAttribute("user", user);
 		noticeDTO ndto=board_post.noticecontent(id);
 		model.addAttribute("ndto",ndto);
@@ -87,11 +92,9 @@ public class noticeController {
 	public String doupdate(@ModelAttribute("notice") noticeDTO notice,
 						   @PathVariable("id") int id){
 		log.info(notice.getContent());
-		board_post.updatenotice(notice.getTitle(),notice.getContent(),id);
+		board_post.updatenotice(notice.getTitle(), notice.getContent(), id);
 		return "redirect:/content?id="+id;
 	}
-
-	// 게시글 삭제
 
 	// 추천수
 	@ResponseBody
@@ -103,5 +106,14 @@ public class noticeController {
 			board_post.likeNotice(postid);
 		}
 		return findLike;
+	}
+
+	// 게시글 삭제
+	@RequestMapping("/content/delete")
+	public String dodelete(@RequestParam("id") String id) {
+		log.info("넘어온 값 = {}" , id);
+		board_post.heartDelete(id);
+		board_post.delete(id);
+		return "redirect:/notice";
 	}
 }

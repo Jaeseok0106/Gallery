@@ -60,7 +60,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <img src = "/logo.png" id='logo' style = "height:80px;"/>
             </div>
         </div>
         <br><br><br>
@@ -95,7 +95,7 @@
                             <a class="nav-link" href="/qna" id = "detail">Q&A</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/FAQ" id = "detail">FAQ</a>
+                            <a class="nav-link" href="/FAQ" id = "detail" >FAQ</a>
                         </li>
                     </ul>
                 </li>
@@ -115,9 +115,25 @@
                                 <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
                             </li>
                         </c:if>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/mypage" id = "detail">My page</a>
-                        </li>
+                        <c:if test="${user.role == '유저'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/mypage" id="detail">My page</a>
+                              </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${user.role == '관리자'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="listuser" id = "detail">회원관리</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id = "detail">예약관리</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id = "detail">게시판관리</a>
+                            </li>
+                        </c:if>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
@@ -152,12 +168,13 @@
             <span class="nav-link" aria-current="page" id="etc" style="cursor:hand;" value="4">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp기타</span>
         </li>
     </ul>
+    <br>
     <div class="accordion" id="accordionExample">
 
     </div>
             <c:if test="${user.role=='관리자'}">
                 <div class = "text-center">
-                    <button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
+                    <br><button type="button" id=btnwrite class="btn btn-outline-primary btn-sm">글쓰기</button>
                 </div>
             </c:if>
         </div>
