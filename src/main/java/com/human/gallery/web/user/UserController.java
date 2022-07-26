@@ -6,8 +6,10 @@ import com.human.gallery.domain.user.*;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
-import java.net.HttpURLConnection;
 import java.util.UUID;
 
 @Controller
@@ -54,7 +55,8 @@ public class UserController {
 	@PostMapping("/login")
 
 	public String doLogin(@Validated @ModelAttribute("user") UsersLoginForm Form, BindingResult bindingResult,
-							HttpSession session, Model model) {
+							HttpSession session, Model model,
+						  @RequestParam(value = "redirect", defaultValue = "/") String redirect) {
 
 		if (bindingResult.hasErrors())
 		{
@@ -68,8 +70,10 @@ public class UserController {
 			return "users/login";
 		}
 
+		log.info("넘어온 리다이렉트 값 = {}", redirect);
+
 		session.setAttribute("user",user);
-		return "redirect:/";
+		return "redirect:"+redirect;
 	}
 
 	@RequestMapping("/signin")

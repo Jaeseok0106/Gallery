@@ -378,10 +378,9 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
       });
     });
   </script>
-  <script src="${classpath}/editor/ckeditor.js"></script>
-  <script src="${classpath}/editor/translations/ko.js"></script>
+  <script src="/ckeditor/ckeditor.js"></script>
   <script>
-    ClassicEditor.create(document.querySelector("#editor"));
+    CKEDITOR.replace("editor");
   </script>
   <script>
     $(document).ready(function () {

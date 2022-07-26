@@ -1,16 +1,15 @@
 package com.human.gallery.domain.user;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 public class UsersLoginForm {
-	@NotBlank()
+	@NotBlank
 	String id;
-	@NotBlank()
+	@NotBlank
 	String password;
 }

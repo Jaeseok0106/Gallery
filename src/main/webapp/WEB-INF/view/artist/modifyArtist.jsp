@@ -376,10 +376,9 @@ prefix="c" %> <%@ page session="false" %>
       });
     });
   </script>
-  <script src="${classpath}/editor/ckeditor.js"></script>
-  <script src="${classpath}/editor/translations/ko.js"></script>
+  <script src="/ckeditor/ckeditor.js"></script>
   <script>
-    ClassicEditor.create(document.querySelector("#editor"));
-    ClassicEditor.create(document.querySelector("#editor2"));
+    CKEDITOR.replace("editor");
+    CKEDITOR.replace("editor2");
   </script>
 </html>

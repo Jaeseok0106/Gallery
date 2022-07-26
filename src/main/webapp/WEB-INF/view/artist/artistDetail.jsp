@@ -183,7 +183,6 @@ prefix="c" %> <%@ page session="false" %>
                     <a class="nav-link" href="#" id="detail">게시판관리</a>
                   </li>
                 </c:if>
-                >>>>>>> devops
               </ul>
             </li>
             <li class="nav-item mx-5">

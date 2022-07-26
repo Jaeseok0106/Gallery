@@ -365,7 +365,8 @@ ${rdto.content}</textarea
       }
     });
   </script>
+  <script src="/ckeditor/ckeditor.js"></script>
   <script>
-    ClassicEditor.create(document.querySelector("#editor"));
+    CKEDITOR.replace("editor");
   </script>
 </html>
