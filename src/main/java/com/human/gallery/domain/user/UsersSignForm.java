@@ -2,10 +2,7 @@ package com.human.gallery.domain.user;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Data
 public class UsersSignForm {
@@ -23,6 +20,7 @@ public class UsersSignForm {
 	
 	@NotBlank
 	@Pattern(regexp="^[ㄱ-ㅎ가-힣]*$")
+	@Size(max = 20)
 	private String name;
 	@NotBlank
 	private String address;

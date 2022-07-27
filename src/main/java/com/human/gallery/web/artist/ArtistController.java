@@ -37,7 +37,6 @@ public class ArtistController {
 							 Model model) {
 		List<Artist> artistList = artistRepository.findAll();
 		model.addAttribute("artist", artistList);
-		log.info("아티스트 목록 넘어온 값 = {}", artistList);
 		model.addAttribute("user", user);
 		return "artist/artist";
 	}
