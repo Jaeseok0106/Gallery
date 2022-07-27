@@ -9,7 +9,7 @@
 </select>
 
 <insert id = "addUser">
-	insert into Users values (Users_SEQ.nextval, #{param1}, #{param2}, '유저')
+	insert into Users values (Users_SEQ.nextval, #{param1}, #{param2}, '방문자', #{param3})
 </insert>
 <select id = "findNumById" resultType = "Integer">
 	select usernum from users where id = #{param1}
@@ -20,5 +20,7 @@
 <select id = "findDetailById" resultType="com.human.gallery.domain.user.Users">
 	select * from userDetail where id = #{param1}
 </select>
-
+<select id = "findSaltById" parameterType="String">
+	select salt from Users where id = #{id}
+</select>
 </mapper>

@@ -3,11 +3,8 @@ package com.human.gallery.web.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.human.gallery.domain.user.*;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,12 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Controller
 @Slf4j
-@Builder
-
 public class UserController {
 
 	@Autowired
@@ -36,7 +32,7 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-
+	String redirect = "/";
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(@SessionAttribute(name = "user", required = false) Users user, Model model) {
 		log.info("호출 여부");
@@ -46,7 +42,9 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public String viewLogin(@ModelAttribute("user") Users user) {
+	public String viewLogin(@ModelAttribute("user") Users user,
+							@RequestParam(defaultValue = "/") String redirectURL) {
+		redirect = redirectURL;
 		return "users/login";
 	}
 	@RequestMapping("/logout")
@@ -56,10 +54,8 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-
 	public String doLogin(@Validated @ModelAttribute("user") UsersLoginForm Form, BindingResult bindingResult,
-							HttpSession session, Model model,
-						  @RequestParam(value = "redirect", defaultValue = "/") String redirect) {
+							HttpSession session, Model model) throws NoSuchAlgorithmException {
 
 		if (bindingResult.hasErrors())
 		{
@@ -73,10 +69,9 @@ public class UserController {
 			return "users/login";
 		}
 
-		log.info("넘어온 리다이렉트 값 = {}", redirect);
 
 		session.setAttribute("user",user);
-		return "redirect:"+redirect;
+		return "redirect:" + redirect;
 	}
 
 	@RequestMapping("/signin")
@@ -90,7 +85,7 @@ public class UserController {
 	@PostMapping("/signin")
 	public String doSignin(@Validated @ModelAttribute("userSign") UsersSignForm form, BindingResult bindingResult,
 							Model model,
-						   @SessionAttribute(name = "user", required = false) Users usera) {
+						   @SessionAttribute(name = "user", required = false) Users usera) throws NoSuchAlgorithmException {
 
 		if (bindingResult.hasErrors())
 		{
