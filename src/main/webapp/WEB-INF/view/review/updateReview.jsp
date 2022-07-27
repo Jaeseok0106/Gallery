@@ -177,10 +177,7 @@ prefix="c" %> <%@ page session="false" %>
                     <a class="nav-link" href="listuser" id="detail">회원관리</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">예약관리</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">게시판관리</a>
+                    <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                   </li>
                 </c:if>
               </ul>

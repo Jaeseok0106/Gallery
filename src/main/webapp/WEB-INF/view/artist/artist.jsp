@@ -8,21 +8,21 @@
 	<title>Home</title>
 </head>
 <style>
-.nav-item{
-list-style-type:none;
-font-size: 55px;
-}
 .card {
 	align : center;
 	margin-left : auto;
 	margin-right : auto;
 }
+.nav-item{
+	list-style-type:none;
+	font-size: 55px;
+}
 .nav-link {
-    font-weight: 600;
-    color: #000000;
-    padding: 0 0.3125rem;
-    font-size: 20px;
-    font-size: 1.25rem;
+	font-weight: 600;
+	color: #000000;
+	padding: 0 0.3125rem;
+	font-size: 20px;
+	font-size: 1.25rem;
 }
 #detail {
 	font-size: 0.7rem;
@@ -30,7 +30,7 @@ font-size: 55px;
 .page-title {
 	border-top: 10px solid black;
 	border-bottom : 10px solid black;
-	margin-bottom : 4rem;
+	margin-bottom : 2rem;
 }
 .page-title h1{
 	padding : 2rem;
@@ -119,13 +119,10 @@ text-decoration-line:none;
 						</c:if>
 						<c:if test="${user.role == '관리자'}">
 							<li class="nav-item">
-								<a class="nav-link" href="listuser" id = "detail">회원관리</a>
+								<a class="nav-link" href="listuser" id="detail">회원관리</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">예약관리</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">게시판관리</a>
+								<a class="nav-link" href="listReserve" id="detail">예약관리</a>
 							</li>
 						</c:if>
 						<li class="nav-item">

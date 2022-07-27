@@ -8,7 +8,7 @@
         select *
         from	(select rownum as seq, c.*
                  from	((select rownum as rn, a.usernum, a.id as id, a.password, b.username, b.mobile, b.address, b.dtaddress, b.email, b.postcode
-                           from users a, userdetail b
+                          from users a, userdetail b
                           where a.usernum=b.id
                           order by a.usernum) c)
                  where rownum <![CDATA[<=]]> #{lastRow})

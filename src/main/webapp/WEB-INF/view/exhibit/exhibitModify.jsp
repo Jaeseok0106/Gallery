@@ -13,12 +13,9 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
     <title>Home</title>
   </head>
   <style>
-    .nav-item {
-      list-style-type: none;
+    .nav-item{
+      list-style-type:none;
       font-size: 55px;
-    }
-    .ck-editor__editable {
-      height: 400px;
     }
     .nav-link {
       font-weight: 600;
@@ -27,14 +24,17 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
       font-size: 20px;
       font-size: 1.25rem;
     }
+    #detail {
+      font-size: 0.7rem;
+    }
     .page-title {
       border-top: 10px solid black;
-      border-bottom: 10px solid black;
-      margin-bottom: 4rem;
+      border-bottom : 10px solid black;
+      margin-bottom : 2rem;
     }
-    .page-title h1 {
-      padding: 2rem;
-      text-align: center;
+    .page-title h1{
+      padding : 2rem;
+      text-align : center;
     }
     body {
       font-family: LeeSeoyun;
@@ -175,10 +175,7 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
                     <a class="nav-link" href="listuser" id="detail">회원관리</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">예약관리</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">게시판관리</a>
+                    <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                   </li>
                 </c:if>
               </ul>

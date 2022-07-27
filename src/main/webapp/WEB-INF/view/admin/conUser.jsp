@@ -5,7 +5,7 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>회원 관리</title>
+    <title>회원관리</title>
 </head>
 <style>
     table {
@@ -128,13 +128,10 @@
                         </c:if>
                         <c:if test="${user.role == '관리자'}">
                             <li class="nav-item">
-                                <a class="nav-link" href="listuser" id = "detail">회원관리</a>
+                                <a class="nav-link" href="listuser" id="detail">회원관리</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">예약관리</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">게시판관리</a>
+                                <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                             </li>
                         </c:if>
                     </ul>
@@ -153,7 +150,7 @@
 <main class = "container p-5">
     <div class = "container">
         <div class = "page-title">
-            <h1>회원목록</h1>
+            <h1>회원 관리</h1>
         </div>
     </div>
     <p></p>
@@ -185,12 +182,12 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="qna?curPage=1&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Previous">
+                        <a class="page-link" href="listuser?curPage=1" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
-                        <li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">
+                        <li class="page-item"><a class="page-link" href="listuser?curPage=${i}">
                             <c:if test="${i == paging.curPage}">
                                 <span style="color:red">${i}</span>
                             </c:if>
@@ -200,7 +197,7 @@
                         </a></li>
                     </c:forEach>
                     <li class="page-item">
-                        <a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Next">
+                        <a class="page-link" href="listuser?curPage=${paging.totalPageCount}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -208,7 +205,7 @@
             </nav>
         </div>
         <div class = "col-12 text-end">
-            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/signin'">새 데이터 추가</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/signin'">새 회원 추가</button>
         </div>
     </div>
     </div>

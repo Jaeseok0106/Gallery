@@ -135,13 +135,10 @@
                         </c:if>
                         <c:if test="${user.role == '관리자'}">
                             <li class="nav-item">
-                                <a class="nav-link" href="listuser" id = "detail">회원관리</a>
+                                <a class="nav-link" href="listuser" id="detail">회원관리</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">예약관리</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">게시판관리</a>
+                                <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                             </li>
                         </c:if>
                     </ul>
@@ -160,24 +157,13 @@
 <main class = "container p-5">
     <div class = "container">
         <div class = "page-title">
-            <h1>Q&A</h1>
+            <h1>예약 관리</h1>
         </div>
     </div>
     <form id="serform">
         <div class = "col-12 text-end">
-            <select size="1" id="selSort">
-                <option value="date">날짜순</option>
-                <option value="view">조회순</option>
-                <option value="heart">추천순</option>
-            </select>
-            <select size="1" id="type" name="type">
-                <option value="">검색조건</option>
-                <option value="tc">제목+내용</option>
-                <option value="t">제목</option>
-                <option value="c">내용</option>
-            </select>
-            <input style = "width:15%;" type="text" placeholder="검색어를 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
-            <button type="button" class="btn btn-outline-secondary" id="btnSearch">
+            <input style = "width:15%;" type="text" placeholder="전시회 이름을 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
+            <button type="button" class="btn btn-outline-secondary" id="btnSearch" onclick="location.href='/listReserve?keyword=${paging.keyword}'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                 </svg>
@@ -188,31 +174,31 @@
     <p></p>
     <div class = "container" id = "boardList">
         <div class = "row">
-            <table id='qnatb' class ="text-center">
+            <table id='rtb' class ="text-center">
                 <tr class ="text-center">
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>날짜</th>
-                    <th>조회</th>
-                    <th>추천</th>
+                    <th style="width: 20%;">전시회 이름</th>
+                    <th style="width: 20%;">예약자</th>
+                    <th style="width: 20%;">인원</th>
+                    <th style="width: 20%;">날짜</th>
+                    <th style="width: 20%;">변경</th>
                 </tr>
                 <c:choose>
-                    <c:when test="${!empty qnalist}">
-                        <c:forEach items="${qnalist}" var="list">
+                    <c:when test="${!empty listReserve}">
+                        <c:forEach items="${listReserve}" var="list">
                             <tr class = "text-center">
-                                <td>${list.id}</td>
-                                <td><a href="detail?id=${list.id}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">${list.title}</a></td>
-                                <td>${list.userid}</td>
-                                <td>${list.postdate}</td>
-                                <td>${list.views}</td>
-                                <td>${list.heart}</td>
+                                <td>${list.exhibitName}</td>
+                                <td>${list.userName}</td>
+                                <td>${list.person}</td>
+                                <td>${list.reserveDate}</td>
+                                <td>
+                                    <a href="listReserve/resdel?orderId=${list.orderId}"><button type="button" class="btn btn-danger" id="resDel">삭제</button></a>
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="6">조회된 게시글이 없습니다.</td>
+                            <td colspan="6">조회된 예약이 없습니다.</td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -221,12 +207,12 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="qna?curPage=1&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Previous">
+                        <a class="page-link" href="listReserve?curPage=1&keyword=${paging.keyword}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
-                        <li class="page-item"><a class="page-link" href="qna?curPage=${i}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}">
+                        <li class="page-item"><a class="page-link" href="listReserve?curPage=${i}&keyword=${paging.keyword}">
                             <c:if test="${i == paging.curPage}">
                                 <span style="color:red">${i}</span>
                             </c:if>
@@ -236,7 +222,7 @@
                         </a></li>
                     </c:forEach>
                     <li class="page-item">
-                        <a class="page-link" href="qna?curPage=${paging.totalPageCount}&sort=${paging.sort}&type=${paging.type}&keyword=${paging.keyword}" aria-label="Next">
+                        <a class="page-link" href="listReserve?curPage=${paging.totalPageCount}&keyword=${paging.keyword}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -244,12 +230,12 @@
             </nav>
         </div>
         <div class = "col-12 text-end">
-            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='new'">글쓰기</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/exhibit/upload'">전시회 추가</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='/artist/upload'">아티스트 추가</button>
         </div>
     </div>
     </div>
 </main>
-
 <!-- 하단 -->
 <div class="container-fluid">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -312,16 +298,14 @@
                 $("#none3").css("display", "none");
             })
         })
+    $('#resDel').click(function () {
+        if(!confirm('예약정보를 삭제하시겠습니까?')) {
+            return false;
+        }
+    })
     $('#btnSearch').click(function (e) {
         e.preventDefault();
-        var url="/qna";
-        if($('#selSort option:selected').val()=='date') {
-            url=url+'?sort=date&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-        } else if($('#selSort option:selected').val()=='view') {
-            url=url+'?sort=view&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-        } else if($('#selSort option:selected').val()=='heart') {
-            url=url+'?sort=heart&type='+$('#type').val()+'&keyword='+$('#keyword').val();
-        }
+        var url="/listReserve?keyword="+$('#keyword').val();
         location.href=url;
     })
 </script>

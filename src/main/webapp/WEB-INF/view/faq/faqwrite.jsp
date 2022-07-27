@@ -22,6 +22,15 @@
     #detail {
         font-size: 0.7rem;
     }
+    .page-title {
+        border-top: 10px solid black;
+        border-bottom : 10px solid black;
+        margin-bottom : 2rem;
+    }
+    .page-title h1{
+        padding : 2rem;
+        text-align : center;
+    }
     body {
         font-family : LeeSeoyun;
     }
@@ -117,13 +126,10 @@
                         </c:if>
                         <c:if test="${user.role == '관리자'}">
                             <li class="nav-item">
-                                <a class="nav-link" href="listuser" id = "detail">회원관리</a>
+                                <a class="nav-link" href="listuser" id="detail">회원관리</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">예약관리</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" id = "detail">게시판관리</a>
+                                <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                             </li>
                         </c:if>
                     </ul>

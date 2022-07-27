@@ -26,9 +26,6 @@
     #detail {
         font-size: 0.7rem;
     }
-    #detail {
-        font-size: 0.7rem;
-    }
     .page-title {
         border-top: 10px solid black;
         border-bottom : 10px solid black;
