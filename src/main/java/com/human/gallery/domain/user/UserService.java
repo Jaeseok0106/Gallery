@@ -49,7 +49,4 @@ public class UserService {
 		String address = user.getAddress() + " " + user.getRefAddress();
 		userRepository.addDetail(number, user.getName(),user.getMobile(), address ,user.getDtaddress(), user.getEmail(), user.getPostcode());
 	}
-
-	public void login(User user) {
-	}
 }

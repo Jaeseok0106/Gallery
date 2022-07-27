@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.human.gallery.domain.user.*;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,7 +30,8 @@ import java.util.UUID;
 
 public class UserController {
 
-	private final UserService userService;
+	@Autowired
+	private UserService userService;
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
@@ -158,7 +161,7 @@ public class UserController {
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		System.out.println("카카오 엑세스 토큰 : "+oauthToken.getAccess_token());
 
 		RestTemplate rt2 = new RestTemplate();
@@ -196,14 +199,11 @@ public class UserController {
 		UUID tempPassword=UUID.randomUUID();
 		System.out.println("갤러리 패스워드 : "+tempPassword);
 
-		/*Users kakaoUser = User.builder()
-				.username(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
-				.password(tempPassword.toString())
-				.email(kakaoProfile.getKakao_account().getEmail())
-				.build();
+/*		Users user = Users.builder()
 
-		userService.addUsers(kakaoUser);*/
 
+
+		userService.addUsers(user);*/
 		return response2.getBody();
 	}
 }
