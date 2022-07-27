@@ -1,4 +1,4 @@
-package com.human.gallery.domain.aboutus;
+package com.human.gallery.web.aboutus;
 
 import com.human.gallery.domain.user.Users;
 import lombok.extern.slf4j.Slf4j;

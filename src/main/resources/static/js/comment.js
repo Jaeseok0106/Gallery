@@ -47,7 +47,7 @@ $(document).ready(function () {
                 // $("#addComment").after().remove();
             },
             success : function(data) {
-                getComment();
+                getComment(parseInt($("#pageMax").val())-1);
             }
         })
     })
@@ -64,7 +64,7 @@ $(document).ready(function () {
             },
             success : function () {
                 console.log("데이터 보낸거같은데");
-                getComment();
+                getComment($("#currentCommentPage").val());
             }
         })
     })
@@ -112,12 +112,23 @@ function reply_click(commentNumber) {
     }
 }
 
-function getComment() {
+function getComment(page) {
+    if (page == null || page == 0) {
+        page = 1;
+        $("#currentCommentPage").val(1);
+    }
+    else if (page == $("#pageMax").val()) {
+        page = page - 1;
+        $("#currentCommentPage").val(page);
+    }
+    else {
+        $("#currentCommentPage").val(page);
+    }
     $.ajax({
         url : "/getComment",
         type : "GET",
         dataType : "JSON",
-        data : {postId : $("#postId").val(), pageNumber : 1},
+        data : {postId : $("#postId").val(), pageNumber : page},
         beforeSend : function() {
             $("#writeComment").empty();
         },
@@ -208,11 +219,12 @@ function getCommentNum() {
 }
 function updateComment(commentNumber) {
     console.log("나는 업데이트 할거임 = {}", commentNumber);
-    let temp = $("#userComment"+commentNumber).children().text();
+    let temp = $("#userComment"+commentNumber).text();
+    console.log("수정 댓글 원본 = " + temp);
     temp = temp.split('[');
-    console.log(temp[0]);
+    console.log("수정 댓글 짤랐을 때 = " + temp[0]);
     $("#userComment"+commentNumber).children().remove();
-    let str = `<textarea id="updateForm" rows="3" cols="10" style="width:90%; display: inline">${temp[0]}</textarea>
+    let str = `<textarea id="updateForm" rows="3" cols="10" style="width:90%; display: inline; text-align:left;">${temp[0]}</textarea>
             <button type="button" id="updateReply" class="btn btn-outline-Dark" style="height:auto;">등록</button>`;
     $("#userComment"+commentNumber).append(str);
 }
@@ -223,7 +235,7 @@ function doUpdate(commentNumber, content) {
         dataType : "",
         data : {id : commentNumber, content : content},
         success : function () {
-            getComment();
+            getComment($("#currentCommentPage").val());
         }
     })
 }
@@ -238,7 +250,7 @@ function doDelete(commentNumber) {
             data : {id : commentNumber},
             success : function() {
                 alert("삭제 완료..");
-                getComment();
+                getComment($("#currentCommentPage").val());
             }
         })
     }
@@ -260,19 +272,44 @@ function commentPaging() {
         url : "/getCommentNum",
         dataType : "text",
         data : {postId: $("#postId").val()},
+        beforeSend : function() {
+            $("#commentPage").empty();
+        },
         success : function (data) {
             commentCount = data;
             console.log("댓글 -> ", commentCount);
             pageList = Math.ceil(commentCount / RowsPerPage) + 1;
+            $("#pageMax").val(pageList);
             console.log("페이지 리스트 -> ", pageList);
-            for (let i = 1; i <pageList; i++) {
+            let temp = `<li class="page-item" id = "previous">
+                    <span class="page-link" onclick="getComment(${$("#currentCommentPage").val()-1})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </span>
+                </li>`;
+            $("#commentPage").append(temp);
+            if (pageList == 1) {
                 let str = `<li class="page-item">
-                    <span class="page-link" href="/getComment?postId=${$("#postId").val()}&pageNumber=${i}">
+                    <span class="page-link" onclick="getComment(1)">
+                    1
+                    </span>
+                 </li>`;
+                $("#commentPage").append(str);
+            } else {
+                for (let i = 1; i < pageList; i++) {
+                    let str = `<li class="page-item">
+                    <span class="page-link" onclick="getComment(${i})">
                     ${i}
                     </span>
                  </li>`;
-                $("#previous").after(str);
+                    $("#commentPage").append(str);
+                }
             }
+            let temp2 = `<li class="page-item" id = "next">
+                    <span class="page-link" onclick="getComment(${parseInt($("#currentCommentPage").val()) + 1})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>`;
+            $("#commentPage").append(temp2);
         }
     })
 }

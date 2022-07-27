@@ -162,7 +162,7 @@ prefix="c" %> <%@ page session="false" %>
                     >
                   </li>
                 </c:if>
-                <c:if test="${user.role == '유저'}">
+                <c:if test="${user.role == '방문자'}">
                   <li class="nav-item">
                     <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
@@ -183,7 +183,6 @@ prefix="c" %> <%@ page session="false" %>
                     <a class="nav-link" href="#" id="detail">게시판관리</a>
                   </li>
                 </c:if>
-                >>>>>>> devops
               </ul>
             </li>
             <li class="nav-item mx-5">

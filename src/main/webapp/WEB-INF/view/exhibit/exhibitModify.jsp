@@ -160,7 +160,7 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
                     >
                   </li>
                 </c:if>
-                <c:if test="${user.role == '유저'}">
+                <c:if test="${user.role == '방문자'}">
                   <li class="nav-item">
                     <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
@@ -393,10 +393,9 @@ ${exhibit.info}</textarea
       });
     });
   </script>
-  <script src="${classpath}/editor/ckeditor.js"></script>
-  <script src="${classpath}/editor/translations/ko.js"></script>
+  <script src="/ckeditor/ckeditor.js"></script>
   <script>
-    ClassicEditor.create(document.querySelector("#editor"));
+    CKEDITOR.replace("editor");
   </script>
   <script>
     $(document).ready(function () {

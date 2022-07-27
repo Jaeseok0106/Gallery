@@ -114,7 +114,7 @@
                                 <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
                             </li>
                         </c:if>
-                        <c:if test="${user.role == '유저'}">
+                        <c:if test="${user.role == '방문자'}">
                             <li class="nav-item">
                                 <a class="nav-link" href="#" id = "detail">My page</a>
                             </li>
@@ -145,6 +145,8 @@
 <input type="hidden" id="role" value="${user.role}">
 <input type="hidden" id="usernum" value="${user.userNum}">
 <input type = "hidden" id = "postId" value = "${rdto.id}">
+<input type = "hidden" id = "currentCommentPage" value = "">
+<input type = "hidden" id = "pageMax" value = "">
 <br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
@@ -204,19 +206,9 @@
         <div id="writeComment" class="mb-3">
         </div>
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                <li class="page-item" id = "previous">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" id = "next">
-                    <span class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </span>
-                </li>
+            <ul class="pagination justify-content-end" id = "commentPage">
             </ul>
-        </nav>`;
+        </nav>
         </div>
     </div>
 </main>

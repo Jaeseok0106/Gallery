@@ -60,6 +60,7 @@ public class CommentController {
 
 //        List<Comment> commentList = commentRepository.findByPostId(postId);
         List<Comment> commentList = commentRepository.findByIdWithPaging(postId, pageNumber);
+        log.info("댓글 = {}", commentList);
         JSONArray jA = new JSONArray();
         for (int i = 0; i < commentList.size(); i++) {
             Comment comment = commentList.get(i);

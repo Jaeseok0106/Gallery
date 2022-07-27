@@ -111,7 +111,7 @@ prefix="c" %> <%@ page session="false" %>
                   <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
                 </li>
               </c:if>
-              <c:if test="${user.role == '유저'}">
+              <c:if test="${user.role == '방문자'}">
                 <li class="nav-item">
                   <a class="nav-link" href="/mypage" id="detail">My page</a>
                 </li>
@@ -142,6 +142,8 @@ prefix="c" %> <%@ page session="false" %>
   <input type = "hidden" id = "role" value = "${user.role}">
   <input type = "hidden" id = "usernum" value = "${user.userNum}">
   <input type = "hidden" id = "postId" value = "${qdto.id}">
+  <input type = "hidden" id = "currentCommentPage" value = "">
+  <input type = "hidden" id = "pageMax" value = "">
   <br><br>
   <main class = "container p-5">
     <div class = "row">
@@ -197,6 +199,10 @@ prefix="c" %> <%@ page session="false" %>
     <div class="container">
       <div id="writeComment" class="mb-3">
       </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end" id = "commentPage">
+        </ul>
+      </nav>
     </div>
     </div>
   </main>
