@@ -148,8 +148,11 @@
             <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;"value="3">회원 탈퇴</span>
         </li>
     </ul>
+    <div id="bcc">
+    </div>
     <div  id="acc">
-
+    </div>
+    <div id="ccc">
     </div>
 
     </div>
@@ -222,12 +225,33 @@
 </script>
 <script>
     $(document)
+        .on('click','#cgv',function(){
+            $("#acc").empty();
+            let str=`<br><br><h2 style="text-align: center">예매 내역</h2><hr><br>`;
+            $("#acc").append(str);
+
+        })
+</script>
+<script>
+    $(document)
         .on('click','#mmt',function(){
             $("#acc").empty();
-            $("#acc").attr("style","height: 500px; background-color: lightgrey");
-            let str = `ID:<input type="text" id="id"></input>`;
+            // $("#acc").attr("style","height: 500px; background-color: lightgrey");
+            let str = `<br><br><h2 style="text-align: center">개인 정보 관리</h2><hr><br>
+                        ID:<input type="text" id="id"></input>`;
             $("#acc").append(str);
         })
 
+</script>
+<script>
+    $(document)
+    .on('click','#sec',function(){
+        $("#acc").empty();
+        let str=`<br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
+               <table boder="1" bordercolor="black" class="center">
+                <tr><td>비밀번호:<input type:text id="pw"><button id="btntc" value="탈퇴">탈퇴</button></td></tr>
+                </table> `;
+        $('#acc').append(str);
+    })
 </script>
 </html>
