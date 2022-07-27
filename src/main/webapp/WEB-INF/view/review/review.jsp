@@ -128,7 +128,7 @@ text-decoration-line:none;
 								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
-						<c:if test="${user.role == '유저'}">
+						<c:if test="${user.role == '방문자'}">
 							<li class="nav-item">
 								<a class="nav-link" href="/mypage" id="detail">My page</a>
 							  </li>
