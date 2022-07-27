@@ -12,8 +12,8 @@ prefix="c" %> <%@ page session="false" %>
     <title>Home</title>
   </head>
   <style>
-    .nav-item {
-      list-style-type: none;
+    .nav-item{
+      list-style-type:none;
       font-size: 55px;
     }
     .nav-link {
@@ -28,12 +28,12 @@ prefix="c" %> <%@ page session="false" %>
     }
     .page-title {
       border-top: 10px solid black;
-      border-bottom: 10px solid black;
-      margin-bottom: 4rem;
+      border-bottom : 10px solid black;
+      margin-bottom : 2rem;
     }
-    .page-title h1 {
-      padding: 2rem;
-      text-align: center;
+    .page-title h1{
+      padding : 2rem;
+      text-align : center;
     }
     body {
       font-family: LeeSeoyun;
@@ -177,10 +177,7 @@ prefix="c" %> <%@ page session="false" %>
                     <a class="nav-link" href="listuser" id="detail">회원관리</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">예약관리</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">게시판관리</a>
+                    <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                   </li>
                 </c:if>
               </ul>
@@ -254,7 +251,7 @@ prefix="c" %> <%@ page session="false" %>
                 <button
                   type="button"
                   class="btn btn-outline-danger"
-                  onclick="location.href='/artist'"
+                  onclick="location.href='/listReserve'"
                 >
                   취소
                 </button>

@@ -10,29 +10,29 @@
 <link href = "css/success.css" rel="stylesheet"/>
 </head>
 <style>
-.nav-item{
-list-style-type:none;
-font-size: 55px;
-}
-.nav-link {
-    font-weight: 600;
-    color: #000000;
-    padding: 0 0.3125rem;
-    font-size: 20px;
-    font-size: 1.25rem;
-}
-#detail {
-	font-size: 0.7rem;
-}
-.page-title {
-	border-top: 10px solid black;
-	border-bottom : 10px solid black;
-	margin-bottom : 4rem;
-}
-.page-title h1{
-	padding : 2rem;
-	text-align : center;
-}
+	.nav-item{
+		list-style-type:none;
+		font-size: 55px;
+	}
+	.nav-link {
+		font-weight: 600;
+		color: #000000;
+		padding: 0 0.3125rem;
+		font-size: 20px;
+		font-size: 1.25rem;
+	}
+	#detail {
+		font-size: 0.7rem;
+	}
+	.page-title {
+		border-top: 10px solid black;
+		border-bottom : 10px solid black;
+		margin-bottom : 2rem;
+	}
+	.page-title h1{
+		padding : 2rem;
+		text-align : center;
+	}
 body {
 	font-family : LeeSeoyun;
 }
@@ -113,13 +113,10 @@ text-decoration-line:none;
 						</c:if>
 						<c:if test="${user.role == '관리자'}">
 							<li class="nav-item">
-								<a class="nav-link" href="listuser" id = "detail">회원관리</a>
+								<a class="nav-link" href="listuser" id="detail">회원관리</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">예약관리</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">게시판관리</a>
+								<a class="nav-link" href="listReserve" id="detail">예약관리</a>
 							</li>
 						</c:if>
 					</ul>

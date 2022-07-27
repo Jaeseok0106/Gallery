@@ -121,13 +121,10 @@ prefix="c" %> <%@ page session="false" %>
               </c:if>
               <c:if test="${user.role == '관리자'}">
                 <li class="nav-item">
-                  <a class="nav-link" href="listuser" id = "detail">회원관리</a>
+                  <a class="nav-link" href="listuser" id="detail">회원관리</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" id = "detail">예약관리</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" id = "detail">게시판관리</a>
+                  <a class="nav-link" href="listReserve" id="detail">예약관리</a>
                 </li>
               </c:if>
             </ul>
@@ -189,7 +186,7 @@ prefix="c" %> <%@ page session="false" %>
       </div>
       <br><br>
       <div class="text-end">
-        <c:if test="${user.id == qdto.userid}">
+        <c:if test="${user.id == qdto.userid || user.role == '관리자'}">
         <button type="button" class="btn btn-outline-dark" onclick="location.href='up?id=${qdto.id}'">수정</button>
         <a href="delqna?id=${qdto.id}"><button type="button" class="btn btn-outline-dark" id="btnDel">삭제</button></a>
         </c:if>
