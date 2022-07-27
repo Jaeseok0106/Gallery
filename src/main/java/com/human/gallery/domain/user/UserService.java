@@ -19,8 +19,8 @@ public class UserService {
 	public Users login(String id, String password) throws NoSuchAlgorithmException {
 		Users user = userRepository.findById(id);
 
-		String salt = EncryptionUtils.getSalt();
-//		String salt = user.getSalt();
+//		String salt = EncryptionUtils.getSalt();
+		String salt = user.getSalt();
 //		log.info("salt 값 = {}", salt);
 		String tempPassword = EncryptionUtils.getEncrypt(password, salt);
 		log.info("암호화 된 salt = {}", salt);
@@ -29,7 +29,7 @@ public class UserService {
 		{
 			return null;
 		}
-		else if (user.getPassword().equals(password)) {
+		else if (user.getPassword().equals(tempPassword)) {
 			return user;
 		}
 		else {
