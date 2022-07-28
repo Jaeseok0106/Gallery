@@ -75,19 +75,9 @@ prefix="c" %> <%@ page session="false" %>
         <div class="nav-scroller mb-7" id="list">
           <ul class="nav justify-content-center">
             <li class="nav-item mx-5">
-              <a
-                class="nav-link active p-7"
-                aria-current="page"
-                href="#"
-                id="nav1"
-                >About us</a
-              >
+              <a class="nav-link active p-7" aria-current="page" href="#" id="nav1">About us</a>
               <div>
-                <ul
-                  class="nav justify-content-end"
-                  style="display: none"
-                  id="none1"
-                >
+                <ul class="nav justify-content-end" style="display: none" id="none1">
                   <li class="nav-item">
                     <a
                       class="nav-link"
@@ -177,11 +167,7 @@ prefix="c" %> <%@ page session="false" %>
                   <li class="nav-item">
                     <a class="nav-link" href="#" id="detail">My page</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="detail" href="/history"
-                      >결제 내역</a
-                    >
-                  </li>
+
                 </c:if>
                 <c:if test="${user.role == '관리자'}">
                   <li class="nav-item">
@@ -206,9 +192,7 @@ prefix="c" %> <%@ page session="false" %>
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <br><br>
     <!-- main 안에다가 주 내용 작성할것 -->
-    <%--
     <main class="container p-5">
-      --%>
       <div class="container">
         <div class="page-title">
           <h1>Director 인사말</h1>
@@ -226,9 +210,7 @@ prefix="c" %> <%@ page session="false" %>
           </section>
         </div>
       </div>
-      <%--
       <div class="col-6" style="padding: 0px">
-        --%> <%--
         <div class="container">
           <img src="director.png" id="director" style="height: 500px" />
           <p align="right">
@@ -237,11 +219,8 @@ prefix="c" %> <%@ page session="false" %>
           </p>
           <strong class="sign">선장</strong>
         </div>
-        --%> <%--
         <div class="container"></div>
-        --%> <%--
       </div>
-      --%>
     </main>
 
     <!-- 하단 -->

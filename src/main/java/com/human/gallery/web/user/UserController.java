@@ -3,11 +3,8 @@ package com.human.gallery.web.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.human.gallery.domain.user.*;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,12 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Controller
 @Slf4j
-@Builder
-
 public class UserController {
 
 	@Autowired
@@ -36,7 +32,7 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-
+	String redirect = "/";
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(@SessionAttribute(name = "user", required = false) Users user, Model model) {
 		log.info("호출 여부");
@@ -46,7 +42,9 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public String viewLogin(@ModelAttribute("user") Users user) {
+	public String viewLogin(@ModelAttribute("user") Users user,
+							@RequestParam(defaultValue = "/") String redirectURL) {
+		redirect = redirectURL;
 		return "users/login";
 	}
 	@RequestMapping("/logout")
@@ -56,10 +54,8 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-
 	public String doLogin(@Validated @ModelAttribute("user") UsersLoginForm Form, BindingResult bindingResult,
-							HttpSession session, Model model,
-						  @RequestParam(value = "redirect", defaultValue = "/") String redirect) {
+							HttpSession session, Model model) throws NoSuchAlgorithmException {
 
 		if (bindingResult.hasErrors())
 		{
@@ -73,10 +69,9 @@ public class UserController {
 			return "users/login";
 		}
 
-		log.info("넘어온 리다이렉트 값 = {}", redirect);
 
 		session.setAttribute("user",user);
-		return "redirect:"+redirect;
+		return "redirect:" + redirect;
 	}
 
 	@RequestMapping("/signin")
@@ -90,7 +85,7 @@ public class UserController {
 	@PostMapping("/signin")
 	public String doSignin(@Validated @ModelAttribute("userSign") UsersSignForm form, BindingResult bindingResult,
 							Model model,
-						   @SessionAttribute(name = "user", required = false) Users usera) {
+						   @SessionAttribute(name = "user", required = false) Users usera) throws NoSuchAlgorithmException {
 
 		if (bindingResult.hasErrors())
 		{
@@ -124,21 +119,21 @@ public class UserController {
 		return "account";
 	}
 	@GetMapping("/auth/kakao/callback")
-	public @ResponseBody String kakaoCallback(String code) {	// Data를 리턴해주는 컨트롤러 함수
+	public @ResponseBody String kakaoCallback(String code, HttpSession session) {    // Data를 리턴해주는 컨트롤러 함수
 		// POST방식으로 key=value 데이터를 요청 (카카오측으로)
 		// Retrofit2(안드로이드에서 주로사용)
 		RestTemplate rt = new RestTemplate();
 
 		// HttpHeaders 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// HttpBody 오브젝트 생성
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("grant_type","authorization_code");
-		params.add("client_id","11afdf6f295b3f272c88971d1ea73cdd");
-		params.add("redirect_uri","http://localhost:8080/auth/kakao/callback");
-		params.add("code",code);
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", "11afdf6f295b3f272c88971d1ea73cdd");
+		params.add("redirect_uri", "http://localhost:8080/auth/kakao/callback");
+		params.add("code", code);
 		params.add("client_secret", "cYyzjY4ee1qMSBmJOJyYQf1RbwPJ9W5L");
 
 		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -162,14 +157,14 @@ public class UserController {
 			throw new RuntimeException(e);
 		}
 
-		System.out.println("카카오 엑세스 토큰 : "+oauthToken.getAccess_token());
+		System.out.println("카카오 엑세스 토큰 : " + oauthToken.getAccess_token());
 
 		RestTemplate rt2 = new RestTemplate();
 
 		// HttpHeaders 오브젝트 생성
 		HttpHeaders headers2 = new HttpHeaders();
-		headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
-		headers2.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+		headers2.add("Authorization", "Bearer " + oauthToken.getAccess_token());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
 		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 =
@@ -191,19 +186,29 @@ public class UserController {
 			throw new RuntimeException(e);
 		}
 
-		System.out.println("카카오 아이디(번호) :"+kakaoProfile.getId());
-		System.out.println("카카오 이메일 :"+kakaoProfile.getKakao_account().getEmail());
+		System.out.println("카카오 아이디(번호) :" + kakaoProfile.getId());
+		System.out.println("카카오 이메일 :" + kakaoProfile.getKakao_account().getEmail());
 
-		System.out.println("갤러리 유저네임 : "+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
-		System.out.println("갤러리 이메일 : "+kakaoProfile.getKakao_account().getEmail());
-		UUID tempPassword=UUID.randomUUID();
-		System.out.println("갤러리 패스워드 : "+tempPassword);
+		System.out.println("갤러리 유저네임 : " + kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId());
+		System.out.println("갤러리 이메일 : " + kakaoProfile.getKakao_account().getEmail());
+		UUID tempPassword = UUID.randomUUID();
+		System.out.println("갤러리 패스워드 : " + tempPassword);
 
 /*		Users user = Users.builder()
-
-
+				.username(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
+				.password(tempPassword.toString())
+				.email(kakaoProfile.getKakao_account().getEmail())
+				.build();
 
 		userService.addUsers(user);*/
-		return response2.getBody();
+
+		Users user = userService.checkId(kakaoProfile.getKakao_account().getEmail());
+		if (user == null) {
+			userService.kakaoUsers(kakaoProfile.getKakao_account().getEmail(), String.valueOf(tempPassword));
+		} else {
+			session.setAttribute("user", user);
+			return "redirect:/";
+		}
+				return response2.getBody();
 	}
 }

@@ -6,8 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserRepository {
 	
 	Users findById(String id);
-	void addUser(String id, String password);
+	void addUser(String id, String password, String salt);
 	void addDetail(Integer number, String name, String mobile, String address, String dtaddress, String email, int postcode);
 	Integer findNumById(String id);
 	Users findDetailById(String id);
+	String findSaltById(String id);
 }

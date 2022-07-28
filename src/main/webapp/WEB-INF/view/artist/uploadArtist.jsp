@@ -165,11 +165,7 @@ prefix="c" %> <%@ page session="false" %>
                   <li class="nav-item">
                     <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="detail" href="/history"
-                      >결제 내역</a
-                    >
-                  </li>
+
                 </c:if>
                 <c:if test="${user.role == '관리자'}">
                   <li class="nav-item">
@@ -357,6 +353,12 @@ prefix="c" %> <%@ page session="false" %>
         if ($("#formFile").val() == "") {
           alert("사진을 입력해주세요");
           console.log(ADA);
+          return false;
+        }
+        let career = CKEDITOR.instances.editor.getData();
+        let direction = CKEDITOR.instances.editor2.getData();
+        if (career == ''|| direction == '') {
+          alert("안에를 입력해야합니다.");
           return false;
         }
       });
