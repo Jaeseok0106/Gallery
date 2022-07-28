@@ -19,6 +19,7 @@ prefix="c" %> <%@ page session="false" %>
     }
     .detail {
       display: inline-block;
+    }
     .nav-item{
       list-style-type:none;
       font-size: 55px;
