@@ -28,24 +28,31 @@
 	font-size: 20px;
 	font-size: 1.25rem;
 }
+
 .page-title {
 	border-top: 10px solid black;
 	border-bottom: 10px solid black;
 	margin-bottom: 4rem;
 }
+
 .page-title h1 {
 	padding: 2rem;
 	text-align: center;
 }
+
 body {
-	font-family: 'IBMPlexSansKR-Regular';
+	font-family: LeeSeoyun;
 }
+
 @font-face {
-	font-family: 'IBMPlexSansKR-Regular';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+	font-family: 'LeeSeoyun';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
+		format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
+
 a {
 	text-decoration-line: none;
 }
@@ -55,7 +62,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:100px;"/>
+				<img src = "/logo.png" id='logo' style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -66,7 +73,7 @@ a {
 					<div>
 						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
+								<a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
@@ -75,10 +82,10 @@ a {
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="./artist" id = "nav3">Artist</a>
+					<a class="nav-link" href="./artist" id = "nav3">artist</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="#" id = "nav4">Post</a>
@@ -125,8 +132,6 @@ a {
 		</div>
 	</header>
 </div>
-<input type = "hidden" id = "role" value = "${user.role}">
-<input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 	<!-- main 안에다가 주 내용 작성할것 -->
 	<main class="p-5">
@@ -136,34 +141,13 @@ a {
 			</div>
 		</div>
 		<main class="container">
-			<form:form id = "frmAdd" action = "./signin" method = "POST" modelAttribute = "userSign">
+			<form:form id = "frmAdd" action = "/google/signin" method = "POST" modelAttribute = "userSign">
+				<input type = "hidden" name = "id" value = ${userSign.id}>
 				<div>
 					<p>
-						<label class = "col-4 text-end">ID : </label>
-						<form:input path ="id" class = "col-8" placeholder="ID를 입력해주세요." style = "width:40%;"/>
-						<form:errors path = "id" class = "FieldError" />
-						<label class = "FieldError">${overlap} </label>
-					</p>
-					<p>
-						<label class = "col-4 text-end">비밀번호 : </label>
-					    <form:password path = "password" class = "col-8" id="floatingPassword" style = "width:40%;" placeholder="Password" />
-					    <form:errors path = "password" class = "FieldError"/>
-					</p>
-					<p>
-						<label class = "col-4 text-end">비밀번호 확인 : </label>
-						<form:password path = "passwordCheck" class = "col-8" style = "width:40%;" placeholder="Password Check" />
-						<form:errors path = "passwordCheck" class = "FieldError"/>
-						<label class = "FieldError">${passwordError}</label>
-					</p>
-					<p>
 						<label class = "col-4 text-end">이름 : </label>
-						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요."/>
+						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요." value = "${userSign.name}"/>
 						<form:errors path = "name" class = "FieldError" />
-					</p>
-					<p>
-						<label class = "col-4 text-end">E-mail : </label>
-					      <form:input path = "email" class="col-8" id="floatingemail" style = "width:40%;" placeholder="example@example.com" />
-					      <form:errors path = "email" class = "FieldError"/>
 					</p>
 					<p>
 						<label class = "col-4 text-end">우편번호 : </label>
@@ -175,21 +159,28 @@ a {
 						<label class = "col-4 text-end">주소 : </label>
 						<form:input path = "address" id="sample6_address" class="col-8" style = "width:40%;"
 							placeholder="주소" readonly ="true"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "address" class = "FieldError"/>
-							<br>
 					</p>
 					<p>
 						<label class = "col-4 text-end">상세주소 : </label>
 						<form:input path = "dtaddress" id="sample6_detailAddress"
 							class = "col-4" placeholder="상세주소" style="width:20%;"/>
-						<form:errors path = "dtaddress" class = "FieldError"/> 
 						<form:input path = "refAddress"	class = "col-4" style = "width:20%;" id="sample6_extraAddress" placeholder="참고항목" readonly = "true"/>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "dtaddress" class = "FieldError" style = "width:100%;"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "refAddress" class ="FieldError" />
 					</p>
 					<p>
 						<label class = "col-4 text-end">전화번호 : </label>
-						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 포함한 전화번호를 입력해주세요."/> <br>
-						<form:errors path = "mobile" class = "FieldError"/>
+						<form:input path = "mobile" class = "col-4" style = "width:40%;" placeholder="'-' 를 포함한 전화번호를 입력해주세요."/> <br>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "mobile" class = "col-12 text-center FieldError"/>
 					</p>
 					<p class="col-9 text-end">
 						<button type="submit" id="updateBtn" class = "btn btn-primary">회원 가입</button>

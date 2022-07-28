@@ -3,19 +3,22 @@ package com.human.gallery.web.googleLogin;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.human.gallery.domain.googleLogin.GoogleConfig;
-import com.human.gallery.domain.googleLogin.GoogleLogin;
-import com.human.gallery.domain.googleLogin.GoogleLoginRequest;
-import com.human.gallery.domain.googleLogin.GoogleLoginResponse;
+import com.human.gallery.domain.googleLogin.*;
+import com.human.gallery.domain.user.UserService;
+import com.human.gallery.domain.user.Users;
+import com.human.gallery.domain.user.UsersSignForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -25,7 +28,7 @@ import java.net.URISyntaxException;
 public class GoogleLoginController {
 
     private final GoogleConfig googleConfig;
-
+    private final UserService userService;
     @GetMapping("/google/login")
     public ResponseEntity<Object> moveGoogle() {
         String authUrl = googleConfig.googleInitUrl();
@@ -42,7 +45,9 @@ public class GoogleLoginController {
     }
 
     @GetMapping("/google/login/redirect")
-    public ResponseEntity<GoogleLogin> redirectGoogleLogin(@RequestParam("code") String code) {
+    public String redirectGoogleLogin(@RequestParam("code") String code,
+                                                           Model model,
+                                      HttpSession session) {
         RestTemplate restTemplate = new RestTemplate();
         GoogleLoginRequest request = GoogleLoginRequest.builder()
                 .clientId(googleConfig.getGoogleClientId())
@@ -76,7 +81,18 @@ public class GoogleLoginController {
             if (resultJson != null) {
                 GoogleLogin googleLogin = objectMapper.readValue(resultJson, new TypeReference<GoogleLogin>() {});
                 log.info("구글 로그인 - > {}", googleLogin);
-                return ResponseEntity.ok().body(googleLogin);
+                Users userCheck = userService.checkId(googleLogin.getEmail(), "GOOGLE");
+                UsersSignForm user = new UsersSignForm();
+                if (userCheck == null) {
+                    user.setId(googleLogin.getEmail());
+                    user.setName(googleLogin.getName());
+                    model.addAttribute("userSign", user);
+                    return "users/googleSignin";
+
+                } else {
+                    session.setAttribute("user", userCheck);
+                    return "redirect:/";
+                }
             }
             else {
                 throw new Exception("구글 로그인 실패!");
@@ -84,12 +100,20 @@ public class GoogleLoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseEntity.badRequest().body(null);
+        return null;
     }
-//    @GetMapping("/google/login/redirect")
-//    public String getGoogleInfo(@RequestParam("code") String code) {
-//
-//        log.info("code -> {}", code);
-//        return "redirect:/";
-//    }
+    @PostMapping("/google/signin")
+    public String getGoogleInfo(@Validated @ModelAttribute("userSign") GoogleSignForm form, BindingResult bindingResult,
+                                Model model,
+                                @SessionAttribute(name = "user", required = false) Users usera) {
+        if (bindingResult.hasErrors())
+        {
+            log.info("발생된 에러 {} = ", bindingResult.getFieldErrors());
+            model.addAttribute("user", usera);
+            return "users/googleSignin";
+        }
+        log.info("구글 회원가입 - > {}", form);
+        userService.addGoogleUsers(form);
+        return "redirect:/login";
+    }
 }

@@ -5,14 +5,14 @@
 <mapper namespace = "com.human.gallery.domain.user.UserRepository">
 
 <select id = "findById" resultType = "com.human.gallery.domain.user.Users">
-	select * from Users where id = #{param1}
+	select * from Users where id = #{param1} and signpath = 'NORMAL'
 </select>
 
 <insert id = "addUser">
-	insert into Users values (Users_SEQ.nextval, #{param1}, #{param2}, '방문자', #{param3})
+	insert into Users values (Users_SEQ.nextval, #{param1}, #{param2}, '방문자', #{param3}, 'NORMAL')
 </insert>
 <select id = "findNumById" resultType = "Integer">
-	select usernum from users where id = #{param1}
+	select usernum from users where id = #{param1} and signpath = 'NORMAL'
 </select>
 <insert id = "addDetail">
 	insert into userDetail values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7})
@@ -22,5 +22,14 @@
 </select>
 <select id = "findSaltById" parameterType="String">
 	select salt from Users where id = #{id}
+</select>
+<select id = "findByIdWithPath" resultType="com.human.gallery.domain.user.Users" parameterType="String">
+	select * from Users where id = #{id} and signPath = #{path}
+</select>
+<insert id = "addGoogleUser" parameterType="String">
+	insert into Users values (Users_SEQ.nextval, #{id}, #{password}, '방문자', null, 'GOOGLE')
+</insert>
+<select id = "findNumByIdWithPath" parameterType="String" resultType = "Integer">
+	select usernum from users where id = #{id} and signpath = #{signpath}
 </select>
 </mapper>
