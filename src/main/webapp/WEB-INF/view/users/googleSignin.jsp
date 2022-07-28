@@ -62,7 +62,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:100px;"/>
+				<img src = "/logo.png" id='logo' style = "height:100px;"/>
 			</div>
 		</div>
 		<br><br><br>
@@ -145,23 +145,6 @@ a {
 		<main class="container">
 			<form:form id = "frmAdd" action = "./signin" method = "POST" modelAttribute = "userSign">
 				<div>
-					<p>
-						<label class = "col-4 text-end">ID : </label>
-						<form:input path ="id" class = "col-8" placeholder="ID를 입력해주세요." style = "width:40%;"/>
-						<form:errors path = "id" class = "FieldError" />
-						<label class = "FieldError">${overlap} </label>
-					</p>
-					<p>
-						<label class = "col-4 text-end">비밀번호 : </label>
-					    <form:password path = "password" class = "col-8" id="floatingPassword" style = "width:40%;" placeholder="Password" />
-					    <form:errors path = "password" class = "FieldError"/>
-					</p>
-					<p>
-						<label class = "col-4 text-end">비밀번호 확인 : </label>
-						<form:password path = "passwordCheck" class = "col-8" style = "width:40%;" placeholder="Password Check" />
-						<form:errors path = "passwordCheck" class = "FieldError"/>
-						<label class = "FieldError">${passwordError}</label>
-					</p>
 					<p>
 						<label class = "col-4 text-end">이름 : </label>
 						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요."/>

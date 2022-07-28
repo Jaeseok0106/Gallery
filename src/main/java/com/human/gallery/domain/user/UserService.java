@@ -19,9 +19,8 @@ public class UserService {
 	public Users login(String id, String password) throws NoSuchAlgorithmException {
 		Users user = userRepository.findById(id);
 
-//		String salt = EncryptionUtils.getSalt();
-		String salt = user.getSalt();
-//		log.info("salt 값 = {}", salt);
+		String salt = EncryptionUtils.getSalt();
+		log.info("salt 값 = {}", salt);
 		String tempPassword = EncryptionUtils.getEncrypt(password, salt);
 		log.info("암호화 된 salt = {}", salt);
 		log.info("암호화 된 비밀번호 = {}", tempPassword);
@@ -57,5 +56,9 @@ public class UserService {
 		Integer number = userRepository.findNumById(user.getId());
 		String address = user.getAddress() + " " + user.getRefAddress();
 		userRepository.addDetail(number, user.getName(),user.getMobile(), address ,user.getDtaddress(), user.getEmail(), user.getPostcode());
+	}
+
+	public void addGoogleUsers(UsersSignForm user) {
+
 	}
 }
