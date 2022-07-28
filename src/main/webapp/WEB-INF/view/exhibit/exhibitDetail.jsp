@@ -9,7 +9,7 @@ prefix="c" %> <%@ page session="false" %>
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>Home</title>
+    <title>전시회 정보</title>
   </head>
   <style>
     .nav-item{
@@ -36,12 +36,11 @@ prefix="c" %> <%@ page session="false" %>
       text-align : center;
     }
     body {
-      font-family: LeeSeoyun;
+      font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-      font-family: "LeeSeoyun";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
       font-weight: normal;
       font-style: normal;
     }
@@ -80,7 +79,7 @@ prefix="c" %> <%@ page session="false" %>
                       aria-current="page"
                       href="/letter"
                       id="detail"
-                      >director's letter</a
+                      >Director's letter</a
                     >
                   </li>
                   <li class="nav-item">
@@ -96,10 +95,10 @@ prefix="c" %> <%@ page session="false" %>
               </div>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
+              <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/artist" id="nav3">artist</a>
+              <a class="nav-link" href="/artist" id="nav3">Artist</a>
             </li>
             <li class="nav-item mx-5">
               <a class="nav-link" href="#" id="nav4">Post</a>
@@ -163,11 +162,7 @@ prefix="c" %> <%@ page session="false" %>
                   <li class="nav-item">
                     <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="detail" href="/history"
-                      >결제 내역</a
-                    >
-                  </li>
+
                 </c:if>
                 <c:if test="${user.role == '관리자'}">
                   <li class="nav-item">
@@ -191,7 +186,6 @@ prefix="c" %> <%@ page session="false" %>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <input type="hidden" id="exhibitId" value="${exhibit.id}" />
-    <br /><br />
     <!-- main 안에다가 주 내용 작성할것 -->
     <main class="container p-5">
       <div class="page-title">
@@ -271,19 +265,16 @@ prefix="c" %> <%@ page session="false" %>
 
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
+            <a href="/" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
+            <a href="/visit" class="nav-link px-2 text-muted">About</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+            <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
         </ul>
       </footer>
@@ -297,8 +288,11 @@ prefix="c" %> <%@ page session="false" %>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script>
     $(document)
+            .on('click','#logo',function(){
+              document.location.href='/';
+            })
+    $(document)
       .ready(function () {
-        console.log("시작 화면");
         $("#nav1").hover(
           function () {
             $("#none1").css("display", "block");
@@ -352,7 +346,7 @@ prefix="c" %> <%@ page session="false" %>
         }
       })
       .on("click", "#reserveExhibit", function () {
-        if (confirm("예약 하시겠습니까?")) {
+        if (confirm("예약하시겠습니까?")) {
           document.location.href = "/reserve/exhibit/" + $("#exhibitId").val();
         }
       });

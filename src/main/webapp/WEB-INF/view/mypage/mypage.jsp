@@ -8,6 +8,10 @@
     <title>MY PAGE</title>
 </head>
 <style>
+    #history {
+        background-color: gainsboro;
+
+    }
     table {
         border-collapse: separate;
         border-spacing: 0 10px;
@@ -36,11 +40,11 @@
         text-align : center;
     }
     body {
-        font-family : LeeSeoyun;
+        font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-        font-family: 'LeeSeoyun';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
         font-weight: normal;
         font-style: normal;
     }
@@ -68,7 +72,7 @@
                     <div>
                         <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
@@ -77,10 +81,10 @@
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/artist" id = "nav3">artist</a>
+                    <a class="nav-link" href="/artist" id = "nav3">Artist</a>
                 </li>
                 <li class="nav-item mx-5">
                     <a class="nav-link" href="#" id = "nav4">Post</a>
@@ -115,6 +119,24 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/mypage" id = "detail">My page</a>
                         </li>
+                        <c:if test="${user.role == '방문자'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="detail">My page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="detail" href="/history"
+                                >결제 내역</a
+                                >
+                            </li>
+                        </c:if>
+                        <c:if test="${user.role == '관리자'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="listuser" id="detail">회원관리</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="listReserve" id="detail">예약관리</a>
+                            </li>
+                        </c:if>
                     </ul>
                 </li>
                 <li class="nav-item mx-5">
@@ -126,7 +148,6 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div class = "container">
@@ -166,11 +187,18 @@
         </a>
 
         <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQ</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+            <li class="nav-item">
+                <a href="/" class="nav-link px-2 text-muted">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="/visit" class="nav-link px-2 text-muted">About</a>
+            </li>
+            <li class="nav-item">
+                <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
+            </li>
+            <li class="nav-item">
+                <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
+            </li>
         </ul>
     </footer>
 </div>
@@ -178,6 +206,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script>
     $(document)
         .ready(function () {
@@ -224,20 +253,392 @@
     $(document)
         .on('click','#cgv',function(){
             $("#acc").empty();
-            let str=`<br><br><h2 style="text-align: center">예매 내역</h2><hr><br>`;
+            let str=`<br><br><h2 style="text-align: center">예매 내역</h2><hr><br>
+                    <main class = "container p-5">
+	<div class = "container">
+	</div>
+    <div class="col-12 col-sm-12 text-center">
+        <h3>내역조회</h3>
+        조회기간&nbsp;&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnToday" value = "오늘"></input>&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnWeek" value = "이번주"></input>&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="btnMonth" value = "이번달"></input>&nbsp;
+        <input type="date" id="date1">~
+        <input type="date" id="date2">&nbsp;
+        <input type="button" class="btn btn-outline-secondary" id="selectPayment" style="font-weight: bold;" value = "조회"></input>
+    </div>
+    <br><br>
+	<div class = "container" id = "boardList">
+		<div class = "row">
+			<table id = "paymentTable">
+
+			</table>
+			<p></p>
+			<p></p>
+			<p></p>
+		</div>
+	</div>
+    <div id="history" style="display: none;" align="center">
+    <p style="margin-top: 40px;"></p>
+    <h2>예매내역</h2><br>
+    <table id="tb1" class="table table-striped text-center">
+    </table>
+    </div>
+</main>
+`;
+            $(document).on("click", "#btnToday", function() {
+                let today = getToday();
+                $.ajax({
+                    type: "POST",
+                    url: "/history/reserve/today",
+                    data: {userId: $("#usernum").val(), date: today},
+                    dataType: "JSON",
+                    beforeSend: function () {
+                        $("#paymentTable").empty();
+                    },
+                    success: function (reserve) {
+                        console.log(reserve['isPayment']);
+                        let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                        $("#paymentTable").append(temp);
+                        let state;
+                        if (reserve['isPayment'] == 'N') {
+                            state = "예약취소";
+                            let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                            $("#paymentTable").append(str);
+                        } else {
+                            state = "예약완료"
+                            let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                            $("#paymentTable").append(str);
+                        }
+                    }
+                })
+            })
+
+
+            function getPaymentHistory() {
+                $.ajax({
+                    type : 'POST',
+                    url : '/history/reserve/'+ $("#usernum").val(),
+                    data : '',
+                    dataType : "JSON",
+                    beforeSend : function() {
+                        $("#paymentTable").empty();
+                    },
+                    success : function (data) {
+                        let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                        $("#paymentTable").append(temp);
+                        for (let i = 0; i < data.length; i++) {
+                            let reserve = data[i];
+                            let state;
+                            if (reserve['state'] == 'N') {
+                                state = "예약취소"
+                                let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitionName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                                $("#paymentTable").append(str);
+                            } else {
+                                state = "예약완료"
+                                let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitionName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                                $("#paymentTable").append(str);
+                            }
+                        }
+                    }
+                })
+            }
+
+            function getToday(){
+                let date = new Date();
+                let year = date.getFullYear();
+                let month = ("0" + (1 + date.getMonth())).slice(-2);
+                let day = ("0" + date.getDate()).slice(-2);
+
+                return year + "-" + month + "-" + day;
+            }
+            function getThisWeek() {
+
+                let currentDay = new Date();
+                let theYear = currentDay.getFullYear();
+                let theMonth = currentDay.getMonth();
+                let theDate  = currentDay.getDate();
+                let theDayOfWeek = currentDay.getDay();
+
+                let thisWeek = [];
+
+                for(let i=0; i<7; i++) {
+                    let resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+                    let yyyy = resultDay.getFullYear();
+                    let mm = Number(resultDay.getMonth()) + 1;
+                    let dd = resultDay.getDate();
+
+                    mm = String(mm).length === 1 ? '0' + mm : mm;
+                    dd = String(dd).length === 1 ? '0' + dd : dd;
+
+                    thisWeek[i] = yyyy + '-' + mm + '-' + dd;
+                }
+
+                return thisWeek;
+            }
+            function getThisMonth() {
+                let date = new Date();
+                let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+                let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                console.log(firstDay);
+                console.log(lastDay);
+                firstDay = firstDay.toISOString().substring(0,10);
+                lastDay = lastDay.toISOString().substring(0,10);
+                let thisMonth = [];
+                thisMonth[0] = firstDay;
+                thisMonth[1] = lastDay;
+                return thisMonth;
+            }
+            $(document)
+                .ready(function() {
+                    getPaymentHistory();
+                    $('#history').dialog({
+                        resizable: false,
+                        autoOpen:false,
+                        width:600,
+                        height:400,
+                        open: function() {
+                            $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                        },
+                        close: function() {
+                        }
+                    })
+                })
+                .on('click','#btnDetail',function() {
+                    let id = $(this).parent().parent().find('td:eq(0)').attr('id');
+                    console.log("오픈할 id = " + id);
+                    $.ajax({
+                        type : 'POST',
+                        url : '/history/reserve/detail/' + id,
+                        data : {userId : $("#usernum").val()},
+                        dataType : 'JSON',
+                        beforeSend : function () {
+                            $("#tb1").empty();
+                        },
+                        success : function (data) {
+                            console.log("성공 " + data['orderId']);
+                            let str = `
+	 <tr>
+		<th>예매번호</th>
+		<td id = orderId>\${data['orderId']}</td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td>\${data['exhibitionName']}</td>
+	</tr>
+	<tr>
+		<th>날짜</th>
+		<td>\${data['reserveDate']}</td>
+	</tr>
+	<tr>
+		<th>이름</th>
+		<td>\${data['representName']}</td>
+	</tr>
+	<tr>
+		<th>인원</th>
+		<td>\${data['person']}</td>
+	</tr>
+	<tr>
+		<th>상태</th>
+		<td>예매완료</td>
+	</tr>
+	<tr style="display: none;">
+	</tr>
+	<tr>
+		<td colspan="2" style="background: gainsboro">
+			<p style="margin-top: 20px;"></p>
+			<button type="button" class="btn btn-outline-dark" id="btnC">취소하기</button>
+			<button type="button" class="btn btn-outline-dark" id="btnCancel">닫기</button>
+		</td>
+	</tr>`
+                            $("#tb1").append(str);
+                        }
+                    })
+                    $('#history').dialog('open');
+
+                })
+                .on('click','#btnCancel',function() {
+                    $('#history').dialog('close');
+                    getPaymentHistory();
+                })
+                .on('click','#btnC',function() {
+                    if(!confirm('예매를 취소하시겠습니까?'))  {
+                        return false;
+                    }
+                    else {
+                        $.ajax({
+                            type : 'POST',
+                            url : '/history/reserve/delete/'+$("#orderId").text(),
+                            data : '',
+                            dataType : 'JSON',
+                            success : function() {
+                                $('#history').dialog('close');
+                                getPaymentHistory();
+                            }
+                        })
+                    }
+                })
+                .on("click", "#btnWeek", function() {
+                    let thisWeek = getThisWeek();
+                    $.ajax({
+                        type : "POST",
+                        url : "/history/reserve/thisWeek",
+                        data : {userId :$("#usernum").val(), password : thisWeek[0], endDate : thisWeek[6]},
+                        dataType : "JSON",
+                        beforeSend : function() {
+                            $("#paymentTable").empty();
+                        },
+                        success : function(data) {
+                            let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                            $("#paymentTable").append(temp);
+                            for (let i = 0; i < data.length; i++) {
+                                let reserve = data[i];
+                                let state;
+                                if (reserve['isPayment'] == 'N') {
+                                    state = "예약취소"
+                                    let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                                    $("#paymentTable").append(str);
+                                } else {
+                                    state = "예약완료"
+                                    let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                                    $("#paymentTable").append(str);
+                                }
+                            }
+                        }
+                    })
+                })
+                .on("click", "#btnMonth", function() {
+                    let date = getThisMonth();
+                    $.ajax({
+                        type : "POST",
+                        url : "/history/reserve/thisMonth",
+                        data : {userId :$("#usernum").val(), startDate : date[0], endDate : date[1]},
+                        dataType : "JSON",
+                        beforeSend : function() {
+                            $("#paymentTable").empty()
+                        },
+                        success : function(data) {
+                            let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                            $("#paymentTable").append(temp);
+                            for (let i = 0; i < data.length; i++) {
+                                let reserve = data[i];
+                                let state;
+                                if (reserve['isPayment'] == 'N') {
+                                    state = "예약취소"
+                                    let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                                    $("#paymentTable").append(str);
+                                } else {
+                                    state = "예약완료"
+                                    let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                                    $("#paymentTable").append(str);
+                                }
+                            }
+                        }
+                    })
+                })
+
             $("#acc").append(str);
 
         })
 </script>
 <script>
     $(document)
-        .on('click','#mmt',function(){
+        .on('click','#mmt',function() {
             $("#acc").empty();
             // $("#acc").attr("style","height: 500px; background-color: lightgrey");
-            let str = `<br><br><h2 style="text-align: center">개인 정보 관리</h2><hr><br>
-                        ID:<input type="text" id="id"></input>`;
+            let str = `<br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
+                        <h5 style="text-align: center">비밀 번호를 입력 하세요.<br><br><input type="password" id="pwd">      </input><button id="btnupdate">수정</button></h5>`;
             $("#acc").append(str);
         })
+        .on('click','#btnupdate',function(){
+            $.ajax({
+                type : "POST",
+                url : "/mypage/update",
+                data : {userId :$("#usernum").val(), password : $("#pwd").val()},
+                dataType : "JSON",
+                success : function(data) {
+                console.log(data);
+            }
+
+            })
+            })
+
 
 </script>
 <script>
@@ -246,7 +647,7 @@
         $("#acc").empty();
         let str=`<br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
                <table boder="1" bordercolor="black" class="center">
-                <tr><td>비밀번호:<input type:text id="pw"><button id="btntc" value="탈퇴">탈퇴</button></td></tr>
+                <tr><td>비밀번호:<input type="text" id="pw"><button id="btntc" value="탈퇴">탈퇴</button></td></tr>
                 </table> `;
         $('#acc').append(str);
     })

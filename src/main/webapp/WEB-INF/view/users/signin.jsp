@@ -28,31 +28,24 @@
 	font-size: 20px;
 	font-size: 1.25rem;
 }
-
 .page-title {
 	border-top: 10px solid black;
 	border-bottom: 10px solid black;
 	margin-bottom: 4rem;
 }
-
 .page-title h1 {
 	padding: 2rem;
 	text-align: center;
 }
-
 body {
-	font-family: LeeSeoyun;
+	font-family: 'IBMPlexSansKR-Regular';
 }
-
 @font-face {
-	font-family: 'LeeSeoyun';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
-		format('woff');
+	font-family: 'IBMPlexSansKR-Regular';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
-
 a {
 	text-decoration-line: none;
 }
@@ -73,7 +66,7 @@ a {
 					<div>
 						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+								<a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
@@ -82,10 +75,10 @@ a {
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="./artist" id = "nav3">artist</a>
+					<a class="nav-link" href="./artist" id = "nav3">Artist</a>
 				</li>
 				<li class="nav-item mx-5">
 					<a class="nav-link" href="#" id = "nav4">Post</a>

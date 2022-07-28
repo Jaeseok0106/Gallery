@@ -37,12 +37,11 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
       text-align : center;
     }
     body {
-      font-family: LeeSeoyun;
+      font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-      font-family: "LeeSeoyun";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
       font-weight: normal;
       font-style: normal;
     }
@@ -81,7 +80,7 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
                       aria-current="page"
                       href="/letter"
                       id="detail"
-                      >director's letter</a
+                      >Director's letter</a
                     >
                   </li>
                   <li class="nav-item">
@@ -97,10 +96,10 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
               </div>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
+              <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/artist" id="nav3">artist</a>
+              <a class="nav-link" href="/artist" id="nav3">Artist</a>
             </li>
             <li class="nav-item mx-5">
               <a class="nav-link" href="#" id="nav4">Post</a>
@@ -164,11 +163,7 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
                   <li class="nav-item">
                     <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="detail" href="/history"
-                      >결제 내역</a
-                    >
-                  </li>
+
                 </c:if>
                 <c:if test="${user.role == '관리자'}">
                   <li class="nav-item">
@@ -191,7 +186,6 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
     </div>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
-    <br /><br />
     <!-- main 안에다가 주 내용 작성할것 -->
     <main class="container p-5">
       <form
@@ -307,19 +301,16 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
 
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
+            <a href="/" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
+            <a href="/visit" class="nav-link px-2 text-muted">About</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+            <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
         </ul>
       </footer>
