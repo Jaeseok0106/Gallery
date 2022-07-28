@@ -1,5 +1,6 @@
 package com.human.gallery.domain.user;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
