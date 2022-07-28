@@ -93,7 +93,7 @@ public class UserController {
 			model.addAttribute("user", usera);
 			return "users/signin";
 		}
-		Users checkId = userService.checkId(form.getId());
+		Users checkId = userService.checkId(form.getId(), "NORMAL");
 		if (checkId != null)
 		{
 			model.addAttribute("user", usera);
@@ -202,9 +202,9 @@ public class UserController {
 
 		userService.addUsers(user);*/
 
-		Users user = userService.checkId(kakaoProfile.getKakao_account().getEmail());
+		Users user = userService.checkId(kakaoProfile.getKakao_account().getEmail(), "KAKAO");
 		if (user == null) {
-			userService.kakaoUsers(kakaoProfile.getKakao_account().getEmail(), String.valueOf(tempPassword));
+//			userService.kakaoUsers(kakaoProfile.getKakao_account().getEmail(), String.valueOf(tempPassword));
 		} else {
 			session.setAttribute("user", user);
 			return "redirect:/";

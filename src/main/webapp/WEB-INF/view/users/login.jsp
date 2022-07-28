@@ -92,7 +92,7 @@ body {
             </a>
     </div>
         <div class="form-floating" id="googleLogin">
-            <div class="kakaobtn">
+            <div class="googlebtn">
                 <a href="/google/login">
                     <img src="/googleLogin.png" width="300px" height="47px"/>
                 </a>
