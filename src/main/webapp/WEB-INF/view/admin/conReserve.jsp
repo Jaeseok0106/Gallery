@@ -62,7 +62,7 @@
         text-align: center;
     }
     #btnSearch {
-        margin-bottom: 3.5px;
+        margin-bottom: 2.5px;
     }
 </style>
 <body>
@@ -70,7 +70,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "/logo.png" id='logo' style = "height:80px;"/>
+                <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
             </div>
         </div>
         <br><br><br>
@@ -161,7 +161,7 @@
     </div>
     <form id="serform">
         <div class = "col-12 text-end">
-            <input style = "width:15%;" type="text" placeholder="전시회 이름을 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
+            <input style = "width:17%;" type="text" placeholder="전시회 이름을 입력하세요" aria-label=".form-control-sm example" id="keyword" name="keyword" value="${paging.keyword}"/>
             <button type="button" class="btn btn-outline-secondary" id="btnSearch" onclick="location.href='/listReserve?keyword=${paging.keyword}'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -265,10 +265,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
     $(document)
         .ready(function () {
             console.log("시작 화면");

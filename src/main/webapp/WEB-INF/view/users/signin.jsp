@@ -13,13 +13,12 @@
 <title>회원 가입</title>
 </head>
 <style>
-.nav-item {
-	list-style-type: none;
-	float: left;
-	font-size: 55px;
-}
 .FieldError {
 	color:red;
+}
+.nav-item{
+	list-style-type:none;
+	font-size: 55px;
 }
 .nav-link {
 	font-weight: 600;
@@ -28,14 +27,17 @@
 	font-size: 20px;
 	font-size: 1.25rem;
 }
+#detail {
+	font-size: 0.7rem;
+}
 .page-title {
 	border-top: 10px solid black;
-	border-bottom: 10px solid black;
-	margin-bottom: 4rem;
+	border-bottom : 10px solid black;
+	margin-bottom : 2rem;
 }
-.page-title h1 {
-	padding: 2rem;
-	text-align: center;
+.page-title h1{
+	padding : 2rem;
+	text-align : center;
 }
 body {
 	font-family: 'IBMPlexSansKR-Regular';
@@ -47,7 +49,8 @@ body {
 	font-style: normal;
 }
 a {
-	text-decoration-line: none;
+	text-decoration: none;
+	color:black;
 }
 </style>
 <body>
@@ -55,7 +58,7 @@ a {
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "logo.png" id='logo' style = "height:100px;"/>
+				<a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
 			</div>
 		</div>
 		<br><br><br>
@@ -102,7 +105,7 @@ a {
 								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="./signin" id = "detail">Sign in</a>
+								<a class="nav-link" href="/signin" id = "detail">Sign in</a>
 							</li>
 						</c:if>
 						<c:if test = "${user.id != null }">
@@ -110,12 +113,22 @@ a {
 								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
 							</li>
 						</c:if>
-						<li class="nav-item">
-							<a class="nav-link" href="/mypage" id = "detail">My page</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
-						</li>
+						<c:if test="${user.role == '방문자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="#" id = "detail">My page</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+							</li>
+						</c:if>
+						<c:if test="${user.role == '관리자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="listuser" id="detail">회원관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="listReserve" id="detail">예약관리</a>
+							</li>
+						</c:if>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
@@ -127,7 +140,6 @@ a {
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
-<br><br>
 	<!-- main 안에다가 주 내용 작성할것 -->
 	<main class="p-5">
 		<div class="container">
@@ -236,10 +248,6 @@ a {
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	$(document)
-			.on('click','#logo',function(){
-				document.location.href='/';
-			})
 	$(document).ready(function() {
 		console.log("시작 화면");
 		$("#nav1").hover(function() {

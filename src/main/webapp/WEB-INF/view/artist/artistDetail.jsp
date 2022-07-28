@@ -56,7 +56,7 @@ prefix="c" %> <%@ page session="false" %>
       <header class="blog-header py-3" style="height: 230px">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="text-center">
-            <img src="/logo.png" id="logo" style="height: 80px" />
+            <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
           </div>
         </div>
         <br /><br /><br />
@@ -207,20 +207,13 @@ prefix="c" %> <%@ page session="false" %>
         <h2>Artist note</h2>
         ${artist.direction}
       </div>
-      <c:if test="${user.role == '관리자'}">
         <div class="col-12 text-end">
-          <button
-            type="button"
-            class="btn btn-primary"
-            onclick="location.href='/artist/modify/${artist.id}'"
-          >
-            수정
-          </button>
-          <button type="button" class="btn btn-danger" id="deleteArtist">
-            삭제
-          </button>
+          <c:if test="${user.role == '관리자'}">
+            <button type="button" class="btn btn-primary" onclick="location.href='/artist/modify/${artist.id}'">수정</button>
+            <button type="button" class="btn btn-danger" id="deleteArtist">삭제</button>
+          </c:if>
+          <button type="button" class="btn btn-dark" onclick="location.href='/artist'">목록</button>
         </div>
-      </c:if>
     </main>
 
     <!-- 하단 -->
@@ -263,9 +256,6 @@ prefix="c" %> <%@ page session="false" %>
   ></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script>
-    $(document).on("click", "#logo", function () {
-      document.location.href = "/";
-    });
     $(document)
       .ready(function () {
         console.log("시작 화면");

@@ -61,7 +61,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "/logo.png" id='logo' style = "height:80px;"/>
+                <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
             </div>
         </div>
         <br><br><br>
@@ -236,11 +236,6 @@
 <script>
     CKEDITOR.replace("editorq")
     CKEDITOR.replace("editora")
-
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
-        })
      $(document)
          .on('click','#clear',function() {
              if(confirm("작성을 완료하시겠습니까?")) {

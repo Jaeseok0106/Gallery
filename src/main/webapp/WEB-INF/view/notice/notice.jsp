@@ -8,72 +8,69 @@
 	<title>NOTICE</title>
 </head>
 <style>
-table {
-  border-collapse: separate;
-  border-spacing: 0 20px;
-}
-.nav-item{
-list-style-type:none;
-font-size: 55px;
-}
-.nav-link {
-    font-weight: 600;
-    color: #000000;
-    padding: 0 0.3125rem;
-    font-size: 20px;
-    font-size: 1.25rem;
-}
-#detail {
-	font-size: 0.7rem;
-}
-#detail {
-	font-size: 0.7rem;
-}
-.page-title {
-	border-top: 10px solid black;
-	border-bottom : 10px solid black;
-	margin-bottom : 2rem;
-}
-.page-title h1{
-	padding : 2rem;
-	text-align : center;
-}
-body {
-	font-family: 'IBMPlexSansKR-Regular';
-}
-@font-face {
-	font-family: 'IBMPlexSansKR-Regular';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-a {
-	text-decoration: none;
-	color:black;
-}
-.pagination{
-	justify-content: center;
-}
-#selSort{
-	width: 70px;
-	height: 30px;
-	text-align: center;
-}
-#type {
-	width: 90px;
-	height: 30px;
-	text-align: center;
-}
-#btnSearch {
-	margin-bottom: 3.5px;
-}
+	table {
+		border-collapse: separate;
+		border-spacing: 0 20px;
+	}
+	.nav-item{
+		list-style-type:none;
+		font-size: 55px;
+	}
+	.nav-link {
+		font-weight: 600;
+		color: #000000;
+		padding: 0 0.3125rem;
+		font-size: 20px;
+		font-size: 1.25rem;
+	}
+	#detail {
+		font-size: 0.7rem;
+	}
+	.page-title {
+		border-top: 10px solid black;
+		border-bottom : 10px solid black;
+		margin-bottom : 2rem;
+	}
+	.page-title h1{
+		padding : 2rem;
+		text-align : center;
+	}
+	body {
+		font-family: 'IBMPlexSansKR-Regular';
+	}
+	@font-face {
+		font-family: 'IBMPlexSansKR-Regular';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	a {
+		text-decoration: none;
+		color:black;
+	}
+	.pagination{
+		justify-content: center;
+	}
+	#selSort{
+		width: 70px;
+		height: 30px;
+		text-align: center;
+	}
+	#type {
+		width: 90px;
+		height: 30px;
+		text-align: center;
+	}
+	#btnSearch {
+		margin-bottom: 2.5px;
+	}
 </style>
 <body>
 <div class="container">
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "/logo.png" id='logo' style = "height:80px;"/>
+				<a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
 			</div>
 		</div>
 		<br><br><br>
@@ -131,7 +128,7 @@ a {
 						<c:if test="${user.role == '방문자'}">
 							<li class="nav-item">
 								<a class="nav-link" href="/mypage" id="detail">My page</a>
-							  </li>
+							</li>
 							<li class="nav-item">
 								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
 							</li>
@@ -187,14 +184,14 @@ a {
 	<p></p>
 	<div class = "container" id = "boardList">
 		<div class = "row">
-			<table id=tbldata class ="text-center">
+			<table id='qnatb' class ="text-center">
 				<tr class ="text-center">
 					<th>번호</th>
 					<th>제목</th>
-					<th>작성자</th>
-					<th>작성 날짜</th>
+					<th>글쓴이</th>
+					<th>날짜</th>
 					<th>조회</th>
-					<th>추천수</th>
+					<th>추천</th>
 				</tr>
 				<c:choose>
 					<c:when test="${!empty listnotice}">
@@ -253,28 +250,28 @@ a {
 
 <!-- 하단 -->
 <div class="container-fluid">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
+	<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+		<p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
 
-    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-    </a>
+		<a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+			<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+		</a>
 
-	  <ul class="nav col-md-4 justify-content-end">
-		  <li class="nav-item">
-			  <a href="/" class="nav-link px-2 text-muted">Home</a>
-		  </li>
-		  <li class="nav-item">
-			  <a href="/visit" class="nav-link px-2 text-muted">About</a>
-		  </li>
-		  <li class="nav-item">
-			  <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
-		  </li>
-		  <li class="nav-item">
-			  <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
-		  </li>
-	  </ul>
-  </footer>
+		<ul class="nav col-md-4 justify-content-end">
+			<li class="nav-item">
+				<a href="/" class="nav-link px-2 text-muted">Home</a>
+			</li>
+			<li class="nav-item">
+				<a href="/visit" class="nav-link px-2 text-muted">About</a>
+			</li>
+			<li class="nav-item">
+				<a href="/notice" class="nav-link px-2 text-muted">Notice</a>
+			</li>
+			<li class="nav-item">
+				<a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
+			</li>
+		</ul>
+	</footer>
 </div>
 
 </body>
@@ -283,10 +280,6 @@ a {
 <script>
 $(document)
 .ready(function () {
-	$(document)
-			.on('click','#logo',function(){
-				document.location.href='/';
-			})
 	console.log("시작 화면");
 	$("#nav1").hover(function() {
 		$("#none1").css("display", "block");

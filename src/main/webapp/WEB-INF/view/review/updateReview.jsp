@@ -56,7 +56,7 @@ prefix="c" %> <%@ page session="false" %>
       <header class="blog-header py-3" style="height: 230px">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="text-center">
-            <img src="/logo.png" id="logo" style="height: 80px" />
+            <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
           </div>
         </div>
         <br /><br /><br />
@@ -289,9 +289,6 @@ ${rdto.content}</textarea
   <script src="${classpath}/editor/ckeditor.js"></script>
   <script src="${classpath}/editor/translations/ko.js"></script>
   <script>
-    $(document).on("click", "#logo", function () {
-      document.location.href = "/";
-    });
     $(document).ready(function () {
       console.log("시작 화면");
       $("#nav1").hover(

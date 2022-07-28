@@ -65,7 +65,7 @@ text-decoration-line:none;
 	text-align: center;
 }
 #btnSearch {
-	margin-bottom: 3.5px;
+	margin-bottom: 2.5px;
 }
 </style>
 <body>
@@ -73,7 +73,7 @@ text-decoration-line:none;
 	<header class="blog-header py-3" style = "height : 230px;">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "/logo.png" id='logo' style = "height:80px;"/>
+				<a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
 			</div>
 		</div>
 		<br><br><br>
@@ -279,10 +279,6 @@ text-decoration-line:none;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-	$(document)
-			.on('click','#logo',function(){
-				document.location.href='/';
-			})
 	$(document)
 			.ready(function () {
 				console.log("시작 화면");
