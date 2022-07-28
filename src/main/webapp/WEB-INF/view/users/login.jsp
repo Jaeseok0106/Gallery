@@ -67,7 +67,7 @@ body {
 <form action="./kakaologin.do" method="post" name="lfrm" hidden>
     <input type="text" name="kakaoemail" id="kakaoemail" value="" />
 </form>
-<form:form id = "frmAdd" action = "./login" method = "POST" modelAttribute = "user">
+<form:form id = "frmAdd" action = "/login" method = "POST" modelAttribute = "user">
 	<h1 class="h3 mb-3 fw-normal">로그인</h1>
 
     <div class="form-floating">
@@ -91,6 +91,12 @@ body {
                 <img src="/loginButton.png" width="300px" height="47px"/>
             </a>
     </div>
+        <div class="form-floating" id="googleLogin">
+            <div class="kakaobtn">
+                <a href="/google/login">
+                    <img src="/googleLogin.png" width="300px" height="47px"/>
+                </a>
+            </div>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
 </div>
 </form:form>

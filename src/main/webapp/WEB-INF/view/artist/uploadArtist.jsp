@@ -364,6 +364,12 @@ prefix="c" %> <%@ page session="false" %>
           console.log(ADA);
           return false;
         }
+        let career = CKEDITOR.instances.editor.getData();
+        let direction = CKEDITOR.instances.editor2.getData();
+        if (career == ''|| direction == '') {
+          alert("안에를 입력해야합니다.");
+          return false;
+        }
       });
     });
   </script>
