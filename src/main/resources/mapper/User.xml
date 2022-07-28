@@ -32,4 +32,10 @@
 <select id = "findNumByIdWithPath" parameterType="String" resultType = "Integer">
 	select usernum from users where id = #{id} and signpath = #{signpath}
 </select>
+	<select id = "findUsersByEmail" resultType="Integer">
+		select id from userdetail where email = #{param1}
+	</select>
+	<select id = "findUserIdByNum" resultType = "String">
+		select id from users where usernum = #{param1}
+	</select>
 </mapper>
