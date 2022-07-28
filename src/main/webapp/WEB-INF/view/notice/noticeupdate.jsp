@@ -36,12 +36,11 @@ prefix="c" %> <%@ page session="false" %>
       text-align: center;
     }
     body {
-      font-family: LeeSeoyun;
+      font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-      font-family: "LeeSeoyun";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
       font-weight: normal;
       font-style: normal;
     }
@@ -83,7 +82,7 @@ prefix="c" %> <%@ page session="false" %>
                       aria-current="page"
                       href="/letter"
                       id="detail"
-                      >director's letter</a
+                      >Director's letter</a
                     >
                   </li>
                   <li class="nav-item">
@@ -99,10 +98,10 @@ prefix="c" %> <%@ page session="false" %>
               </div>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
+              <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/artist" id="nav3">artist</a>
+              <a class="nav-link" href="/artist" id="nav3">Artist</a>
             </li>
             <li class="nav-item mx-5">
               <a class="nav-link" href="#" id="nav4">Post</a>
@@ -194,7 +193,6 @@ prefix="c" %> <%@ page session="false" %>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <input type="hidden" id="id" value="${ndto.id}" />
-    <br /><br />
     <!-- main 안에다가 주 내용 작성할것 -->
     <main class="container p-5">
       <div
@@ -257,19 +255,16 @@ ${ndto.content}</textarea
 
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
+            <a href="/" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
+            <a href="/visit" class="nav-link px-2 text-muted">About</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+            <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
         </ul>
       </footer>
@@ -334,8 +329,8 @@ ${ndto.content}</textarea
         })
     $(document)
         .on('click','#clear',function(){
-            if(confirm("정말 수정 완료 하시겠습니까?")) {
-                        alert("게시물이 수정 되었습니다.");
+            if(confirm("수정을 완료하시겠습니까?")) {
+                        alert("게시물이 수정되었습니다.");
                     }
             else {
                 return false;
@@ -343,8 +338,8 @@ ${ndto.content}</textarea
         })
     $(document)
         .on('click','#reset',function(){
-            if(confirm("정말 수정을 취소 하시겠습니까?")) {
-                alert("게시물 수정이 취소 되었습니다.");
+            if(confirm("수정을 취소하시겠습니까?")) {
+                alert("게시물 수정이 취소되었습니다.");
                 document.location.href='/content?id='+${ndto.id};
             }
             else {

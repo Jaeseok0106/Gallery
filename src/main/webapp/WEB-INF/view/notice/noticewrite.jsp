@@ -36,12 +36,11 @@ prefix="c" %> <%@ page session="false" %>
       text-align: center;
     }
     body {
-      font-family: LeeSeoyun;
+      font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-      font-family: "LeeSeoyun";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
       font-weight: normal;
       font-style: normal;
     }
@@ -92,7 +91,7 @@ prefix="c" %> <%@ page session="false" %>
                       aria-current="page"
                       href="/letter"
                       id="detail"
-                      >director's letter</a
+                      >Director's letter</a
                     >
                   </li>
                   <li class="nav-item">
@@ -108,10 +107,10 @@ prefix="c" %> <%@ page session="false" %>
               </div>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
+              <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/artist" id="nav3">artist</a>
+              <a class="nav-link" href="/artist" id="nav3">Artist</a>
             </li>
             <li class="nav-item mx-5">
               <a class="nav-link" href="#" id="nav4">Post</a>
@@ -203,7 +202,6 @@ prefix="c" %> <%@ page session="false" %>
     </div>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
-    <br /><br />
     <!-- main 안에다가 주 내용 작성할것 -->
     <main class="container p-5">
       <div
@@ -263,19 +261,16 @@ prefix="c" %> <%@ page session="false" %>
 
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
+            <a href="/" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
+            <a href="/visit" class="nav-link px-2 text-muted">About</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+            <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
         </ul>
       </footer>
@@ -331,12 +326,12 @@ prefix="c" %> <%@ page session="false" %>
 
     $(document)
       .on("click", "#reset", function () {
-        if (confirm("정말 작성을 취소 하시겠습니까?")) {
+        if (confirm("작성을 취소하시겠습니까?")) {
           document.location.href = "/notice";
         }
       })
       .on("click", "#clear", function () {
-        if (confirm("정말 작성 완료하시겠습니까?")) {
+        if (confirm("작성 완료하시겠습니까?")) {
           editor = CKEDITOR.instances.editor.getData();
           if (editor != "" && $("#title").val() != "") {
             $.ajax({
@@ -345,7 +340,7 @@ prefix="c" %> <%@ page session="false" %>
               url: "write",
               data: { title: $("#title").val(), content: editor },
               success: function () {
-                alert("작성이 완료 되었습니다.");
+                alert("작성이 완료되었습니다.");
                 document.location.href = "/notice";
               },
             });

@@ -38,15 +38,14 @@
         text-align : center;
     }
     body {
-        font-family: LeeSeoyun;
+        font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-        font-family: "LeeSeoyun";
-        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff") format("woff");
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
         font-weight: normal;
         font-style: normal;
     }
-
     a {
         text-decoration-line: none;
     }
@@ -70,7 +69,7 @@
                     <div>
                         <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
@@ -79,10 +78,10 @@
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/artist" id = "nav3">artist</a>
+                    <a class="nav-link" href="/artist" id = "nav3">Artist</a>
                 </li>
                 <li class="nav-item mx-5">
                     <a class="nav-link" id = "nav4">Post</a>
@@ -144,7 +143,6 @@
 <input type = "hidden" id = "postId" value = "${rdto.id}">
 <input type = "hidden" id = "currentCommentPage" value = "">
 <input type = "hidden" id = "pageMax" value = "">
-<br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class="container p-5">
     <div class="row">
@@ -159,7 +157,7 @@
             <p class="text-start">
                 ${rdto.userid}
                 <span style="float: right">
-                    조회수 : ${rdto.views+1} 추천수 : ${rdto.heart} <span id = "commentNum">댓글 : 222</span>
+                    조회수 : ${rdto.views+1} 추천수 : ${rdto.heart} <span id = "commentNum">댓글 : </span>
             </span>
             </p>
         </div>
@@ -228,19 +226,16 @@
 
         <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item">
-                <a href="#" class="nav-link px-2 text-muted">Home</a>
+                <a href="/" class="nav-link px-2 text-muted">Home</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link px-2 text-muted">Features</a>
+                <a href="/visit" class="nav-link px-2 text-muted">About</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+                <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link px-2 text-muted">About</a>
+                <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
             </li>
         </ul>
     </footer>
