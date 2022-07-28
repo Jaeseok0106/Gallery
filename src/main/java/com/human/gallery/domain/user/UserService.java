@@ -1,10 +1,12 @@
 package com.human.gallery.domain.user;
 
+import com.human.gallery.domain.googleLogin.GoogleSignForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -19,7 +21,7 @@ public class UserService {
 	public Users login(String id, String password) throws NoSuchAlgorithmException {
 		Users user = userRepository.findById(id);
 
-		String salt = EncryptionUtils.getSalt();
+		String salt = user.getSalt();
 		log.info("salt 값 = {}", salt);
 		String tempPassword = EncryptionUtils.getEncrypt(password, salt);
 		log.info("암호화 된 salt = {}", salt);
@@ -35,9 +37,9 @@ public class UserService {
 			return null;
 		}
 	}
-	public Users checkId(String id) {
+	public Users checkId(String id, String path) {
 		
-		Users user = userRepository.findById(id);
+		Users user = userRepository.findByIdWithPath(id, path);
 		
 		if (user == null) {
 			return null;
@@ -58,7 +60,13 @@ public class UserService {
 		userRepository.addDetail(number, user.getName(),user.getMobile(), address ,user.getDtaddress(), user.getEmail(), user.getPostcode());
 	}
 
-	public void addGoogleUsers(UsersSignForm user) {
+	public void addGoogleUsers(GoogleSignForm googleUser) {
+		String tempPassword = UUID.randomUUID().toString();
 
+		userRepository.addGoogleUser(googleUser.getId(), tempPassword,null);
+		Integer number = userRepository.findNumByIdWithPath(googleUser.getId(), "GOOGLE");
+		log.info("넘어온 번호 -> {}", number);
+		String address = googleUser.getAddress() + " " + googleUser.getRefAddress();
+		userRepository.addDetail(number, googleUser.getName(), googleUser.getMobile(), address, googleUser.getDtaddress(), googleUser.getId(), googleUser.getPostcode());
 	}
 }

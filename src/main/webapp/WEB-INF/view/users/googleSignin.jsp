@@ -132,8 +132,6 @@ a {
 		</div>
 	</header>
 </div>
-<input type = "hidden" id = "role" value = "${user.role}">
-<input type = "hidden" id = "usernum" value = "${user.userNum}">
 <br><br>
 	<!-- main 안에다가 주 내용 작성할것 -->
 	<main class="p-5">
@@ -143,17 +141,13 @@ a {
 			</div>
 		</div>
 		<main class="container">
-			<form:form id = "frmAdd" action = "./signin" method = "POST" modelAttribute = "userSign">
+			<form:form id = "frmAdd" action = "/google/signin" method = "POST" modelAttribute = "userSign">
+				<input type = "hidden" name = "id" value = ${userSign.id}>
 				<div>
 					<p>
 						<label class = "col-4 text-end">이름 : </label>
-						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요."/>
+						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요." value = "${userSign.name}"/>
 						<form:errors path = "name" class = "FieldError" />
-					</p>
-					<p>
-						<label class = "col-4 text-end">E-mail : </label>
-					      <form:input path = "email" class="col-8" id="floatingemail" style = "width:40%;" placeholder="example@example.com" />
-					      <form:errors path = "email" class = "FieldError"/>
 					</p>
 					<p>
 						<label class = "col-4 text-end">우편번호 : </label>
@@ -165,21 +159,28 @@ a {
 						<label class = "col-4 text-end">주소 : </label>
 						<form:input path = "address" id="sample6_address" class="col-8" style = "width:40%;"
 							placeholder="주소" readonly ="true"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "address" class = "FieldError"/>
-							<br>
 					</p>
 					<p>
 						<label class = "col-4 text-end">상세주소 : </label>
 						<form:input path = "dtaddress" id="sample6_detailAddress"
 							class = "col-4" placeholder="상세주소" style="width:20%;"/>
-						<form:errors path = "dtaddress" class = "FieldError"/> 
 						<form:input path = "refAddress"	class = "col-4" style = "width:20%;" id="sample6_extraAddress" placeholder="참고항목" readonly = "true"/>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "dtaddress" class = "FieldError" style = "width:100%;"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "refAddress" class ="FieldError" />
 					</p>
 					<p>
 						<label class = "col-4 text-end">전화번호 : </label>
-						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 포함한 전화번호를 입력해주세요."/> <br>
-						<form:errors path = "mobile" class = "FieldError"/>
+						<form:input path = "mobile" class = "col-4" style = "width:40%;" placeholder="'-' 를 포함한 전화번호를 입력해주세요."/> <br>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "mobile" class = "col-12 text-center FieldError"/>
 					</p>
 					<p class="col-9 text-end">
 						<button type="submit" id="updateBtn" class = "btn btn-primary">회원 가입</button>
