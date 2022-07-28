@@ -139,14 +139,14 @@ function getComment(page) {
                                     댓글 쓰기
                                 </div>
                             <textarea id="noneLoginForm" rows="3" cols="10"  placeholder = "로그인 후 입력이 가능합니다." style="width:90%; display: inline" readonly = "true" onclick="sendLoginForm()"></textarea>
-                            <input type="button" id="" class="btn btn-outline-Dark" style="height:auto;" value = "댓글 등록"/>`
+                            <input type="button" id="" class="btn btn-outline-Dark" style="height:auto; margin-bottom: 33px" value = "댓글 등록"/>`
                 $("#writeComment").append(text);
             } else {
                 let text = `<div id="comment">
                                     댓글 쓰기
                                 </div>
                                 <textarea id="commentForm" rows="3" cols="10" style="width:90%; display: inline"></textarea>
-                                <input type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto;" value = "댓글 등록"/>`
+                                <input type="button" id="addComment" class="btn btn-outline-Dark" style="height:auto; margin-bottom: 33px" value = "댓글 등록"/>`
                 $("#writeComment").append(text);
             }
             for (let i = 0; i < data.length; i++) {

@@ -32,11 +32,11 @@
         text-align : center;
     }
     body {
-        font-family : LeeSeoyun;
+        font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-        font-family: 'LeeSeoyun';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
         font-weight: normal;
         font-style: normal;
     }
@@ -72,7 +72,7 @@
                     <div>
                         <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+                                <a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
@@ -81,10 +81,10 @@
                     </div>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+                    <a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
                 </li>
                 <li class="nav-item mx-5">
-                    <a class="nav-link" href="/artist" id = "nav3">artist</a>
+                    <a class="nav-link" href="/artist" id = "nav3">Artist</a>
                 </li>
                 <li class="nav-item mx-5">
                     <a class="nav-link" href="#" id = "nav4">Post</a>
@@ -144,7 +144,6 @@
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
 <input type = "hidden" id = "faqid" value = "${faq_table.id}">
-<br><br>
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div style = "border-top: 0.3rem dotted black; border-bottom: 0.3rem dotted black;" class="text-center">
@@ -178,11 +177,18 @@
         </a>
 
         <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+            <li class="nav-item">
+                <a href="/" class="nav-link px-2 text-muted">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="/visit" class="nav-link px-2 text-muted">About</a>
+            </li>
+            <li class="nav-item">
+                <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
+            </li>
+            <li class="nav-item">
+                <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
+            </li>
         </ul>
     </footer>
 </div>
@@ -244,8 +250,8 @@
         })
     $(document)
         .on('click','#clear',function(){
-            if(confirm("수정을 완료 하시겠습니까?")){
-                alert("수정이 완료 되었습니다.");
+            if(confirm("수정을 완료하시겠습니까?")){
+                alert("수정이 완료되었습니다.");
                 return true;
             }
             else{
@@ -253,8 +259,8 @@
         })
     $(document)
         .on('click','#reset',function(){
-            if(confirm("수정을 취소 하시겠습니까?")){
-                alert("수정을 취소 하셨습니다.");
+            if(confirm("수정을 취소하시겠습니까?")){
+                alert("수정을 취소했습니다.");
                 document.location.href='/FAQ';
             }
             else{

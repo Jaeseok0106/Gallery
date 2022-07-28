@@ -39,15 +39,14 @@ prefix="c" %> <%@ page session="false" %>
       text-align : center;
     }
     body {
-      font-family: LeeSeoyun;
+      font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-      font-family: "LeeSeoyun";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
       font-weight: normal;
       font-style: normal;
-    }
+    }}
     a {
       text-decoration-line: none;
     }
@@ -67,7 +66,7 @@ prefix="c" %> <%@ page session="false" %>
             <div>
               <ul class="nav justify-content-end" style = "display : none;" id = "none1">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+                  <a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
@@ -76,10 +75,10 @@ prefix="c" %> <%@ page session="false" %>
             </div>
           </li>
           <li class="nav-item mx-5">
-            <a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+            <a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
           </li>
           <li class="nav-item mx-5">
-            <a class="nav-link" href="/artist" id = "nav3">artist</a>
+            <a class="nav-link" href="/artist" id = "nav3">Artist</a>
           </li>
           <li class="nav-item mx-5">
             <a class="nav-link" href="#" id = "nav4">Post</a>
@@ -141,7 +140,6 @@ prefix="c" %> <%@ page session="false" %>
   <input type = "hidden" id = "postId" value = "${qdto.id}">
   <input type = "hidden" id = "currentCommentPage" value = "">
   <input type = "hidden" id = "pageMax" value = "">
-  <br><br>
   <main class = "container p-5">
     <div class = "row">
       <div class = "col-12" style = "border-bottom: 0.1rem solid black;">
@@ -155,7 +153,7 @@ prefix="c" %> <%@ page session="false" %>
         <p class = "text-start">
           ${qdto.userid}
           <span style = "float:right">
-				조회수 : ${qdto.views+1}  추천수 : ${qdto.heart} 댓글 : 222
+				조회수 : ${qdto.views+1}  추천수 : ${qdto.heart} <span id = "commentNum">댓글 : </span>
 			</span>
         </p>
       </div>
@@ -190,6 +188,7 @@ prefix="c" %> <%@ page session="false" %>
         <button type="button" class="btn btn-outline-dark" onclick="location.href='up?id=${qdto.id}'">수정</button>
         <a href="delqna?id=${qdto.id}"><button type="button" class="btn btn-outline-dark" id="btnDel">삭제</button></a>
         </c:if>
+        <br><br>
       </div>
     </div>
 
@@ -222,19 +221,16 @@ prefix="c" %> <%@ page session="false" %>
 
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
+            <a href="/" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
+            <a href="/visit" class="nav-link px-2 text-muted">About</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+            <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
         </ul>
       </footer>

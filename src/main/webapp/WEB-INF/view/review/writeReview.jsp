@@ -9,7 +9,7 @@ prefix="c" %> <%@ page session="false" %>
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>글작성</title>
+    <title>리뷰 작성</title>
   </head>
   <style>
     .nav-item {
@@ -36,12 +36,11 @@ prefix="c" %> <%@ page session="false" %>
       text-align: center;
     }
     body {
-      font-family: LeeSeoyun;
+      font-family: 'IBMPlexSansKR-Regular';
     }
     @font-face {
-      font-family: "LeeSeoyun";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
-        format("woff");
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
       font-weight: normal;
       font-style: normal;
     }
@@ -83,7 +82,7 @@ prefix="c" %> <%@ page session="false" %>
                       aria-current="page"
                       href="/letter"
                       id="detail"
-                      >director's letter</a
+                      >Director's letter</a
                     >
                   </li>
                   <li class="nav-item">
@@ -99,10 +98,10 @@ prefix="c" %> <%@ page session="false" %>
               </div>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/exhibit" id="nav2">exhibition</a>
+              <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="/artist" id="nav3">artist</a>
+              <a class="nav-link" href="/artist" id="nav3">Artist</a>
             </li>
             <li class="nav-item mx-5">
               <a class="nav-link" href="#" id="nav4">Post</a>
@@ -188,7 +187,6 @@ prefix="c" %> <%@ page session="false" %>
       </header>
     </div>
     <input type="hidden" id="role" value="${user.role}" />
-    <br /><br />
     <!-- main 안에다가 주 내용 작성할것 -->
     <main class="container p-5">
       <div
@@ -205,6 +203,7 @@ prefix="c" %> <%@ page session="false" %>
             <input
               class="form-control"
               type="text"
+              id="title"
               name="title"
               placeholder="제목"
               aria-label="default input example"
@@ -225,7 +224,7 @@ prefix="c" %> <%@ page session="false" %>
             />
           </div>
           <div class="col text-end">
-            <button type="submit" class="btn btn-outline-primary">
+            <button type="submit" class="btn btn-outline-primary" id="btnWrite">
               작성 완료
             </button>
             <button
@@ -258,19 +257,16 @@ prefix="c" %> <%@ page session="false" %>
 
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
+            <a href="/" class="nav-link px-2 text-muted">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
+            <a href="/visit" class="nav-link px-2 text-muted">About</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+            <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
           </li>
         </ul>
       </footer>
@@ -282,6 +278,10 @@ prefix="c" %> <%@ page session="false" %>
     crossorigin="anonymous"
   ></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="/ckeditor/ckeditor.js"></script>
+  <script>
+    CKEDITOR.replace("editor");
+  </script>
   <script>
     $(document).on("click", "#logo", function () {
       document.location.href = "/";
@@ -322,14 +322,21 @@ prefix="c" %> <%@ page session="false" %>
         $("#none3").css("display", "none");
       });
     });
-    $("#delete").click(function () {
-      if (!confirm("게시글을 삭제하시겠습니까?")) {
+    editor = CKEDITOR.instances.editor.getData();
+    $("#btnWrite").click(function () {
+      if ($("#title").val() == "" || $("#title").val() < 1) {
+        alert("제목을 입력해야 합니다.");
+        $("#title").focus();
+        window.scrollTo({ left: 0, top: 250, behavior: "smooth" });
         return false;
       }
+      if (editor == "" || editor.eq("")) {
+        alert("내용을 입력해야 합니다.");
+        window.scrollTo({ left: 0, top: 350, behavior: "smooth" });
+        return false;
+      }
+      alert("게시글이 등록되었습니다.");
+      return true;
     });
-  </script>
-  <script src="/ckeditor/ckeditor.js"></script>
-  <script>
-    CKEDITOR.replace("editor");
   </script>
 </html>
