@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.constraints.NotNull;
+
 @Service
 @Slf4j
 public class UserService {
@@ -48,5 +50,8 @@ public class UserService {
 		Integer number = userRepository.findNumById(user.getId());
 		String address = user.getAddress() + " " + user.getRefAddress();
 		userRepository.addDetail(number, user.getName(),user.getMobile(), address ,user.getDtaddress(), user.getEmail(), user.getPostcode());
+	}
+	public void kakaoUsers(String id, String password) {
+
 	}
 }
