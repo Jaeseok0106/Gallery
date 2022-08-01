@@ -2,6 +2,7 @@ package com.human.gallery.web.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.human.gallery.domain.googleLogin.GoogleSignForm;
 import com.human.gallery.domain.user.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,8 +119,9 @@ public class UserController {
 		log.info("여기도 넘어옴");
 		return "account";
 	}
+	// kakaoLogin
 	@GetMapping("/auth/kakao/callback")
-	public @ResponseBody String kakaoCallback(String code, HttpSession session) {    // Data를 리턴해주는 컨트롤러 함수
+	public String kakaoCallback(String code, Model model, HttpSession session) {    // Data를 리턴해주는 컨트롤러 함수
 		// POST방식으로 key=value 데이터를 요청 (카카오측으로)
 		// Retrofit2(안드로이드에서 주로사용)
 		RestTemplate rt = new RestTemplate();
@@ -194,21 +196,28 @@ public class UserController {
 		UUID tempPassword = UUID.randomUUID();
 		System.out.println("갤러리 패스워드 : " + tempPassword);
 
-/*		Users user = Users.builder()
-				.username(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
-				.password(tempPassword.toString())
-				.email(kakaoProfile.getKakao_account().getEmail())
-				.build();
-
-		userService.addUsers(user);*/
-
-		Users user = userService.checkId(kakaoProfile.getKakao_account().getEmail(), "KAKAO");
-		if (user == null) {
-//			userService.kakaoUsers(kakaoProfile.getKakao_account().getEmail(), String.valueOf(tempPassword));
+		Users userCheck = userService.checkId(kakaoProfile.getKakao_account().getEmail(), "KAKAO");
+		UsersSignForm user = new UsersSignForm();
+		if (userCheck == null) {
+			user.setId(kakaoProfile.getKakao_account().getEmail());
+			user.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
+			model.addAttribute("userSign", user);
+			return "users/kakaoSignin";
 		} else {
-			session.setAttribute("user", user);
+			session.setAttribute("user", userCheck);
 			return "redirect:/";
 		}
-				return response2.getBody();
+	}
+	@PostMapping("/kakao/signin")
+	public String getKakaoInfo(@Validated @ModelAttribute("userSign")GoogleSignForm form, BindingResult bindingResult,
+							   Model model, @SessionAttribute(name = "user", required = false) Users usera) {
+		if(bindingResult.hasErrors()) {
+			log.info("발새된 에러 {} = ", bindingResult.getFieldErrors());
+			model.addAttribute("user", usera);
+			return "users/kakaoSignin";
+		}
+		log.info("카카오 회원가입 - > {}", form);
+		userService.addKakaoUser(form);
+		return "redirect:/login";
 	}
 }

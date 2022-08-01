@@ -78,6 +78,7 @@ public class GoogleLoginController {
 
             String resultJson = restTemplate.getForObject(requestUrl, String.class);
             log.info("resultJson -> {}", resultJson);
+            // 체크
             if (resultJson != null) {
                 GoogleLogin googleLogin = objectMapper.readValue(resultJson, new TypeReference<GoogleLogin>() {});
                 log.info("구글 로그인 - > {}", googleLogin);

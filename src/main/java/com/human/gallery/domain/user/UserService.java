@@ -69,4 +69,13 @@ public class UserService {
 		String address = googleUser.getAddress() + " " + googleUser.getRefAddress();
 		userRepository.addDetail(number, googleUser.getName(), googleUser.getMobile(), address, googleUser.getDtaddress(), googleUser.getId(), googleUser.getPostcode());
 	}
+
+	public void addKakaoUser(GoogleSignForm kakaoUser) {
+		String tempPassword = UUID.randomUUID().toString();
+
+		userRepository.addKakaoUser(kakaoUser.getId(), tempPassword, null);
+		Integer number2 = userRepository.findNumByIdWithPath(kakaoUser.getId(), "KAKAO");
+		String address = kakaoUser.getAddress() + " " + kakaoUser.getRefAddress();
+		userRepository.addDetail(number2, kakaoUser.getName(), kakaoUser.getMobile(), address, kakaoUser.getAddress(), kakaoUser.getId(), kakaoUser.getPostcode());
+	}
 }

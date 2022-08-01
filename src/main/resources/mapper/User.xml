@@ -32,4 +32,7 @@
 <select id = "findNumByIdWithPath" parameterType="String" resultType = "Integer">
 	select usernum from users where id = #{id} and signpath = #{signpath}
 </select>
+<insert id = "addKakaoUser" parameterType="String">
+	insert into Users values (Users_SEQ.nextval, #{id}, #{password}, '방문자', null, 'KAKAO')
+</insert>
 </mapper>

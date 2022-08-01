@@ -210,17 +210,6 @@ prefix="c" %> <%@ page session="false" %>
           </section>
         </div>
       </div>
-      <div class="col-6" style="padding: 0px">
-        <div class="container">
-          <img src="director.png" id="director" style="height: 500px" />
-          <p align="right">
-            왜 또 아픈상처에 소금을 뿌리십니까 <br />
-            제게도 꿈이 있었습니다
-          </p>
-          <strong class="sign">선장</strong>
-        </div>
-        <div class="container"></div>
-      </div>
     </main>
 
     <!-- 하단 -->
