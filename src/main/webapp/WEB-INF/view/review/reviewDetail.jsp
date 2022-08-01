@@ -14,6 +14,9 @@
     <title>${rdto.title}</title>
 </head>
 <style>
+    .px-2:hover {
+        cursor:pointer;
+    }
     .nav-item{
         list-style-type:none;
         font-size: 55px;

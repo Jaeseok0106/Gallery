@@ -16,7 +16,7 @@ public interface ReserveRepository {
     Reserve findByIdWithUserId(String orderId, String userId);
     void updateStateByOrderId(String orderId);
 
-    Reserve findByDateWithUserId(String userId, String reserveDate);
+    ArrayList<Reserve> findByDateWithUserId(String userId, String reserveDate);
     ArrayList<Reserve> findWeekByDateWithUserId(@Param("userId")String userId, @Param("startDate") String startDate,
                                                 @Param("endDate") String endDate);
 }
