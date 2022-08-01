@@ -58,7 +58,7 @@ prefix="c" %> <%@ page session="false" %>
       <header class="blog-header py-3" style="height: 230px">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="text-center">
-            <img src="/logo.png" id="logo" style="height: 80px" />
+            <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
           </div>
         </div>
         <br /><br /><br />
@@ -285,9 +285,6 @@ prefix="c" %> <%@ page session="false" %>
     CKEDITOR.replace("editor");
   </script>
   <script>
-    $(document).on("click", "#logo", function () {
-      document.location.href = "/";
-    });
     $(document).ready(function () {
       $("#nav1").hover(
         function () {
@@ -323,8 +320,8 @@ prefix="c" %> <%@ page session="false" %>
         $("#none3").css("display", "none");
       });
     });
-    editor = CKEDITOR.instances.editor.getData();
     $("#btnWrite").click(function () {
+      editor = CKEDITOR.instances.editor.getData();
       if ($("#title").val() == "" || $("#title").val() < 1) {
         alert("제목을 입력해야 합니다.");
         $("#title").focus();

@@ -61,7 +61,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "/logo.png" id='logo' style = "height:80px;"/>
+                <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
             </div>
         </div>
         <br><br><br>
@@ -272,12 +272,8 @@
         });
     });
     $(document)
-        .on('click','#logo',function(){
-            document.location.href='../../..';
-        })
-    $(document)
         .on('click','#delete',function(){
-            if(confirm("정말 삭제 하시겠습니까?")) {
+            if(confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
                     type:'get',datatype:'text',url:'content/delete',
                     data : {id : $("#id").val()},

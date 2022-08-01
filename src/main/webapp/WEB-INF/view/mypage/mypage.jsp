@@ -61,7 +61,7 @@
     <header class="blog-header py-3" style = "height : 230px;">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center">
-                <img src = "logo.png" id='logo' style = "height:80px;"/>
+                <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
             </div>
         </div>
         <br><br><br>
@@ -202,7 +202,6 @@
 <script>
     $(document)
         .ready(function () {
-
             console.log("시작 화면");
             $("#nav1").hover(function() {
                 $("#none1").css("display", "block");
@@ -235,10 +234,6 @@
                 $("#none2").css("display", "none");
                 $("#none3").css("display", "none");
             })
-        })
-    $(document)
-        .on('click','#logo',function(){
-            document.location.href='/';
         })
 </script>
 <script>
