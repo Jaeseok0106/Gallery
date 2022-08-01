@@ -6,15 +6,18 @@ import com.human.gallery.domain.payment.PaymentRepository;
 import com.human.gallery.domain.reserve.Reserve;
 import com.human.gallery.domain.reserve.ReserveRepository;
 import com.human.gallery.domain.user.UserRepository;
+import com.human.gallery.domain.user.UserService;
 import com.human.gallery.domain.user.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +36,7 @@ public class mypageController {
     private final ExhibitRepository exhibitRepository;
     private final UserRepository userRepository;
     private final ReserveRepository reserveRepository;
+
     @GetMapping("/reserve/exhibit/{exhibitId}")
     public String viewcheckPay(@SessionAttribute(name = "user", required = false) Users user,
                                Model model,
@@ -160,7 +164,12 @@ public class mypageController {
     }
 //    @PostMapping("/mypage/update")
 //    public String domypageupdate(@RequestParam("userId") String userId,
-//                                 @RequestParam("password") String password){
-//
+//                                 @RequestParam("password") String password) throws NoSuchAlgorithmException {
+//        Users user = userRepository.mypage(userId,password);
+//        if (user == null)
+//        {
+//            return "users/login";
+//        }
+//        return "redirect:";
 //    }
 }

@@ -116,17 +116,9 @@
                                 <a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
                             </li>
                         </c:if>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/mypage" id = "detail">My page</a>
-                        </li>
                         <c:if test="${user.role == '방문자'}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" id="detail">My page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="detail" href="/history"
-                                >결제 내역</a
-                                >
+                                <a class="nav-link" href="/mypage" id="detail">My page</a>
                             </li>
                         </c:if>
                         <c:if test="${user.role == '관리자'}">
@@ -253,7 +245,7 @@
     $(document)
         .on('click','#cgv',function(){
             $("#acc").empty();
-            let str=`<br><br><h2 style="text-align: center">예매 내역</h2><hr><br>
+            let str=`<br><br><h2 style="text-align: center">예매 내역</h2><hr>
                     <main class = "container p-5">
 	<div class = "container">
 	</div>
@@ -297,7 +289,8 @@
                         $("#paymentTable").empty();
                     },
                     success: function (reserve) {
-                        console.log(reserve['isPayment']);
+                        console.log(reserve);
+                        console.log(reserve['is_Payment']);
                         let temp = `<tr class ="text-center">
                             <th>예매번호</th>
                             <th>제목</th>
@@ -307,7 +300,7 @@
                         </tr>`
                         $("#paymentTable").append(temp);
                         let state;
-                        if (reserve['isPayment'] == 'N') {
+                        if (reserve['is_Payment'] == 'N') {
                             state = "예약취소";
                             let str = `
                     <tr class = "p-5 text-center">
@@ -621,23 +614,36 @@
     $(document)
         .on('click','#mmt',function() {
             $("#acc").empty();
-            // $("#acc").attr("style","height: 500px; background-color: lightgrey");
-            let str = `<br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
-                        <h5 style="text-align: center">비밀 번호를 입력 하세요.<br><br><input type="password" id="pwd">      </input><button id="btnupdate">수정</button></h5>`;
+
+
+            let str = `<main class="container text-center">
+                        <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
+                        아이디<br><input type="text" style="width:6%" id="id" value="${user.id}" readonly/><br><br>
+                        비밀 번호<br><input type="password" class="container text-center" style="width:25%" id="pwd" placeholder="PASS WORD"/><br><br>
+                        비밀 번호 확인<br><input type="password" class="container text-center" style="width:25%" id="pwd2" placeholder="PASS WORd CHECK"/><br><br>
+                        이름<br><input type="text" class="container text-center" style="width:25%" id="name" placeholder="NAME"/><br><br>
+                        E-mail<br><input type="text" class="container text-center" style="width:25%" id="mail" placeholder="example@example.com"/><br><br>
+                        우편 번호<br><input type="text" class="container text-center" style="width:25%" id="postcode" placeholder="POST CODE"/><br>
+                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br><br>
+                        주소<br><input type="text" class="container text-center" style="width:25%" id="adress" placeholder="ADRESS"/><br><br>
+                        상세 주소<br><input type="text" class="container text-center" style="width:12%" id="adress2" placeholder="DETAIL"/>      <input type="text" class="container text-center" style="width:12%" id="reference" placeholder="REFERENCE"/><br><br>
+                        <button id="btnadj">수정 완료</button>
+                        </main>`;
+                        //테이블로 바꾸기
             $("#acc").append(str);
         })
-        .on('click','#btnupdate',function(){
-            $.ajax({
-                type : "POST",
-                url : "/mypage/update",
-                data : {userId :$("#usernum").val(), password : $("#pwd").val()},
-                dataType : "JSON",
-                success : function(data) {
-                console.log(data);
-            }
-
-            })
-            })
+        // .on('click','#btnupdate',function(){
+        //     $.ajax({
+        //         type : "POST",
+        //         url : "/mypage/update",
+        //         data : {userId :$("#usernum").val(), password : $("#pwd").val()},
+        //         dataType : "JSON",
+        //         success : function(data) {
+        //         console.log(data);
+        //     }
+        //
+        //     })
+        //     })
 
 
 </script>

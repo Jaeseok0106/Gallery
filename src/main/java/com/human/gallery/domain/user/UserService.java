@@ -1,5 +1,6 @@
 package com.human.gallery.domain.user;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,20 +11,15 @@ import javax.validation.constraints.NotNull;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
 	
 	private final UserRepository userRepository;
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+
 
 	public Users login(String id, String password) throws NoSuchAlgorithmException {
 		Users user = userRepository.findById(id);
-
-//		String salt = EncryptionUtils.getSalt();
 		String salt = user.getSalt();
-//		log.info("salt 값 = {}", salt);
 		String tempPassword = EncryptionUtils.getEncrypt(password, salt);
 		log.info("암호화 된 salt = {}", salt);
 		log.info("암호화 된 비밀번호 = {}", tempPassword);
