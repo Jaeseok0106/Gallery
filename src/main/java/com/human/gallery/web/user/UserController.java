@@ -110,6 +110,26 @@ public class UserController {
 		model.addAttribute("user", usera);
 		return "redirect:/login";
 	}
+	@GetMapping("/findMyId")
+	public String viewFindJSP() {
+		return "users/findUserId";
+	}
+	@PostMapping("/findMyId")
+	@ResponseBody
+	public String checkMail(@RequestParam("email") String email) {
+		boolean checkedMail = userService.checkEmail(email);
+		if (checkedMail) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	@PostMapping("/findMyId/userId")
+	@ResponseBody
+	public String returnUserId(@RequestParam("email") String email) {
+		String userId = userService.returnUserId(email);
+		return userId;
+	}
 
 	@GetMapping("/history")
 	public String viewAccount(@SessionAttribute ("user") Users user, Model model) {
