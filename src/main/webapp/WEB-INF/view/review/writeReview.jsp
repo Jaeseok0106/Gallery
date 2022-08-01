@@ -319,8 +319,8 @@ prefix="c" %> <%@ page session="false" %>
         $("#none3").css("display", "none");
       });
     });
-    editor = CKEDITOR.instances.editor.getData();
     $("#btnWrite").click(function () {
+      editor = CKEDITOR.instances.editor.getData();
       if ($("#title").val() == "" || $("#title").val() < 1) {
         alert("제목을 입력해야 합니다.");
         $("#title").focus();

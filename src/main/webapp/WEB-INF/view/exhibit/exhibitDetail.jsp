@@ -200,7 +200,8 @@ prefix="c" %> <%@ page session="false" %>
           >
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="${exhibit.images}" class="d-block w-100" alt="..." />
+                <br>
+                <img src="${exhibit.images}" class="d-block w-100" alt="..." style="margin-top: 12px"/>
               </div>
             </div>
           </div>
@@ -225,11 +226,8 @@ prefix="c" %> <%@ page session="false" %>
               <dd class="col-sm-9">${exhibit.price}</dd>
               <dt class="col-sm-3">입장 가능 인원</dt>
               <dd class="col-sm-9">${exhibit.total}</dd>
-              <p></p>
             </dl>
-            <button type="button" class="btn btn-primary" id="reserveExhibit">
-              예매하기
-            </button>
+            <button type="button" class="btn btn-primary" id="reserveExhibit">예매하기</button>
             <c:if test="${user.role == '관리자'}">
               <button type="button" class="btn btn-dark" onclick="location.href='/exhibit/modify/${exhibit.id}'">전시회 수정</button>
               <button type="button" class="btn btn-danger" id="deleteExhibit">전시회 삭제</button>

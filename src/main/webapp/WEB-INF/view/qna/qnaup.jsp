@@ -323,8 +323,8 @@ ${qdto.content}</textarea
         $("#none3").css("display", "none");
       });
     });
-    editor = CKEDITOR.instances.editor.getData();
     $("#btnUp").click(function () {
+      editor = CKEDITOR.instances.editor.getData();
       if ($("#title").val() == "" || $("#title").val() < 1) {
         alert("제목을 입력해야 합니다.");
         $("#title").focus();
