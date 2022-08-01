@@ -13,120 +13,131 @@
 <title>회원 가입</title>
 </head>
 <style>
-.nav-item {
-	list-style-type: none;
-	float: left;
-	font-size: 55px;
-}
-.FieldError {
-	color:red;
-}
-.nav-link {
-	font-weight: 600;
-	color: #000000;
-	padding: 0 0.3125rem;
-	font-size: 20px;
-	font-size: 1.25rem;
-}
-
-.page-title {
-	border-top: 10px solid black;
-	border-bottom: 10px solid black;
-	margin-bottom: 4rem;
-}
-
-.page-title h1 {
-	padding: 2rem;
-	text-align: center;
-}
-
-body {
-	font-family: LeeSeoyun;
-}
-
-@font-face {
-	font-family: 'LeeSeoyun';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-a {
-	text-decoration-line: none;
-}
+	.FieldError {
+		color:red;
+	}
+	.nav-item{
+		list-style-type:none;
+		font-size: 55px;
+	}
+	.nav-link {
+		font-weight: 600;
+		color: #000000;
+		padding: 0 0.3125rem;
+		font-size: 20px;
+		font-size: 1.25rem;
+	}
+	#detail {
+		font-size: 0.7rem;
+	}
+	.page-title {
+		border-top: 10px solid black;
+		border-bottom : 10px solid black;
+		margin-bottom : 2rem;
+	}
+	.page-title h1{
+		padding : 2rem;
+		text-align : center;
+	}
+	body {
+		font-family: 'IBMPlexSansKR-Regular';
+	}
+	@font-face {
+		font-family: 'IBMPlexSansKR-Regular';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	a {
+		text-decoration: none;
+		color:black;
+	}
 </style>
 <body>
 <div class="container">
-	<header class="blog-header py-3" style = "height : 230px;">
+	<header class="blog-header py-3" style="height: 230px">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
-				<img src = "/logo.png" id='logo' style = "height:100px;"/>
+				<a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
 			</div>
 		</div>
-		<br><br><br>
-		<div class="nav-scroller mb-7" id = "list">
+		<br /><br /><br />
+		<div class="nav-scroller mb-7" id="list">
 			<ul class="nav justify-content-center">
 				<li class="nav-item mx-5">
-					<a class="nav-link active p-7" aria-current="page" id = "nav1">About us</a>
+					<a class="nav-link active p-7" aria-current="page" href="/letter" id="nav1">About us</a>
 					<div>
-						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
+						<ul class="nav justify-content-end" style="display: none" id="none1">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/letter" id = "detail">director's letter</a>
+								<a class="nav-link" aria-current="page" href="/letter" id="detail">Director's letter</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
+								<a class="nav-link" aria-current="page" href="/visit" id="detail">Visit</a>
 							</li>
 						</ul>
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/exhibit" id = "nav2">exhibition</a>
+					<a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="./artist" id = "nav3">artist</a>
+					<a class="nav-link" href="/artist" id="nav3">Artist</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav4">Post</a>
-					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
+					<a class="nav-link" href="/review" id="nav4">Post</a>
+					<ul class="nav justify-content-end" style="display: none" id="none2">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="./review" id = "detail">Review</a>
+							<a class="nav-link" aria-current="page" href="/review" id="detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="/qna" id="detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="/FAQ" id="detail">FAQ</a>
 						</li>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" aria-current="page" href="#" id = "nav5">Member</a>
-					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
-						<c:if test = "${user.id == null}">
+					<c:if test="${user.id == null}">
+						<a class="nav-link" aria-current="page" href="/login" id="nav5">Member</a>
+					</c:if>
+					<c:if test="${user.id != null && user.role == '방문자'}">
+						<a class="nav-link" aria-current="page" href="/mypage" id="nav5">Member</a>
+					</c:if>
+					<c:if test="${user.id != null && user.role == '관리자'}">
+						<a class="nav-link" aria-current="page" href="/listuser" id="nav5">Member</a>
+					</c:if>
+					<ul class="nav justify-content-end" style="display: none" id="none3">
+						<c:if test="${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+								<a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="./signin" id = "detail">Sign in</a>
+								<a class="nav-link" href="/signin" id="detail">Sign in</a>
 							</li>
 						</c:if>
-						<c:if test = "${user.id != null }">
+						<c:if test="${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+								<a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
 							</li>
 						</c:if>
-						<li class="nav-item">
-							<a class="nav-link" href="/mypage" id = "detail">My page</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = "detail">Disabled</a>
-						</li>
+						<c:if test="${user.role == '방문자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="/mypage" id="detail">My page</a>
+							</li>
+						</c:if>
+						<c:if test="${user.role == '관리자'}">
+							<li class="nav-item">
+								<a class="nav-link" href="/listuser" id="detail">회원관리</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/listReserve" id="detail">예약관리</a>
+							</li>
+						</c:if>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" aria-current="page" href="/notice" id = "nav6">Notice</a>
+					<a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
 				</li>
 			</ul>
 		</div>
