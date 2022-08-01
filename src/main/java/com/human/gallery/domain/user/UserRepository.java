@@ -16,7 +16,7 @@ public interface UserRepository {
 
 	void addGoogleUser(@Param("id") String id, @Param("password") String password, @Param("salt") String salt);
 	Integer findNumByIdWithPath(@Param("id") String id, @Param("signpath") String signPath);
+	void addKakaoUser(@Param("id") String id, @Param("password") String password, @Param("salt") String salt);
 	Integer findUsersByEmail(String email);
-
 	String findUserIdByNum(Integer number);
 }

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class GoogleConfig {
 
     @Value("${google.auth.url}")
-    private String googleAuthUrl;
+private String googleAuthUrl;
     @Value("${google.login.url}")
     private String googleLoginUrl;
     @Value("${google.redirect.uri}")

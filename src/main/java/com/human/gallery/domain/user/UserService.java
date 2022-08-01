@@ -85,4 +85,13 @@ public class UserService {
 		String userID = userRepository.findUserIdByNum(num);
 		return userID;
 	}
+
+	public void addKakaoUser(GoogleSignForm kakaoUser) {
+		String tempPassword = UUID.randomUUID().toString();
+
+		userRepository.addKakaoUser(kakaoUser.getId(), tempPassword, null);
+		Integer number2 = userRepository.findNumByIdWithPath(kakaoUser.getId(), "KAKAO");
+		String address = kakaoUser.getAddress() + " " + kakaoUser.getRefAddress();
+		userRepository.addDetail(number2, kakaoUser.getName(), kakaoUser.getMobile(), address, kakaoUser.getAddress(), kakaoUser.getId(), kakaoUser.getPostcode());
+	}
 }
