@@ -80,6 +80,10 @@ body {
       <form:errors path = "password" class = "FieldError"/>
       <label for="floatingPassword">비밀번호를 입력하세요</label>
     </div>
+    <div>
+        <label id = "findUserId" class = "col-6 px-2">아이디 찾기</label>
+        <label id = "findUserPwd" class = "col-6 px-2">비밀번호 찾기</label>
+    </div>
     <label class = "FieldError">${loginFail}</label>
     <button class="w-100 btn btn-lg btn-primary" type="submit" >로그인</button>
     <div class="form-floating">
@@ -92,7 +96,7 @@ body {
             </a>
     </div>
         <div class="form-floating" id="googleLogin">
-            <div class="kakaobtn">
+            <div class="googlebtn">
                 <a href="/google/login">
                     <img src="/googleLogin.png" width="300px" height="47px"/>
                 </a>
@@ -102,5 +106,12 @@ body {
 </form:form>
 </main>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+    $(document)
+    .on("click", "#findUserId", function() {
+        window.open("/findMyId", "asdsad", width="44rem", height="20rem");
+    })
+</script>
 </html>

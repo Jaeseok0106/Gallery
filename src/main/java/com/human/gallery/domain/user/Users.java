@@ -1,6 +1,5 @@
 package com.human.gallery.domain.user;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
@@ -17,4 +16,5 @@ public class Users {
 	private int postcode;
 	private String mobile;
 	private String salt;
+	private String signPath;
 }

@@ -1,6 +1,7 @@
 package com.human.gallery.domain.user;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserRepository {
@@ -11,4 +12,11 @@ public interface UserRepository {
 	Integer findNumById(String id);
 	Users findDetailById(String id);
 	String findSaltById(String id);
+	Users findByIdWithPath(@Param("id") String id, @Param("path") String path);
+
+	void addGoogleUser(@Param("id") String id, @Param("password") String password, @Param("salt") String salt);
+	Integer findNumByIdWithPath(@Param("id") String id, @Param("signpath") String signPath);
+	Integer findUsersByEmail(String email);
+
+	String findUserIdByNum(Integer number);
 }

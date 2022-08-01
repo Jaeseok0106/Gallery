@@ -29,6 +29,7 @@ public class UsersSignForm {
 	private String dtaddress;
 	@NotBlank
 	private String refAddress;
+	@NotBlank
 	@Email
 	private String email;
 	
