@@ -1,5 +1,6 @@
 package com.human.gallery.domain.user;
 
+import lombok.RequiredArgsConstructor;
 import com.human.gallery.domain.googleLogin.GoogleSignForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,11 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
 	
 	private final UserRepository userRepository;
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+
 
 	public Users login(String id, String password) throws NoSuchAlgorithmException {
 		Users user = userRepository.findById(id);
