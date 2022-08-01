@@ -35,4 +35,10 @@
 <insert id = "addKakaoUser" parameterType="String">
 	insert into Users values (Users_SEQ.nextval, #{id}, #{password}, '방문자', null, 'KAKAO')
 </insert>
+	<select id = "findUsersByEmail" resultType="Integer">
+		select id from userdetail where email = #{param1}
+	</select>
+	<select id = "findUserIdByNum" resultType = "String">
+		select id from users where usernum = #{param1}
+	</select>
 </mapper>

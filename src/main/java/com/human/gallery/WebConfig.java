@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/director.png", "/exhibit/*.jpg", "/artist/*.jpg", "/artist/*.png", "/artist/*.jpeg",
                         "/artist/*.JPG",
                         "/ckeditor/**", "/1.jpg" ,"/2.jpg", "/3.jpeg", "/exhibit/*.JPG", "/*.png", "/*.PNG",
-                        "/google/**","/auth/kakao/callback", "/kakao/signin"
+                        "/google/**","/auth/kakao/callback", "/kakao/signin", "/findMyId/**"
                 );
         registry.addInterceptor(new AdminCheckInterceptor())
                 .order(1)

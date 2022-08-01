@@ -1,5 +1,6 @@
 package com.human.gallery.domain.user;
 
+import lombok.RequiredArgsConstructor;
 import com.human.gallery.domain.googleLogin.GoogleSignForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,11 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
 	
 	private final UserRepository userRepository;
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+
 
 	public Users login(String id, String password) throws NoSuchAlgorithmException {
 		Users user = userRepository.findById(id);
@@ -48,6 +47,16 @@ public class UserService {
 			return user;
 		}
 	}
+	public boolean checkEmail(String email) {
+		Integer num = userRepository.findUsersByEmail(email);
+
+		if (num == null || num == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
 	public void addUsers(UsersSignForm user) throws NoSuchAlgorithmException {
 		String salt = EncryptionUtils.getSalt();
@@ -67,7 +76,14 @@ public class UserService {
 		Integer number = userRepository.findNumByIdWithPath(googleUser.getId(), "GOOGLE");
 		log.info("넘어온 번호 -> {}", number);
 		String address = googleUser.getAddress() + " " + googleUser.getRefAddress();
-		userRepository.addDetail(number, googleUser.getName(), googleUser.getMobile(), address, googleUser.getDtaddress(), googleUser.getId(), googleUser.getPostcode());
+		String tempEmail = UUID.randomUUID().toString();
+		userRepository.addDetail(number, googleUser.getName(), googleUser.getMobile(), address, googleUser.getDtaddress(), tempEmail, googleUser.getPostcode());
+	}
+
+	public String returnUserId(String email) {
+		Integer num = userRepository.findUsersByEmail(email);
+		String userID = userRepository.findUserIdByNum(num);
+		return userID;
 	}
 
 	public void addKakaoUser(GoogleSignForm kakaoUser) {
