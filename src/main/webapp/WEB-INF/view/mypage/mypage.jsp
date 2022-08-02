@@ -287,9 +287,7 @@
                     beforeSend: function () {
                         $("#paymentTable").empty();
                     },
-                    success: function (reserve) {
-                        console.log(reserve);
-                        console.log(reserve['is_Payment']);
+                    success: function (data) {
                         let temp = `<tr class ="text-center">
                             <th>예매번호</th>
                             <th>제목</th>
@@ -299,19 +297,21 @@
                         </tr>`
                         $("#paymentTable").append(temp);
                         let state;
-                        if (reserve['is_Payment'] == 'N') {
-                            state = "예약취소";
-                            let str = `
+                        for (let i = 0; i < data.length; i++) {
+
+                            if (reserve['is_Payment'] == 'N') {
+                                state = "예약취소";
+                                let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
                         <td>\${reserve['reserveDate']}</td>
                         <td>\${state}</td>
                     </tr>`;
-                            $("#paymentTable").append(str);
-                        } else {
-                            state = "예약완료"
-                            let str = `
+                                $("#paymentTable").append(str);
+                            } else {
+                                state = "예약완료"
+                                let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
@@ -319,7 +319,8 @@
                         <td>\${state}</td>
                         <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
                     </tr>`;
-                            $("#paymentTable").append(str);
+                                $("#paymentTable").append(str);
+                            }
                         }
                     }
                 })
@@ -513,7 +514,7 @@
                     $.ajax({
                         type : "POST",
                         url : "/history/reserve/thisWeek",
-                        data : {userId :$("#usernum").val(), password : thisWeek[0], endDate : thisWeek[6]},
+                        data : {userId :$("#usernum").val(), startDate : thisWeek[0], endDate : thisWeek[6]},
                         dataType : "JSON",
                         beforeSend : function() {
                             $("#paymentTable").empty();
@@ -604,9 +605,58 @@
                         }
                     })
                 })
-
+                .on("click", "#selectPayment", function() {
+                    if ($("#date1").val() == '' || $("#date2").val() == '') {
+                        alert("날짜를 제대로 선택해주세요");
+                    } else {
+                        $.ajax({
+                            type : "POST",
+                            url : "/history/reserve/date",
+                            data : {userId :$("#usernum").val(), startDate : $("#date1").val(), endDate : $("#date2").val()},
+                            dataType : "JSON",
+                            beforeSend : function() {
+                                $("#paymentTable").empty()
+                            },
+                            success : function(data) {
+                                let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                                $("#paymentTable").append(temp);
+                                for (let i = 0; i < data.length; i++) {
+                                    let reserve = data[i];
+                                    let state;
+                                    if (reserve['isPayment'] == 'N') {
+                                        state = "예약취소"
+                                        let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                                        $("#paymentTable").append(str);
+                                    } else {
+                                        state = "예약완료"
+                                        let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                                        $("#paymentTable").append(str);
+                                    }
+                                }
+                            }
+                        })
+                    }
+                })
             $("#acc").append(str);
-
         })
 </script>
 <script>
@@ -708,8 +758,6 @@
         //
         //     })
         //     })
-
-
 </script>
 <script>
     $(document)

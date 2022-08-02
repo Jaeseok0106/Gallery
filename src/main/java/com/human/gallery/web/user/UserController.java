@@ -131,6 +131,26 @@ public class UserController {
 		String userId = userService.returnUserId(email);
 		return userId;
 	}
+	@GetMapping("/findMyPwd")
+	public String viewFindPwd() {
+		return "users/findUserPwd";
+	}
+	@PostMapping("/findMyPwd")
+	@ResponseBody
+	public String checkIdAndMail(@RequestParam("email") String email, @RequestParam("userId") String id) {
+		boolean checked = userService.checkIdAndMail(email, id);
+		if (checked) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	@PostMapping("/findMyPwd/temp")
+	@ResponseBody
+	public String tempPassword(@RequestParam("userId") String id, @RequestParam("password") String temp) throws NoSuchAlgorithmException {
+		userService.changeTemp(id, temp);
+		return "true";
+	}
 
 	@GetMapping("/history")
 	public String viewAccount(@SessionAttribute ("user") Users user, Model model) {

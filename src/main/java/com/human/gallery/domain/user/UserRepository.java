@@ -21,4 +21,6 @@ public interface UserRepository {
 	String findUserIdByNum(Integer number);
 	void impoupdate(String username,String email,int postcode,String address,String dtaddress,String mobile,String id);
 	void pwdupdate(String password,String salt,String id);
+	String checkIdAndMail(@Param("email") String email, @Param("userId") String id);
+	void changePwdWithTemp(@Param("temp") String temp, @Param("id") String id, @Param("salt") String salt);
 }
