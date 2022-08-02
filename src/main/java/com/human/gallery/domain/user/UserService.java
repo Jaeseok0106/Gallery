@@ -35,6 +35,13 @@ public class UserService {
 			return null;
 		}
 	}
+	public void impoupdate(UsersUpdateForm form) throws NoSuchAlgorithmException {
+
+		String salt = EncryptionUtils.getSalt();
+		String tempPassword = EncryptionUtils.getEncrypt(form.getPassword(), salt);
+		userRepository.pwdupdate(tempPassword,salt, form.getId());
+		userRepository.impoupdate(form.getName(), form.getEmail(), form.getPostcode(), form.getAddress(), form.getDtaddress(), form.getMobile(), form.getId());
+	}
 	public Users checkId(String id, String path) {
 		
 		Users user = userRepository.findByIdWithPath(id, path);

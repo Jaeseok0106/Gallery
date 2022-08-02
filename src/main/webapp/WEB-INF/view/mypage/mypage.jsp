@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -189,7 +190,7 @@
                 <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
             </li>
             <li class="nav-item">
-                <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
+                <a href="/FAQ" class="nav-link px-2 text-muted">FAQ</a>
             </li>
         </ul>
     </footer>
@@ -236,6 +237,9 @@
             })
         })
 </script>
+<script
+        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js">
+</script>
 <script>
     $(document)
         .on('click','#cgv',function(){
@@ -245,7 +249,6 @@
 	<div class = "container">
 	</div>
     <div class="col-12 col-sm-12 text-center">
-        <h3>내역조회</h3>
         조회기간&nbsp;&nbsp;
         <input type="button" class="btn btn-outline-secondary" id="btnToday" value = "오늘"></input>&nbsp;
         <input type="button" class="btn btn-outline-secondary" id="btnWeek" value = "이번주"></input>&nbsp;
@@ -273,7 +276,8 @@
     </div>
 </main>
 `;
-            $(document).on("click", "#btnToday", function() {
+            $(document)
+                .on("click", "#btnToday", function() {
                 let today = getToday();
                 $.ajax({
                     type: "POST",
@@ -656,6 +660,58 @@
         })
 </script>
 <script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode(
+            {
+                oncomplete : function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if (data.userSelectedType === 'R') {
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if (data.bname !== ''
+                            && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if (data.buildingName !== ''
+                            && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', '
+                                + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+
+                    } else {
+                        document.getElementById("sample6_address").value = '';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr + " " + extraAddr;
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("sample6_address")
+                        .focus();
+                }
+            }).open();
+    }
+</script>
+<script>
     $(document)
         .on('click','#mmt',function() {
             $("#acc").empty();
@@ -663,18 +719,31 @@
 
             let str = `<main class="container text-center">
                         <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
-                        아이디<br><input type="text" style="width:6%" id="id" value="${user.id}" readonly/><br><br>
-                        비밀 번호<br><input type="password" class="container text-center" style="width:25%" id="pwd" placeholder="PASS WORD"/><br><br>
-                        비밀 번호 확인<br><input type="password" class="container text-center" style="width:25%" id="pwd2" placeholder="PASS WORd CHECK"/><br><br>
-                        이름<br><input type="text" class="container text-center" style="width:25%" id="name" placeholder="NAME"/><br><br>
-                        E-mail<br><input type="text" class="container text-center" style="width:25%" id="mail" placeholder="example@example.com"/><br><br>
-                        우편 번호<br><input type="text" class="container text-center" style="width:25%" id="postcode" placeholder="POST CODE"/><br>
-                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br><br>
-                        주소<br><input type="text" class="container text-center" style="width:25%" id="adress" placeholder="ADRESS"/><br><br>
-                        상세 주소<br><input type="text" class="container text-center" style="width:12%" id="adress2" placeholder="DETAIL"/>      <input type="text" class="container text-center" style="width:12%" id="reference" placeholder="REFERENCE"/><br><br>
-                        <button id="btnadj">수정 완료</button>
+                        <form:form id="frmupdate" action="/mypage" method="POST" modelAttribute = "mypage">
+                        <table style="width:100%" style="text-align: center">
+                        <tr><td >아이디</td><td style="text-align: center"><form:input path="id" class="container text-center" value="${user.id}" readonly="true"/>
+                        <form:errors path = "id" class = "FieldError" /></td></tr>
+                        <tr><td >비밀번호</td><td style="text-align: center"><form:password path="password" id="pwd" class="container text-center" placeholder="PASS WORD"/>
+                        <form:errors path = "password" class = "FieldError"/></td></tr>
+                        <tr><td >비밀 번호 확인</td><td style="text-align: center"><form:password path="passwordCheck" class="container text-center"  id="pwd2" placeholder="PASS WORD CHECK"/>
+                        <form:errors path = "passwordCheck" class = "FieldError"/></td></tr>
+                        <tr><td >이름</td><td style="text-align: center"><form:input path="name" class="container text-center" placeholder="NAME" value="${list.username}"/>
+                        <form:errors path = "name" class = "FieldError" /></td></tr>
+                        <tr><td >E-mail</td><td style="text-align: center"><form:input path="email" class="container text-center"  id="mail" placeholder="example@example.com" value="${list.email}"/>
+                        <form:errors path = "email" class = "FieldError"/></td></tr>
+                        <tr><td >우편 번호</td><td style="text-align: center"><form:input path="postcode" class="container text-center"  id="sample6_postcode" placeholder="POST CODE" value="${list.postcode}"/>
+                        <form:errors path = "postcode" class = "FieldError"/></td></tr>
+                        <tr><td></td><td style="text-align: center"><input type="button" class = "btn btn-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td></tr>
+                        <tr><td >주소</td><td style="text-align: center"><form:input path="address" class="container text-center"  id="sample6_address" placeholder="ADRESS" value="${list.address}"/>
+                        <form:errors path = "address" class = "FieldError"/></td></tr>
+                        <tr><td >상세 주소</td><td style="text-align: center"><form:input path="dtaddress" class="container text-center"  id="sample6_extraAddress" placeholder="DETAIL" value="${list.dtaddress}"/>
+                        <form:errors path = "dtaddress" class = "FieldError"/> </td></tr>
+                        <tr><td >전화 번호</td><td style="text-align: center"><form:input path="mobile" class="container text-center"  id="phonenum" placeholder="PHONE NUMDER" value="${list.mobile}"/>
+                        <form:errors path = "mobile" class = "FieldError"/></td></tr>
+                        <tr><td></td><td style="text-align: center"><button class = "btn btn-dark" id="btnadj">수정 완료</button></td></tr>
+                        </table>
+                        </form:form>
                         </main>`;
-                        //테이블로 바꾸기
             $("#acc").append(str);
         })
         // .on('click','#btnupdate',function(){
