@@ -108,7 +108,8 @@
 <div class="login-page">
     <div class="form" id = "inside">
             <input type="email" id = "userEmail" placeholder="이메일을 입력하세요"/>
-            <input type="text" id = "verifyNum" placeholder="인증번호 입력"/>
+        <input type="text" id = "userId" placeholder="아이디를 입력하세요"/>
+        <input type="text" id = "verifyNum" placeholder="인증번호 입력"/>
             <input type = "button" id = "submitMail" value = "인증번호 받기"/>
     </div>
 </div>
@@ -117,35 +118,35 @@
 <script>
     $(document)
     .on("click", "#submitMail", function() {
-        if ($("#submitMail").val() == '인증번호 받기') {
-            if ($("#userEmail").val() == '') {
-
-
-                $.ajax({
-                    type: "POST",
-                    url: "/findMyId",
-                    data: {email: $("#userEmail").val()},
-                    dataType: "text",
-                    success: function (data) {
-                        console.log(data);
-                        if (data == 'false') {
-                            alert("등록된 이메일이 아닙니다.");
-                        } else {
-                            $("#submitMail").val("인증번호 입력");
-                            $.ajax({
-                                type: "POST",
-                                url: "/findMyId/Email",
-                                data: {email: $("#userEmail").val()},
-                                dataType: "text",
-                                success: function (data) {
-                                    console.log(data);
-                                }
-                            })
-                            alert("해당 메일로 인증 번호를 발송하였습니다.");
-                        }
+        if ($("#userEmail").val() == '' || $("#userId").val() == '') {
+            alert("입력란을 채워주세요.");
+        }
+        else if ($("#submitMail").val() == '인증번호 받기') {
+            $.ajax({
+                type : "POST",
+                url : "/findMyPwd",
+                data : {email : $("#userEmail").val(), userId : $("#userId").val()},
+                dataType : "text",
+                success : function(data) {
+                    console.log(data);
+                    if (data == 'false') {
+                        alert("등록된 이메일 또는 아이디가 아닙니다.");
                     }
-                })
-            }
+                    else {
+                        $("#submitMail").val("인증번호 입력");
+                        $.ajax({
+                            type : "POST",
+                            url : "/findMyId/Email",
+                            data : {email : $("#userEmail").val()},
+                            dataType : "text",
+                            success : function(data) {
+                                console.log(data);
+                            }
+                        })
+                        alert("해당 메일로 인증 번호를 발송하였습니다.");
+                    }
+                }
+            })
         } else if ($("#submitMail").val() == "인증번호 입력") {
             if ($("#verifyNum").val() == '')
             {
@@ -158,16 +159,18 @@
                     data: {code: $("#verifyNum").val()},
                     success: function (data) {
                         console.log("입력된 값 =" + data);
+                        let tempPassword = Math.random().toString(36).slice(2);
+                        console.log(tempPassword);
                         if (data == "true") {
                             $.ajax({
                                 type : "POST",
-                                url : "/findMyId/userId",
-                                data : {email : $("#userEmail").val()},
+                                url : "/findMyPwd/temp",
+                                data : {userId : $("#userId").val(), password : tempPassword},
                                 dataType : "text",
                                 success : function(data) {
                                     console.log(data);
                                     $("#inside").empty();
-                                    $("#inside").append(`<label>당신의 아이디는 \${data} 입니다.</label>`);
+                                    $("#inside").append(`<label>임시 비밀번호는 \${tempPassword}입니다.</label>`);
                                 }
                             })
                         } else {

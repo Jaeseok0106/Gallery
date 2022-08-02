@@ -163,8 +163,9 @@ prefix="c" %> <%@ page session="false" %>
       <div class="row mb-2" style="height: 700px">
         <div class="col-6">
           <h2>
-            Gallery 누르 <br />
-            오시는 길
+            Gallery Nur <br />
+            오시는 길 <br /><br />
+            <img src="director3.png" id="director" style="height: 300px" />
           </h2>
         </div>
         <div class="col-6">

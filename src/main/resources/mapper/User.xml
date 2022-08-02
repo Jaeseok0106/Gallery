@@ -35,10 +35,24 @@
 <insert id = "addKakaoUser" parameterType="String">
 	insert into Users values (Users_SEQ.nextval, #{id}, #{password}, '방문자', null, 'KAKAO')
 </insert>
-	<select id = "findUsersByEmail" resultType="Integer">
-		select id from userdetail where email = #{param1}
-	</select>
-	<select id = "findUserIdByNum" resultType = "String">
-		select id from users where usernum = #{param1}
-	</select>
+	<update id="impoupdate">
+		update userdetail set username=#{param1},email=#{param2},postcode=#{param3},address=#{param4},dtaddress=#{param5},mobile=#{param6}
+		                  where id = (select usernum from users where id = #{param7})
+	</update>
+	<update id="pwdupdate">
+		update users set password=#{param1},salt=#{param2} where id=#{param3}
+	</update>
+<select id = "findUsersByEmail" resultType="Integer">
+	select id from userdetail where email = #{param1}
+</select>
+<select id = "findUserIdByNum" resultType = "String">
+	select id from users where usernum = #{param1}
+</select>
+<select id = "checkIdAndMail" resultType="String">
+	select id from users where id = #{userId} and signpath = 'NORMAL' and
+	                          usernum = (select id from userdetail where email = #{email})
+</select>
+<update id = "changePwdWithTemp">
+	update users set password = #{temp}, salt = #{salt} where id = #{id} and signpath = 'NORMAL'
+</update>
 </mapper>

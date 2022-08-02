@@ -131,6 +131,26 @@ public class UserController {
 		String userId = userService.returnUserId(email);
 		return userId;
 	}
+	@GetMapping("/findMyPwd")
+	public String viewFindPwd() {
+		return "users/findUserPwd";
+	}
+	@PostMapping("/findMyPwd")
+	@ResponseBody
+	public String checkIdAndMail(@RequestParam("email") String email, @RequestParam("userId") String id) {
+		boolean checked = userService.checkIdAndMail(email, id);
+		if (checked) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	@PostMapping("/findMyPwd/temp")
+	@ResponseBody
+	public String tempPassword(@RequestParam("userId") String id, @RequestParam("password") String temp) throws NoSuchAlgorithmException {
+		userService.changeTemp(id, temp);
+		return "true";
+	}
 
 	@GetMapping("/history")
 	public String viewAccount(@SessionAttribute ("user") Users user, Model model) {
@@ -216,10 +236,10 @@ public class UserController {
 		UUID tempPassword = UUID.randomUUID();
 		System.out.println("갤러리 패스워드 : " + tempPassword);
 
-		Users userCheck = userService.checkId(kakaoProfile.getKakao_account().getEmail(), "KAKAO");
+		Users userCheck = userService.checkId(String.valueOf(kakaoProfile.getId()), "KAKAO");
 		UsersSignForm user = new UsersSignForm();
 		if (userCheck == null) {
-			user.setId(kakaoProfile.getKakao_account().getEmail());
+			user.setId(String.valueOf(kakaoProfile.getId()));
 			user.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
 			model.addAttribute("userSign", user);
 			return "users/kakaoSignin";

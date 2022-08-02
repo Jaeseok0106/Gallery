@@ -10,6 +10,7 @@ prefix="c" %> <%@ page session="false" %>
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <title>예약하기</title>
   </head>
   <style>
@@ -240,7 +241,7 @@ prefix="c" %> <%@ page session="false" %>
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">예약 날짜</label>
         <div class="col-sm-10">
-          <input type="date" id="pickReserveDate" value="2022-07-20" />
+          <input class = "datepicker" id="pickReserveDate"/>
         </div>
       </div>
       <div class="mb-3 row">
@@ -366,6 +367,7 @@ prefix="c" %> <%@ page session="false" %>
     crossorigin="anonymous"
   ></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <script src="https://js.tosspayments.com/v1"></script>
   <script>
     $(document).ready(function () {
@@ -403,6 +405,18 @@ prefix="c" %> <%@ page session="false" %>
         $("#none2").css("display", "none");
         $("#none3").css("display", "none");
       });
+    });
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+      prevText: '이전 달',
+      nextText: '다음 달',
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+      showMonthAfterYear: true,
+      yearSuffix: '년'
     });
   </script>
   <script>
@@ -452,6 +466,9 @@ prefix="c" %> <%@ page session="false" %>
         beforeSend: function () {},
         success: function (data) {
           console.log("넘어온 값 = ", data);
+          $(function() {
+            $(".datepicker").datepicker({minDate : 0, maxDate : data["endDate"]});
+          })
           $("#staticExhibit").val(data["name"]);
           $("#price").attr("value", data["price"]);
           $("#price").val(data["price"] * $("#personNum").val());
