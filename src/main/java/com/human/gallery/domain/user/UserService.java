@@ -1,9 +1,8 @@
 package com.human.gallery.domain.user;
 
-import lombok.RequiredArgsConstructor;
 import com.human.gallery.domain.googleLogin.GoogleSignForm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -56,6 +55,19 @@ public class UserService {
 		else {
 			return true;
 		}
+	}
+	public boolean checkIdAndMail(String email, String userId) {
+		String users = userRepository.checkIdAndMail(email, userId);
+		if (users == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	public void changeTemp(String userId, String temp) throws NoSuchAlgorithmException {
+		String salt = EncryptionUtils.getSalt();
+		String encryptPwd = EncryptionUtils.getEncrypt(temp, salt);
+		userRepository.changePwdWithTemp(encryptPwd, userId, salt);
 	}
 
 	public void addUsers(UsersSignForm user) throws NoSuchAlgorithmException {

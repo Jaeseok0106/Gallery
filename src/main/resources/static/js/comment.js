@@ -217,16 +217,32 @@ function getCommentNum() {
         }
     })
 }
+let updateClick = 1;
 function updateComment(commentNumber) {
+    updateClick++;
+    let commentPost;
     console.log("나는 업데이트 할거임 = {}", commentNumber);
-    let temp = $("#userComment"+commentNumber).text();
-    console.log("수정 댓글 원본 = " + temp);
-    temp = temp.split('[');
-    console.log("수정 댓글 짤랐을 때 = " + temp[0]);
-    $("#userComment"+commentNumber).children().remove();
-    let str = `<textarea id="updateForm" rows="3" cols="10" style="width:90%; display: inline; text-align:left;">${temp[0]}</textarea>
-            <button type="button" id="updateReply" class="btn btn-outline-Dark" style="height:auto;">등록</button>`;
-    $("#userComment"+commentNumber).append(str);
+    $.ajax({
+        type : "POST",
+        url : "/getCommentById",
+        data : {commentId : commentNumber},
+        dataType : "text",
+        success : function(data) {
+            console.log(data);
+            commentPost = data;
+            commentPost = commentPost.split("[수정된 댓글입니다]");
+            console.log("쪼갰을 때 -> ", commentPost);
+            if (updateClick % 2 == 0) {
+                $("#userComment"+commentNumber).empty();
+                let str = `<textarea id="updateForm" rows="3" cols="10" style="width:90%; display: inline; text-align:left;">${commentPost[0]}</textarea>
+                <button type="button" id="updateReply" class="btn btn-outline-Dark" style="height:auto;">등록</button>`;
+                $("#userComment"+commentNumber).append(str);
+            } else {
+                $("#userComment"+commentNumber).children().remove();
+                $("#userComment"+commentNumber).text(commentPost[0]);
+            }
+        }
+    })
 }
 function doUpdate(commentNumber, content) {
     $.ajax({

@@ -60,4 +60,7 @@
         FROM post_comment where post_id = #{postId} order by reorder)) a, users b
         <![CDATA[where rn >= ((#{pageNumber}-1) * 15 + 1) and rownum < 16 and a.writer = b.usernum]]>
     </select>
+    <select id = "findOneById" resultType="com.human.gallery.domain.comment.Comment">
+        select * from post_comment where id = #{commentId}
+    </select>
 </mapper>
