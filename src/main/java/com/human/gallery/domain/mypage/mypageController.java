@@ -5,9 +5,7 @@ import com.human.gallery.domain.exhibit.ExhibitRepository;
 import com.human.gallery.domain.payment.PaymentRepository;
 import com.human.gallery.domain.reserve.Reserve;
 import com.human.gallery.domain.reserve.ReserveRepository;
-import com.human.gallery.domain.user.UserRepository;
-import com.human.gallery.domain.user.UserService;
-import com.human.gallery.domain.user.Users;
+import com.human.gallery.domain.user.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -15,6 +13,8 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -27,9 +27,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class mypageController {
 
+    private final iMypage mypage;
+    private final UserService userService;
+
     @GetMapping("/mypage")
-    public String mypage(@SessionAttribute(name = "user", required = false) Users user, Model model ) {
+    public String mypage(@ModelAttribute("mypage") UsersUpdateForm usera,
+                         @SessionAttribute(name = "user", required = false) Users user, Model model ) {
         model.addAttribute("user", user);
+        mypageDTO list = mypage.list(user.getId());
+        model.addAttribute("list", list);
         return "mypage/mypage";
     }
     private final PaymentRepository paymentRepository;
@@ -162,14 +168,25 @@ public class mypageController {
         return reserve;
 
     }
-//    @PostMapping("/mypage/update")
-//    public String domypageupdate(@RequestParam("userId") String userId,
-//                                 @RequestParam("password") String password) throws NoSuchAlgorithmException {
-//        Users user = userRepository.mypage(userId,password);
-//        if (user == null)
-//        {
-//            return "users/login";
-//        }
-//        return "redirect:";
-//    }
+    @PostMapping("/mypage")
+    public String doMypage(@Validated @ModelAttribute("mypage") UsersUpdateForm form, BindingResult bindingResult,
+                           Model model,
+                           @SessionAttribute(name = "user", required = false) Users usera) throws NoSuchAlgorithmException {
+
+        if (bindingResult.hasErrors())
+        {
+            log.info("발생된 에러 {} = ", bindingResult.getFieldErrors());
+            model.addAttribute("user", usera);
+            return "mypage/mypage";
+        }
+        if (!form.getPassword().equals(form.getPasswordCheck()))
+        {
+            model.addAttribute("user", usera);
+            model.addAttribute("passwordError", "비밀번호가 일치하지 않습니다.");
+            return "mypage/mypage";
+        }
+        userService.impoupdate(form);
+        model.addAttribute("user", usera);
+        return "mypage/mypage";
+    }
 }

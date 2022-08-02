@@ -3,7 +3,6 @@ package com.human.gallery.domain.user;
 import lombok.RequiredArgsConstructor;
 import com.human.gallery.domain.googleLogin.GoogleSignForm;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -35,6 +34,13 @@ public class UserService {
 		else {
 			return null;
 		}
+	}
+	public void impoupdate(UsersUpdateForm form) throws NoSuchAlgorithmException {
+
+		String salt = EncryptionUtils.getSalt();
+		String tempPassword = EncryptionUtils.getEncrypt(form.getPassword(), salt);
+		userRepository.pwdupdate(tempPassword,salt, form.getId());
+		userRepository.impoupdate(form.getName(), form.getEmail(), form.getPostcode(), form.getAddress(), form.getDtaddress(), form.getMobile(), form.getId());
 	}
 	public Users checkId(String id, String path) {
 		

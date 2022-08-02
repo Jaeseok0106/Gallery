@@ -165,7 +165,7 @@ prefix="c" %> <%@ page session="false" %>
                 </c:if>
                 <c:if test="${user.role == '방문자'}">
                   <li class="nav-item">
-                    <a class="nav-link" href="#" id="detail">My page</a>
+                    <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
 
                 </c:if>
