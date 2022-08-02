@@ -200,7 +200,7 @@ a {
 					</p>
 					<p>
 						<label class = "col-4 text-end">전화번호 : </label>
-						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 포함한 전화번호를 입력해주세요."/> <br>
+						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 제외한 전화번호를 입력해주세요."/> <br>
 						<form:errors path = "mobile" class = "FieldError"/>
 					</p>
 					<p class="col-9 text-end">

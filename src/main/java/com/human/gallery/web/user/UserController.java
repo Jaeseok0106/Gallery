@@ -236,10 +236,10 @@ public class UserController {
 		UUID tempPassword = UUID.randomUUID();
 		System.out.println("갤러리 패스워드 : " + tempPassword);
 
-		Users userCheck = userService.checkId(kakaoProfile.getKakao_account().getEmail(), "KAKAO");
+		Users userCheck = userService.checkId(String.valueOf(kakaoProfile.getId()), "KAKAO");
 		UsersSignForm user = new UsersSignForm();
 		if (userCheck == null) {
-			user.setId(kakaoProfile.getKakao_account().getEmail());
+			user.setId(String.valueOf(kakaoProfile.getId()));
 			user.setName(kakaoProfile.getKakao_account().getProfile().getNickname());
 			model.addAttribute("userSign", user);
 			return "users/kakaoSignin";

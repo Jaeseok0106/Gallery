@@ -190,7 +190,7 @@ prefix="c" %> <%@ page session="false" %>
     </div>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
-    <br><br>
+
     <!-- main 안에다가 주 내용 작성할것 -->
     <main class="container p-5">
       <div class="container">
@@ -199,14 +199,22 @@ prefix="c" %> <%@ page session="false" %>
         </div>
         <div class="inner clearfix">
           <section class="left-area" data-mh="matchArea" style="height: 700px">
-            <img src="director.png" id="director" style="height: 500px" />
+            <img src="inGallery2.png" id="director" style="height: 300px" />
           </section>
           <section class="right-area" data-mh="matchArea" style="height: 700px">
             <p>
-              왜 또 아픈상처에 소금을 뿌리십니까 <br />
-              제게도 꿈이 있었습니다
+              갤러리누르는 2022년 3주년을 맞이했습니다. 오늘이 있기까지 저희 갤러리를 음으로 양으로 도와주신 모든 분들께 무한한 감사를 표합니다. 작가, 예술애호가, 평론가, 기획자, 교육자, 미술사가, 문화 관료, 언론인, 후원가, 화상, 재료상, 감식가, 수복가 등 수많은 이들의 사랑과 헌신이 있었기에, 한국현대
+              미술은 여러 위기를 딛고 오늘에 이르렀습니다. 그러나, 언제나 마지막 큰 박수는 창작에 매진해온 작가 여러분과 그들의 땀방울이 밴 작업 세계에 돌아가야 마땅할 것입니다. 참으로 고맙습니다. <br><br>
+
+              작업들과 주요 신작을 선뵈는 크고 작은 전시들과 국내외에서의 미술품 거래를 통해, 문화의 상승과 사회
+              의 발전을 경험했습니다. 파란만장한 격동의 세월 속에서, 저희 갤러리도 일개 상업화랑 이상의 큰 임무과 책
+              임을 실감하며 나름 기여해왔노라 자부합니다. 물론 때로 힘에 부치기도 했고, 또 기대에 못 미치는 점도 있
+              었을 것입니다. 하오나, 갤러리누르가 한국미술계와 맺어온 특수한 관계는, 국외에서도 전례를 찾아보기 어려울
+              정도로 자별(自別)하고 또 자별합니다. 앞으로 전심과 전력을 다해, 미비한 점을 보완하겠습니다. 더 나아가,
+              새로운 내일로의 돌파구를 찾는 과정에 힘을 보태보겠습니다. 문화사적 존재 의의를 되새기며, 미래에 걸맞은
+              모습으로 거듭나겠습니다.
             </p>
-            <strong class="sign">선장</strong>
+            <strong class="sign">갤러리누르 관장 <br>mr.back 올림 <br><br> 2022년 8월 1일</strong>
           </section>
         </div>
       </div>
