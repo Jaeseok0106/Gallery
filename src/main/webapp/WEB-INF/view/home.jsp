@@ -220,9 +220,9 @@ prefix="c" %> <%@ page session="false" %>
         </button>
       </div>
 
-      <div class="row-mb-2" style="height: 500px">
+ <%--     <div class="row-mb-2" style="height: 500px">
         <div class="col-6"></div>
-      </div>
+      </div>--%>
     </main>
 
     <!-- 하단 -->

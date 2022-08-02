@@ -509,7 +509,7 @@
                     $.ajax({
                         type : "POST",
                         url : "/history/reserve/thisWeek",
-                        data : {userId :$("#usernum").val(), password : thisWeek[0], endDate : thisWeek[6]},
+                        data : {userId :$("#usernum").val(), startDate : thisWeek[0], endDate : thisWeek[6]},
                         dataType : "JSON",
                         beforeSend : function() {
                             $("#paymentTable").empty();

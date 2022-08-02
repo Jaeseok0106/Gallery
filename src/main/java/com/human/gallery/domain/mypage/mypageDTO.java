@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class mypageDTO {
 
  private String id;
- private  String password;
+ private String password;
  private String role;
  private int userNum;
  private String address;
