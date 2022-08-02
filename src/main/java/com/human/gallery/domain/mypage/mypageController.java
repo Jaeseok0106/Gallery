@@ -1,35 +1,37 @@
 package com.human.gallery.domain.mypage;
 
-import com.human.gallery.domain.exhibit.Exhibit;
 import com.human.gallery.domain.exhibit.ExhibitRepository;
 import com.human.gallery.domain.payment.PaymentRepository;
 import com.human.gallery.domain.reserve.Reserve;
 import com.human.gallery.domain.reserve.ReserveRepository;
-import com.human.gallery.domain.user.UserRepository;
-import com.human.gallery.domain.user.UserService;
-import com.human.gallery.domain.user.Users;
+import com.human.gallery.domain.user.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class mypageController {
 
+    private final iMypage mypage;
+    private final UserService userService;
+
     @GetMapping("/mypage")
-    public String mypage(@SessionAttribute(name = "user", required = false) Users user, Model model ) {
+    public String mypage(@ModelAttribute("mypage") UsersUpdateForm usera,
+                         @SessionAttribute(name = "user", required = false) Users user, Model model ) {
         model.addAttribute("user", user);
+        mypageDTO list = mypage.list(user.getId());
+        model.addAttribute("list", list);
         return "mypage/mypage";
     }
     private final PaymentRepository paymentRepository;
@@ -37,52 +39,6 @@ public class mypageController {
     private final UserRepository userRepository;
     private final ReserveRepository reserveRepository;
 
-    @GetMapping("/reserve/exhibit/{exhibitId}")
-    public String viewcheckPay(@SessionAttribute(name = "user", required = false) Users user,
-                               Model model,
-                               @PathVariable("exhibitId") String exhibitId) {
-
-        model.addAttribute("user", user);
-        model.addAttribute("exhibitId", exhibitId);
-        return "payment/checkPay";
-    }
-
-    @PostMapping("/reserve/exhibit/{exhibitId}")
-    @ResponseBody
-    public String returnExhibit(@PathVariable("exhibitId") int id,
-                                @RequestParam("userId") String userId) {
-        Exhibit exhibit = exhibitRepository.findById(id);
-        Users userDetail = userRepository.findDetailById(userId);
-        String uuid = UUID.randomUUID().toString();
-        log.info("유저 정보 = {}", userDetail);
-        JSONObject jO = new JSONObject();
-        jO.put("name", exhibit.getName());
-        jO.put("price", exhibit.getPrice());
-        jO.put("total", exhibit.getTotal());
-        jO.put("exhibitId", exhibit.getId());
-
-        jO.put("userName", userDetail.getUsername());
-        jO.put("address", userDetail.getAddress());
-        jO.put("postcode", userDetail.getPostcode());
-        jO.put("dtaddress", userDetail.getDtaddress());
-        jO.put("orderId", uuid);
-        log.info("예약 화면으로 넘어갈 값 = {}", jO);
-        return jO.toJSONString();
-    }
-
-    @PostMapping("/reserve/add")
-    @ResponseBody
-    public void doAddReserve(@ModelAttribute Reserve reserve) {
-
-        log.info("받은 값 = {}", reserve);
-        reserveRepository.addReserve(reserve);
-    }
-
-    @PostMapping("/reserve/cancel")
-    @ResponseBody
-    public void doDeleteReserve(@RequestParam("orderId") String orderId) {
-        reserveRepository.deleteById(orderId);
-    }
 
     @PostMapping("/history/reserve/{userId}")
     @ResponseBody
@@ -136,7 +92,7 @@ public class mypageController {
     public Object returnTodayReserve(@RequestParam("userId") String userId,
                                      @RequestParam("date") String today) {
         log.info("받은 값 = {} {}", userId, today);
-        Reserve reserve = reserveRepository.findByDateWithUserId(userId, today);
+        ArrayList<Reserve> reserve = reserveRepository.findByDateWithUserId(userId, today);
         log.info("검색 후 넘어온 값 = {}", reserve);
         return reserve;
     }
@@ -162,14 +118,34 @@ public class mypageController {
         return reserve;
 
     }
-//    @PostMapping("/mypage/update")
-//    public String domypageupdate(@RequestParam("userId") String userId,
-//                                 @RequestParam("password") String password) throws NoSuchAlgorithmException {
-//        Users user = userRepository.mypage(userId,password);
-//        if (user == null)
-//        {
-//            return "users/login";
-//        }
-//        return "redirect:";
-//    }
+    @PostMapping("/mypage")
+    public String doMypage(@Validated @ModelAttribute("mypage") UsersUpdateForm form, BindingResult bindingResult,
+                           Model model,
+                           @SessionAttribute(name = "user", required = false) Users usera) throws NoSuchAlgorithmException {
+
+        if (bindingResult.hasErrors())
+        {
+            log.info("발생된 에러 {} = ", bindingResult.getFieldErrors());
+            model.addAttribute("user", usera);
+            return "mypage/mypage";
+        }
+        if (!form.getPassword().equals(form.getPasswordCheck()))
+        {
+            model.addAttribute("user", usera);
+            model.addAttribute("passwordError", "비밀번호가 일치하지 않습니다.");
+            return "mypage/mypage";
+        }
+        userService.impoupdate(form);
+        model.addAttribute("user", usera);
+        return "mypage/mypage";
+    }
+
+    @PostMapping("/history/reserve/date")
+    @ResponseBody
+    public Object returnReserve(@RequestParam("userId") String userId,
+                                @RequestParam("startDate") String start,
+                                @RequestParam("endDate") String end) {
+        ArrayList<Reserve> reserve = reserveRepository.findWeekByDateWithUserId(userId, start, end);
+        return reserve;
+    }
 }

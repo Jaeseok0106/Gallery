@@ -8,15 +8,14 @@ import org.springframework.stereotype.Service;
 public class mypageDTO {
 
  private String id;
- private String password;
- private String role;
- private int userNum;
+ private String username;
+ private String mobile;
  private String address;
  private String dtaddress;
  private String email;
- private String username;
  private int postcode;
- private String mobile;
+ private int userNum;
+ private  String password;
+ private String role;
  private String salt;
-
 }

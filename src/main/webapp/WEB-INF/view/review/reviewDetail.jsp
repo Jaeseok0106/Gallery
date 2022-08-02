@@ -14,6 +14,9 @@
     <title>${rdto.title}</title>
 </head>
 <style>
+    .px-2:hover {
+        cursor:pointer;
+    }
     .nav-item{
         list-style-type:none;
         font-size: 55px;
@@ -117,9 +120,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#" id = "detail">My page</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id = "detail" href = "/history">결제 내역</a>
-                            </li>
+
                         </c:if>
                         <c:if test="${user.role == '관리자'}">
                             <li class="nav-item">
@@ -235,7 +236,7 @@
                 <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
             </li>
             <li class="nav-item">
-                <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
+                <a href="/FAQ" class="nav-link px-2 text-muted">FAQ</a>
             </li>
         </ul>
     </footer>

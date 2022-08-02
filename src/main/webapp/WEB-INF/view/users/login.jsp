@@ -61,6 +61,9 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+#findUserId:hover, #findUserPwd:hover {
+    cursor:pointer;
+}
 </style>
 <body class="text-center">
 <main class= "form-signin">
@@ -112,6 +115,9 @@ body {
     $(document)
     .on("click", "#findUserId", function() {
         window.open("/findMyId", "asdsad", width="44rem", height="20rem");
+    })
+    .on("click" , "#findUserPwd", function() {
+        window.open("/findMyPwd", "asdas", width = "30rem", height = "15rem");
     })
 </script>
 </html>
