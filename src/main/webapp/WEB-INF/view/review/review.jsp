@@ -199,7 +199,7 @@ text-decoration-line:none;
 					<th>글쓴이</th>
 					<th>날짜</th>
 					<th>조회</th>
-					<th>추천순</th>
+					<th>추천</th>
 				</tr>
 				<c:choose>
 					<c:when test="${!empty reviewlist}">

@@ -47,9 +47,24 @@ prefix="c" %> <%@ page session="false" %>
     a {
       text-decoration-line: none;
     }
+    html {
+      position: relative;
+      min-height: 100%;
+      margin: 0;
+    }
+    body {
+      min-height: 100%;
+    }
+    #footer {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      padding: 15px 0;
+    }
   </style>
   <body>
-  <div class="container">
+  <div class="container" id="wrap">
     <header class="blog-header py-3" style="height: 230px">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="text-center">
@@ -194,7 +209,7 @@ prefix="c" %> <%@ page session="false" %>
     </main>
 
     <!-- 하단 -->
-    <div class="container-fluid">
+    <div class="container-fluid" id="footer">
       <footer
         class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
       >

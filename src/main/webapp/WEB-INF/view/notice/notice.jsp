@@ -189,7 +189,7 @@
 	<p></p>
 	<div class = "container" id = "boardList">
 		<div class = "row">
-			<table id='qnatb' class ="text-center">
+			<table id='notb' class ="text-center">
 				<tr class ="text-center">
 					<th>번호</th>
 					<th>제목</th>
