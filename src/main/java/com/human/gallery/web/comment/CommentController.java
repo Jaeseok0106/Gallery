@@ -82,6 +82,12 @@ public class CommentController {
         Integer num = commentRepository.findNumByPostId(postId);
         return num;
     }
+    @PostMapping("/getCommentById")
+    @ResponseBody
+    public String returnComment(@RequestParam("commentId") String id) {
+        Comment comment = commentRepository.findOneById(id);
+        return comment.getContent();
+    }
 
     @PostMapping("/deleteComment")
     public void doDeleteComment(@RequestParam("id") String id) {

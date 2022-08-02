@@ -30,4 +30,6 @@ public interface CommentRepository {
     Integer getMaxReorder(String postId, String redepth, String reparent);
     ArrayList<Comment> findByIdWithPaging(@Param("postId") String postId,
                                           @Param("pageNumber") String pageNumber);
+
+    Comment findOneById(@Param("commentId") String id);
 }

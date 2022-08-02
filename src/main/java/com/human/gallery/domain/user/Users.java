@@ -15,6 +15,7 @@ public class Users {
 	private String username;
 	private int postcode;
 	private String mobile;
+
 	private String salt;
 	private String signPath;
 }

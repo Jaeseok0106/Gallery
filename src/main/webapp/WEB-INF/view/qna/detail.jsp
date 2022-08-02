@@ -12,6 +12,9 @@ prefix="c" %> <%@ page session="false" %>
     <title>${qdto.title}</title>
   </head>
   <style>
+    .px-2:hover {
+      cursor:pointer;
+    }
     .commentJob {
       cursor : pointer;
     }
@@ -201,6 +204,7 @@ prefix="c" %> <%@ page session="false" %>
       </nav>
     </div>
     </div>
+
   </main>
 
     <!-- 하단 -->

@@ -29,7 +29,7 @@ public class EmailService {
         message.setSubject("갤러리 누르의 인증번호 : " + code); // 메일의 제목을 적어줌.
 
         String msg = ""; // 여기서부터 메세지
-        msg += "아이디를 찾는데 필요한 인증번호를 입력해주세요 <br>" +code;
+        msg += "아이디 또는 비밀번호를 찾는데 필요한 인증번호를 입력해주세요 <br>" +code;
         message.setText(msg, "utf-8", "html"); // 메세지의 내용.
         message.setFrom(new InternetAddress("tempnurgallery1@gmail.com", "갤러리 누르"));
         return message;
