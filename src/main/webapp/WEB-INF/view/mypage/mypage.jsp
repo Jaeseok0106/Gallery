@@ -816,11 +816,11 @@ kk
                         $("#acc").empty();
                         let str = `<main class="container text-center">
                             <br><br><h2 style="text-align: center">탈퇴 사유</h2><hr><br>&nbsp&nbsp
-                            <input type="radio" id="ra1">갤러리 서비스 불만&nbsp&nbsp
-                            <input type="radio" id="ra1">높은 이용 금액<br><br>&nbsp&nbsp
-                            <input type="radio" id="ra1">사이트 장애&nbsp&nbsp
-                            <input type="radio" id="ra1">단순 변심&nbsp&nbsp
-                            <input type="radio" id="ra1">기타<br><br>&nbsp&nbsp
+                            <input type="radio" name="ra1" id="ra1">갤러리 서비스 불만&nbsp&nbsp
+                            <input type="radio" name="ra1" id="ra2">높은 이용 금액<br><br>&nbsp&nbsp
+                            <input type="radio" name="ra1" id="ra3">사이트 장애&nbsp&nbsp
+                            <input type="radio" name="ra1" id="ra4">단순 변심&nbsp&nbsp
+                            <input type="radio" name="ra1" id="ra5">기타<br><br>&nbsp&nbsp
                             <button id="btnbb" class = "btn btn-dark" style="text-align: center">탈퇴 하기</button>
                             </main>`;
                         $("#acc").append(str);
@@ -830,7 +830,6 @@ kk
                 }
             })
         })
-
 </script>
 <script>
     $(document)
@@ -932,6 +931,5 @@ kk
             }
         })
     }
-
 </script>
 </html>
