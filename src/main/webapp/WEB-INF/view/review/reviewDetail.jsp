@@ -257,6 +257,7 @@
 ></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="/js/comment.js"></script>
+<script src="/ckeditor2/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
         console.log("시작 화면");

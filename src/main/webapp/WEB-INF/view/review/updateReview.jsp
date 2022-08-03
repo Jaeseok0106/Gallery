@@ -241,8 +241,6 @@ ${rdto.content}</textarea
     crossorigin="anonymous"
   ></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="${classpath}/editor/ckeditor.js"></script>
-  <script src="${classpath}/editor/translations/ko.js"></script>
   <script>
     $(document).ready(function () {
       console.log("시작 화면");

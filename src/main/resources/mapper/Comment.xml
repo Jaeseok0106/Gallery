@@ -63,4 +63,10 @@
     <select id = "findOneById" resultType="com.human.gallery.domain.comment.Comment">
         select * from post_comment where id = #{commentId}
     </select>
+    <select id = "findUserCommentById" resultType="com.human.gallery.domain.comment.Comment">
+        select * from post_comment where writer = #{userId} order by id desc, postdate desc
+    </select>
+    <select id = "returnCategory" resultType="Integer">
+        select categoryList from board_post where id = #{postId}
+    </select>
 </mapper>

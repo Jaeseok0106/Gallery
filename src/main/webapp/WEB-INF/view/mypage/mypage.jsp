@@ -159,13 +159,19 @@
     </div>
     <ul class="nav justify-content-center" id="gry">
         <li class="nav-item col-2">
-            <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;" value="1">예매 내역</span>
+            <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;">예매 내역</span>
         </li>
         <li class="nav-item col-2">
-            <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;"value="2">개인 정보 관리</span>
+            <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;">개인 정보 관리</span>
         </li>
         <li class="nav-item col-2">
-            <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;"value="3">회원 탈퇴</span>
+            <span class="nav-link" aria-current="page" id="myPost" style="cursor:hand;">내가 작성한 글</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="myComment" style="cursor:hand;">내가 작성한 댓글</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;">회원 탈퇴</span>
         </li>
     </ul>
     <div id="bcc">
@@ -173,6 +179,11 @@
     <div  id="acc">
     </div>
     <div id="ccc">
+    </div>
+    <div id = "findMyPost">
+
+    </div>
+    <div id = "findMyComment">
     </div>
 
     </div>
@@ -817,47 +828,106 @@
                 }
             })
         })
-        .on('click','#mmt',function() {
-            $("#acc").empty();
-            let str = `<main class="container text-center">
-                        <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
-                        <form:form id="frmupdate" action="/mypage" method="POST" modelAttribute = "mypage">
-                        <table style="width:100%" style="text-align: center">
-                        <tr><td >아이디</td><td style="text-align: center"><form:input path="id" class="container text-center" value="${user.id}" readonly="true"/>
-                        <form:errors path = "id" class = "FieldError" /></td></tr>
-                        <tr><td >비밀번호</td><td style="text-align: center"><form:password path="password" id="pwd" class="container text-center" placeholder="PASS WORD"/>
-                        <form:errors path = "password" class = "FieldError"/></td></tr>
-                        <tr><td >비밀 번호 확인</td><td style="text-align: center"><form:password path="passwordCheck" class="container text-center"  id="pwd2" placeholder="PASS WORD CHECK"/>
-                        <form:errors path = "passwordCheck" class = "FieldError"/></td></tr>
-                        <tr><td >이름</td><td style="text-align: center"><form:input path="name" class="container text-center" placeholder="NAME" value="${list.username}"/>
-                        <form:errors path = "name" class = "FieldError" /></td></tr>
-                        <tr><td >E-mail</td><td style="text-align: center"><form:input path="email" class="container text-center"  id="mail" placeholder="example@example.com" value="${list.email}"/>
-                        <form:errors path = "email" class = "FieldError"/></td></tr>
-                        <tr><td >우편 번호</td><td style="text-align: center"><form:input path="postcode" class="container text-center"  id="sample6_postcode" placeholder="POST CODE" value="${list.postcode}"/>
-                        <form:errors path = "postcode" class = "FieldError"/></td></tr>
-                        <tr><td></td><td style="text-align: center"><input type="button" class = "btn btn-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td></tr>
-                        <tr><td >주소</td><td style="text-align: center"><form:input path="address" class="container text-center"  id="sample6_address" placeholder="ADRESS" value="${list.address}"/>
-                        <form:errors path = "address" class = "FieldError"/></td></tr>
-                        <tr><td >상세 주소</td><td style="text-align: center"><form:input path="dtaddress" class="container text-center"  id="sample6_extraAddress" placeholder="DETAIL" value="${list.dtaddress}"/>
-                        <form:errors path = "dtaddress" class = "FieldError"/> </td></tr>
-                        <tr><td >전화 번호</td><td style="text-align: center"><form:input path="mobile" class="container text-center"  id="phonenum" placeholder="PHONE NUMDER" value="${list.mobile}"/>
-                        <form:errors path = "mobile" class = "FieldError"/></td></tr>
-                        <tr><td></td><td style="text-align: center"><button class = "btn btn-dark" id="btnadj">수정 완료</button></td></tr>
-                        </table>
-                        </form:form>
-                        </main>`;
-            $("#acc").append(str);
-        })
 </script>
 <script>
     $(document)
-        .on('click','#sec',function(){
-            $("#acc").empty();
-            let str=`<br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
-               <table boder="1" bordercolor="black" class="center">
-                <tr><td>비밀번호:<input type="text" id="pw"><button id="btntc" value="탈퇴">탈퇴</button></td></tr>
-                </table> `;
-            $('#acc').append(str);
+    .on("click", "#myComment", function() {
+        $.ajax({
+            type : "POST",
+            url : "/findAllMyComment",
+            data : {userId : $("#usernum").val()},
+            dataType : "JSON",
+            success : function(data) {
+                console.log(data);
+                let temp =
+                    `<table id = "comment" class = "table">
+                        <tr><th>
+                            번호
+                        </th>
+                        <th>
+                            작성 글 번호
+                        </th>
+                        <th>
+                            내용
+                        </th>
+                       <th>
+                            날짜
+                        </th></tr>
+                    </table>`;
+                $("#findMyComment").append(temp);
+                for (let i = 0; i <data.length; i++) {
+                    let userComment = data[i];
+                    console.log(userComment);
+                    $.ajax({
+                        type : "POST",
+                        url  : "/getCategory",
+                        data : {postId : userComment['postId']},
+                        dataType : "text",
+                        success : function (data) {
+                            let str =
+                                `<tr><td>\${userComment['id']}</td>
+                        <td>\${userComment['postId']}</td>
+                        <td><a href = \${data}?id=\${userComment['postId']}>\${userComment['content']}</td></a>
+                        <td>\${userComment['postDate']}</td></tr>`;
+                            $("#comment").append(str);
+                        }
+                    })
+                }
+            }
         })
+    })
+</script>
+<script>
+    function commentPaging() {
+        let RowsPerPage = 15;
+        let pageList;
+        let commentCount;
+        console.log("페이징 호출여부");
+        $.ajax({
+            type : "POST",
+            url : "/getMyCommentNum",
+            dataType : "text",
+            data : {userId : $("#usernum").val()},
+            beforeSend : function() {
+                $("#commentPage").empty();
+            },
+            success : function (data) {
+                commentCount = data;
+                console.log("댓글 -> ", commentCount);
+                pageList = Math.ceil(commentCount / RowsPerPage) + 1;
+                $("#pageMax").val(pageList);
+                console.log("페이지 리스트 -> ", pageList);
+                let temp = `<li class="page-item" id = "previous">
+                    <span class="page-link" onclick="getComment(\${$("#currentCommentPage").val()-1})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </span>
+                </li>`;
+                $("#commentPage").append(temp);
+                if (pageList == 1) {
+                    let str = `<li class="page-item">
+                    <span class="page-link" onclick="getComment(1)">
+                    1
+                    </span>
+                 </li>`;
+                    $("#commentPage").append(str);
+                } else {
+                    for (let i = 1; i < pageList; i++) {
+                        let str = `<li class="page-item">
+                    <span class="page-link" onclick="getComment(\${i})">
+                    \${i}
+                    </span>
+                 </li>`;
+                        $("#commentPage").append(str);
+                    }
+                }
+                let temp2 = `<li class="page-item" id = "next">
+                    <span class="page-link" onclick="getComment(\${parseInt($("#currentCommentPage").val()) + 1})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>`;
+                $("#commentPage").append(temp2);
+            }
+        })
+    }
 </script>
 </html>
