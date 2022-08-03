@@ -149,6 +149,7 @@
 </div>
 <input type = "hidden" id = "role" value = "${user.role}">
 <input type = "hidden" id = "usernum" value = "${user.userNum}">
+<input type = "hidden" id = "userid" value = "${user.id}">
 <!-- main 안에다가 주 내용 작성할것 -->
 <main class = "container p-5">
     <div class = "container">
@@ -667,6 +668,65 @@
         })
 </script>
 <script>
+    $(document)
+        .on('click','#mmt',function() {
+            $("#acc").empty();
+            let str = `<main class="container text-center">
+            <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
+            <table style="width:100%" style="text-align: center">
+                <tr><td><input type="password" id="pwd2" class="container text-center"  placeholder="비밀 번호를 입력 하세요."/></td></tr>
+                <tr><td colSpan="2" style="text-align: center"><button class = "btn btn-dark" id="btnopen">입력</button></td><td></td></tr>
+            </table>
+                </main>`;
+            $("#acc").append(str);
+        })
+        .on("click", "#btnopen", function () {
+            $.ajax({
+                type : "POST",
+                url : "/pwdcheck",
+                data : {userId:$("#userid").val(),password:$("#pwd2").val()},
+                dataType : "JSON",
+                success : function(data) {
+                    console.log(data);
+                    if (data){
+                        $("#acc").empty();
+                        let str = `<main class="container text-center">
+                            <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
+                            <form:form id="frmupdate" action="/mypage" method="POST" modelAttribute = "mypage">
+                            <table style="width:100%" style="text-align: center">
+                            <tr><td >아이디</td><td style="text-align: center"><form:input path="id" class="container text-center" value="${user.id}" readonly="true"/>
+                            <form:errors path = "id" class = "FieldError" /></td></tr>
+                            <tr><td >비밀번호</td><td style="text-align: center"><form:password path="password" id="pwd" class="container text-center" placeholder="PASS WORD"/>
+                            <form:errors path = "password" class = "FieldError"/></td></tr>
+                            <tr><td >비밀 번호 확인</td><td style="text-align: center"><form:password path="passwordCheck" class="container text-center"  id="pwd2" placeholder="PASS WORD CHECK"/>
+                            <form:errors path = "passwordCheck" class = "FieldError"/></td></tr>
+                            <tr><td >이름</td><td style="text-align: center"><form:input path="name" class="container text-center" placeholder="NAME" value="${list.username}"/>
+                            <form:errors path = "name" class = "FieldError" /></td></tr>
+                            <tr><td >E-mail</td><td style="text-align: center"><form:input path="email" class="container text-center"  id="mail" placeholder="example@example.com" value="${list.email}"/>
+                            <form:errors path = "email" class = "FieldError"/></td></tr>
+                            <tr><td >우편 번호</td><td style="text-align: center"><form:input path="postcode" class="container text-center"  id="sample6_postcode" placeholder="POST CODE" value="${list.postcode}"/>
+                            <form:errors path = "postcode" class = "FieldError"/></td></tr>
+                            <tr><td></td><td style="text-align: center"><input type="button" class = "btn btn-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td></tr>
+                            <tr><td >주소</td><td style="text-align: center"><form:input path="address" class="container text-center"  id="sample6_address" placeholder="ADRESS" value="${list.address}"/>
+                            <form:errors path = "address" class = "FieldError"/></td></tr>
+                            <tr><td >상세 주소</td><td style="text-align: center"><form:input path="dtaddress" class="container text-center"  id="sample6_extraAddress" placeholder="DETAIL" value="${list.dtaddress}"/>
+                            <form:errors path = "dtaddress" class = "FieldError"/> </td></tr>
+                            <tr><td >전화 번호</td><td style="text-align: center"><form:input path="mobile" class="container text-center"  id="phonenum" placeholder="PHONE NUMDER" value="${list.mobile}"/>
+                            <form:errors path = "mobile" class = "FieldError"/></td></tr>
+                            <tr><td></td><td style="text-align: center"><button class = "btn btn-dark" id="btnadj">수정 완료</button></td></tr>
+                            </table>
+                            </form:form>
+                            </main>`;
+                        $("#acc").append(str);
+                    } else {
+                        alert("비밀 번호가 일치하지 않습니다.");
+                    }
+                }
+            })
+        })
+
+</script>
+<script>
     function sample6_execDaumPostcode() {
         new daum.Postcode(
             {
@@ -720,6 +780,43 @@
 </script>
 <script>
     $(document)
+    .on('click','#sec',function() {
+        $("#acc").empty();
+        let str = `<main class="container text-center">
+            <br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
+            <table style="width:100%" style="text-align: center">
+                <tr><td><input type="password" id="pwd3" class="container text-center"  placeholder="비밀 번호를 입력 하세요."/></td></tr>
+                <tr><td colSpan="2" style="text-align: center"><button class = "btn btn-dark" id="btnopen2">입력</button></td><td></td></tr>
+            </table>
+                </main>`;
+        $('#acc').append(str);
+    })
+        .on("click", "#btnopen2", function () {
+            $.ajax({
+                type : "POST",
+                url : "/pwdcheck2",
+                data : {userId:$("#userid").val(),password:$("#pwd3").val()},
+                dataType : "JSON",
+                success : function(data) {
+                    console.log(data);
+                    if (data){
+                        $("#acc").empty();
+                        let str = `<main class="container text-center">
+                            <br><br><h2 style="text-align: center">탈퇴 사유</h2><hr><br>&nbsp&nbsp
+                            <input type="radio" id="ra1">갤러리 서비스 불만&nbsp&nbsp
+                            <input type="radio" id="ra1">높은 이용 금액<br><br>&nbsp&nbsp
+                            <input type="radio" id="ra1">사이트 장애&nbsp&nbsp
+                            <input type="radio" id="ra1">단순 변심&nbsp&nbsp
+                            <input type="radio" id="ra1">기타<br><br>&nbsp&nbsp
+                            <button id="btnbb" class = "btn btn-dark" style="text-align: center">탈퇴 하기</button>
+                            </main>`;
+                        $("#acc").append(str);
+                    } else {
+                        alert("비밀 번호가 일치하지 않습니다.");
+                    }
+                }
+            })
+        })
         .on('click','#mmt',function() {
             $("#acc").empty();
             let str = `<main class="container text-center">

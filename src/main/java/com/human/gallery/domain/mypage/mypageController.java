@@ -149,4 +149,28 @@ public class mypageController {
         ArrayList<Reserve> reserve = reserveRepository.findWeekByDateWithUserId(userId, start, end);
         return reserve;
     }
+    @PostMapping("/pwdcheck")
+    @ResponseBody
+    public String dopwdcheck(@RequestParam("userId") String userId,
+                             @RequestParam("password") String password) throws NoSuchAlgorithmException {
+        Users user = userService.login(userId, password);
+        if (user == null) {
+            return "false";
+        }
+        else {
+            return "true";
+        }
+    }
+    @PostMapping("/pwdcheck2")
+    @ResponseBody
+    public String dopwdcheck2(@RequestParam("userId") String userId,
+                             @RequestParam("password") String password) throws NoSuchAlgorithmException {
+        Users user = userService.login(userId, password);
+        if (user == null) {
+            return "false";
+        }
+        else {
+            return "true";
+        }
+    }
 }
