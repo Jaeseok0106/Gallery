@@ -274,7 +274,7 @@ ${rdto.content}</textarea
             <a href="/notice" class="nav-link px-2 text-muted">Notice</a>
           </li>
           <li class="nav-item">
-            <a href="/FAQ" class="nav-link px-2 text-muted">FAQs</a>
+            <a href="/FAQ" class="nav-link px-2 text-muted">FAQ</a>
           </li>
         </ul>
       </footer>
