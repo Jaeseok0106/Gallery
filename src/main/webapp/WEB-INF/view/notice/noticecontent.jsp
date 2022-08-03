@@ -283,7 +283,7 @@
                     type:'get',datatype:'text',url:'content/delete',
                     data : {id : $("#id").val()},
                     success:function(){
-                        alert("게시물이 삭제 되었습니다.");
+                        alert("게시물이 삭제되었습니다.");
                         document.location.href = "/notice";
                     }
                 })

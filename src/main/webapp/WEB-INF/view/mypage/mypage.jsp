@@ -162,6 +162,9 @@
             <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;" value="1">예매 내역</span>
         </li>
         <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="wri" style="cursor:hand;" value="4">글 작성 내역</span>
+        </li>
+        <li class="nav-item col-2">
             <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;"value="2">개인 정보 관리</span>
         </li>
         <li class="nav-item col-2">
@@ -169,6 +172,8 @@
         </li>
     </ul>
     <div id="bcc">
+    </div>
+    <div id="dcc">
     </div>
     <div  id="acc">
     </div>
@@ -724,7 +729,7 @@
                 }
             })
         })
-
+kk
 </script>
 <script>
     function sample6_execDaumPostcode() {
@@ -816,48 +821,6 @@
                     }
                 }
             })
-        })
-        .on('click','#mmt',function() {
-            $("#acc").empty();
-            let str = `<main class="container text-center">
-                        <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
-                        <form:form id="frmupdate" action="/mypage" method="POST" modelAttribute = "mypage">
-                        <table style="width:100%" style="text-align: center">
-                        <tr><td >아이디</td><td style="text-align: center"><form:input path="id" class="container text-center" value="${user.id}" readonly="true"/>
-                        <form:errors path = "id" class = "FieldError" /></td></tr>
-                        <tr><td >비밀번호</td><td style="text-align: center"><form:password path="password" id="pwd" class="container text-center" placeholder="PASS WORD"/>
-                        <form:errors path = "password" class = "FieldError"/></td></tr>
-                        <tr><td >비밀 번호 확인</td><td style="text-align: center"><form:password path="passwordCheck" class="container text-center"  id="pwd2" placeholder="PASS WORD CHECK"/>
-                        <form:errors path = "passwordCheck" class = "FieldError"/></td></tr>
-                        <tr><td >이름</td><td style="text-align: center"><form:input path="name" class="container text-center" placeholder="NAME" value="${list.username}"/>
-                        <form:errors path = "name" class = "FieldError" /></td></tr>
-                        <tr><td >E-mail</td><td style="text-align: center"><form:input path="email" class="container text-center"  id="mail" placeholder="example@example.com" value="${list.email}"/>
-                        <form:errors path = "email" class = "FieldError"/></td></tr>
-                        <tr><td >우편 번호</td><td style="text-align: center"><form:input path="postcode" class="container text-center"  id="sample6_postcode" placeholder="POST CODE" value="${list.postcode}"/>
-                        <form:errors path = "postcode" class = "FieldError"/></td></tr>
-                        <tr><td></td><td style="text-align: center"><input type="button" class = "btn btn-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td></tr>
-                        <tr><td >주소</td><td style="text-align: center"><form:input path="address" class="container text-center"  id="sample6_address" placeholder="ADRESS" value="${list.address}"/>
-                        <form:errors path = "address" class = "FieldError"/></td></tr>
-                        <tr><td >상세 주소</td><td style="text-align: center"><form:input path="dtaddress" class="container text-center"  id="sample6_extraAddress" placeholder="DETAIL" value="${list.dtaddress}"/>
-                        <form:errors path = "dtaddress" class = "FieldError"/> </td></tr>
-                        <tr><td >전화 번호</td><td style="text-align: center"><form:input path="mobile" class="container text-center"  id="phonenum" placeholder="PHONE NUMDER" value="${list.mobile}"/>
-                        <form:errors path = "mobile" class = "FieldError"/></td></tr>
-                        <tr><td></td><td style="text-align: center"><button class = "btn btn-dark" id="btnadj">수정 완료</button></td></tr>
-                        </table>
-                        </form:form>
-                        </main>`;
-            $("#acc").append(str);
-        })
-</script>
-<script>
-    $(document)
-        .on('click','#sec',function(){
-            $("#acc").empty();
-            let str=`<br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
-               <table boder="1" bordercolor="black" class="center">
-                <tr><td>비밀번호:<input type="text" id="pw"><button id="btntc" value="탈퇴">탈퇴</button></td></tr>
-                </table> `;
-            $('#acc').append(str);
         })
 </script>
 </html>
