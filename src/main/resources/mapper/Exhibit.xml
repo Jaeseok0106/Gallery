@@ -11,7 +11,7 @@
 
     <select id = "findAll" resultType="com.human.gallery.domain.exhibit.Exhibit">
         select a.id, a.name, a.images, a.startDate, a.endDate, b.name as artist from exhibition a, artist b
-        where a.artist = b.id
+        where a.artist = b.id order by enddate desc, id desc
     </select>
 
     <select id = "findById" resultType="com.human.gallery.domain.exhibit.Exhibit">

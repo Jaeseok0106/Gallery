@@ -55,84 +55,89 @@ a {
 </style>
 <body>
 <div class="container">
-	<header class="blog-header py-3" style = "height : 230px;">
+	<header class="blog-header py-3" style="height: 230px">
 		<div class="row flex-nowrap justify-content-between align-items-center">
 			<div class="text-center">
 				<a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
 			</div>
 		</div>
-		<br><br><br>
-		<div class="nav-scroller mb-7" id = "list">
+		<br /><br /><br />
+		<div class="nav-scroller mb-7" id="list">
 			<ul class="nav justify-content-center">
 				<li class="nav-item mx-5">
-					<a class="nav-link active p-7" aria-current="page" id = "nav1">About us</a>
+					<a class="nav-link active p-7" aria-current="page" href="/letter" id="nav1">About us</a>
 					<div>
-						<ul class="nav justify-content-end" style = "display : none;" id = "none1">
+						<ul class="nav justify-content-end" style="display: none" id="none1">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/letter" id = "detail">Director's letter</a>
+								<a class="nav-link" aria-current="page" href="/letter" id="detail">Director's letter</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/visit" id = "detail">Visit</a>
+								<a class="nav-link" aria-current="page" href="/visit" id="detail">Visit</a>
 							</li>
 						</ul>
 					</div>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="/exhibit" id = "nav2">Exhibition</a>
+					<a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="./artist" id = "nav3">Artist</a>
+					<a class="nav-link" href="/artist" id="nav3">Artist</a>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" href="#" id = "nav4">Post</a>
-					<ul class="nav justify-content-end" style = "display : none;" id = "none2">
+					<a class="nav-link" href="/review" id="nav4">Post</a>
+					<ul class="nav justify-content-end" style="display: none" id="none2">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="./review" id = "detail">Review</a>
+							<a class="nav-link" aria-current="page" href="/review" id="detail">Review</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./qna" id = "detail">Q&A</a>
+							<a class="nav-link" href="/qna" id="detail">Q&A</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="./FAQ" id = "detail">FAQ</a>
+							<a class="nav-link" href="/FAQ" id="detail">FAQ</a>
 						</li>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" aria-current="page" href="#" id = "nav5">Member</a>
-					<ul class="nav justify-content-end" style = "display : none;" id = "none3">
-						<c:if test = "${user.id == null}">
+					<c:if test="${user.id == null}">
+						<a class="nav-link" aria-current="page" href="/login" id="nav5">Member</a>
+					</c:if>
+					<c:if test="${user.id != null && user.role == '방문자'}">
+						<a class="nav-link" aria-current="page" href="/mypage" id="nav5">Member</a>
+					</c:if>
+					<c:if test="${user.id != null && user.role == '관리자'}">
+						<a class="nav-link" aria-current="page" href="/listuser" id="nav5">Member</a>
+					</c:if>
+					<ul class="nav justify-content-end" style="display: none" id="none3">
+						<c:if test="${user.id == null}">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/login" id = "detail">Login</a>
+								<a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/signin" id = "detail">Sign in</a>
+								<a class="nav-link" href="/signin" id="detail">Sign in</a>
 							</li>
 						</c:if>
-						<c:if test = "${user.id != null }">
+						<c:if test="${user.id != null }">
 							<li class="nav-item">
-								<a class="nav-link" aria-current="page" href="/logout" id = "detail">Logout</a>
+								<a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
 							</li>
 						</c:if>
 						<c:if test="${user.role == '방문자'}">
 							<li class="nav-item">
-								<a class="nav-link" href="#" id = "detail">My page</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" id = "detail" href = "/history">결제 내역</a>
+								<a class="nav-link" href="/mypage" id="detail">My page</a>
 							</li>
 						</c:if>
 						<c:if test="${user.role == '관리자'}">
 							<li class="nav-item">
-								<a class="nav-link" href="listuser" id="detail">회원관리</a>
+								<a class="nav-link" href="/listuser" id="detail">회원관리</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="listReserve" id="detail">예약관리</a>
+								<a class="nav-link" href="/listReserve" id="detail">예약관리</a>
 							</li>
 						</c:if>
 					</ul>
 				</li>
 				<li class="nav-item mx-5">
-					<a class="nav-link" aria-current="page" href="/notice" id = "nav6">Notice</a>
+					<a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
 				</li>
 			</ul>
 		</div>
@@ -153,40 +158,55 @@ a {
 					<p>
 						<label class = "col-4 text-end">ID : </label>
 						<form:input path ="id" class = "col-8" placeholder="ID를 입력해주세요." style = "width:40%;"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "id" class = "FieldError" />
 						<label class = "FieldError">${overlap} </label>
+
 					</p>
 					<p>
 						<label class = "col-4 text-end">비밀번호 : </label>
 					    <form:password path = "password" class = "col-8" id="floatingPassword" style = "width:40%;" placeholder="Password" />
+					</p>
+					<p class = "col-12 text-center">
 					    <form:errors path = "password" class = "FieldError"/>
 					</p>
 					<p>
 						<label class = "col-4 text-end">비밀번호 확인 : </label>
 						<form:password path = "passwordCheck" class = "col-8" style = "width:40%;" placeholder="Password Check" />
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "passwordCheck" class = "FieldError"/>
 						<label class = "FieldError">${passwordError}</label>
 					</p>
 					<p>
 						<label class = "col-4 text-end">이름 : </label>
 						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요."/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "name" class = "FieldError" />
 					</p>
 					<p>
 						<label class = "col-4 text-end">E-mail : </label>
 					      <form:input path = "email" class="col-8" id="floatingemail" style = "width:40%;" placeholder="example@example.com" />
-					      <form:errors path = "email" class = "FieldError"/>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "email" class = "FieldError"/>
 					</p>
 					<p>
 						<label class = "col-4 text-end">우편번호 : </label>
-						<form:input path = "postcode" class="col-8" style = "width:40%;" id="sample6_postcode" readonly ="true" placeholder="우편번호"/>
+						<form:input path = "postcode" class="col-8" style = "width:40%;" id="sample6_postcode" readonly ="true" placeholder="POST CODE"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "postcode" class = "FieldError"/>
-							<input type="button" class = "btn btn-primary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="button" class = "btn btn-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 					</p>
 					<p>
 						<label class = "col-4 text-end">주소 : </label>
 						<form:input path = "address" id="sample6_address" class="col-8" style = "width:40%;"
 							placeholder="주소" readonly ="true"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "address" class = "FieldError"/>
 							<br>
 					</p>
@@ -194,17 +214,21 @@ a {
 						<label class = "col-4 text-end">상세주소 : </label>
 						<form:input path = "dtaddress" id="sample6_detailAddress"
 							class = "col-4" placeholder="상세주소" style="width:20%;"/>
-						<form:errors path = "dtaddress" class = "FieldError"/> 
 						<form:input path = "refAddress"	class = "col-4" style = "width:20%;" id="sample6_extraAddress" placeholder="참고항목" readonly = "true"/>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "dtaddress" class = "FieldError"/>
 						<form:errors path = "refAddress" class ="FieldError" />
 					</p>
 					<p>
 						<label class = "col-4 text-end">전화번호 : </label>
-						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 제외한 전화번호를 입력해주세요."/> <br>
+						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 제외한 전화번호를 입력해주세요."/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "mobile" class = "FieldError"/>
 					</p>
 					<p class="col-9 text-end">
-						<button type="submit" id="updateBtn" class = "btn btn-primary">회원 가입</button>
+						<button type="submit" id="updateBtn" class = "btn btn-dark">회원 가입</button>
 					</p>
 				</div>
 			</form:form>

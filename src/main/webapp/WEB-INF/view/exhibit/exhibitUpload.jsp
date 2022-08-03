@@ -50,140 +50,95 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
     }
   </style>
   <body>
-    <div class="container">
-      <header class="blog-header py-3" style="height: 230px">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="text-center">
-            <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
-          </div>
+  <div class="container">
+    <header class="blog-header py-3" style="height: 230px">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="text-center">
+          <a href="/"><img src="/logo.png" id="logo" style="height: 80px"/></a>
         </div>
-        <br /><br /><br />
-        <div class="nav-scroller mb-7" id="list">
-          <ul class="nav justify-content-center">
-            <li class="nav-item mx-5">
-              <a
-                class="nav-link active p-7"
-                aria-current="page"
-                href="#"
-                id="nav1"
-                >About us</a
-              >
-              <div>
-                <ul
-                  class="nav justify-content-end"
-                  style="display: none"
-                  id="none1"
-                >
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/letter"
-                      id="detail"
-                      >Director's letter</a
-                    >
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/visit"
-                      id="detail"
-                      >Visit</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="nav-item mx-5">
-              <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
-            </li>
-            <li class="nav-item mx-5">
-              <a class="nav-link" href="/artist" id="nav3">Artist</a>
-            </li>
-            <li class="nav-item mx-5">
-              <a class="nav-link" href="#" id="nav4">Post</a>
-              <ul
-                class="nav justify-content-end"
-                style="display: none"
-                id="none2"
-              >
+      </div>
+      <br /><br /><br />
+      <div class="nav-scroller mb-7" id="list">
+        <ul class="nav justify-content-center">
+          <li class="nav-item mx-5">
+            <a class="nav-link active p-7" aria-current="page" href="/letter" id="nav1">About us</a>
+            <div>
+              <ul class="nav justify-content-end" style="display: none" id="none1">
                 <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    aria-current="page"
-                    href="/review"
-                    id="detail"
-                    >Review</a
-                  >
+                  <a class="nav-link" aria-current="page" href="/letter" id="detail">Director's letter</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/qna" id="detail">Q&A</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/FAQ" id="detail">FAQ</a>
+                  <a class="nav-link" aria-current="page" href="/visit" id="detail">Visit</a>
                 </li>
               </ul>
-            </li>
-            <li class="nav-item mx-5">
-              <a class="nav-link" aria-current="page" href="#" id="nav5"
-                >Member</a
-              >
-              <ul
-                class="nav justify-content-end"
-                style="display: none"
-                id="none3"
-              >
-                <c:if test="${user.id == null}">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/login"
-                      id="detail"
-                      >Login</a
-                    >
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/signin" id="detail">Sign in</a>
-                  </li>
-                </c:if>
-                <c:if test="${user.id != null }">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/logout"
-                      id="detail"
-                      >Logout</a
-                    >
-                  </li>
-                </c:if>
-                <c:if test="${user.role == '방문자'}">
-                  <li class="nav-item">
-                    <a class="nav-link" href="/mypage" id="detail">My page</a>
-                  </li>
-
-                </c:if>
-                <c:if test="${user.role == '관리자'}">
-                  <li class="nav-item">
-                    <a class="nav-link" href="listuser" id="detail">회원관리</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="listReserve" id="detail">예약관리</a>
-                  </li>
-                </c:if>
-              </ul>
-            </li>
-            <li class="nav-item mx-5">
-              <a class="nav-link" aria-current="page" href="/notice" id="nav6"
-                >Notice</a
-              >
-            </li>
-          </ul>
-        </div>
-      </header>
-    </div>
+            </div>
+          </li>
+          <li class="nav-item mx-5">
+            <a class="nav-link" href="/exhibit" id="nav2">Exhibition</a>
+          </li>
+          <li class="nav-item mx-5">
+            <a class="nav-link" href="/artist" id="nav3">Artist</a>
+          </li>
+          <li class="nav-item mx-5">
+            <a class="nav-link" href="/review" id="nav4">Post</a>
+            <ul class="nav justify-content-end" style="display: none" id="none2">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/review" id="detail">Review</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/qna" id="detail">Q&A</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/FAQ" id="detail">FAQ</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item mx-5">
+            <c:if test="${user.id == null}">
+              <a class="nav-link" aria-current="page" href="/login" id="nav5">Member</a>
+            </c:if>
+            <c:if test="${user.id != null && user.role == '방문자'}">
+              <a class="nav-link" aria-current="page" href="/mypage" id="nav5">Member</a>
+            </c:if>
+            <c:if test="${user.id != null && user.role == '관리자'}">
+              <a class="nav-link" aria-current="page" href="/listuser" id="nav5">Member</a>
+            </c:if>
+            <ul class="nav justify-content-end" style="display: none" id="none3">
+              <c:if test="${user.id == null}">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/signin" id="detail">Sign in</a>
+                </li>
+              </c:if>
+              <c:if test="${user.id != null }">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
+                </li>
+              </c:if>
+              <c:if test="${user.role == '방문자'}">
+                <li class="nav-item">
+                  <a class="nav-link" href="/mypage" id="detail">My page</a>
+                </li>
+              </c:if>
+              <c:if test="${user.role == '관리자'}">
+                <li class="nav-item">
+                  <a class="nav-link" href="/listuser" id="detail">회원관리</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/listReserve" id="detail">예약관리</a>
+                </li>
+              </c:if>
+            </ul>
+          </li>
+          <li class="nav-item mx-5">
+            <a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+  </div>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <!-- main 안에다가 주 내용 작성할것 -->
@@ -232,13 +187,13 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
           <tr class="py-5">
             <td class="col-3 text-center">시작 날짜 :</td>
             <td class="col-8 text-left">
-              <input class="form-control" type="date" name="startDate" />
+              <input class="form-control datepicker" name="startDate" />
             </td>
           </tr>
           <tr class="py-5">
             <td class="col-3 text-center">끝 날짜 :</td>
             <td class="col-8 text-left">
-              <input class="form-control" type="date" name="endDate" />
+              <input class="form-control datepicker" name="endDate" />
             </td>
           </tr>
           <tr class="py-5">
@@ -322,6 +277,7 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
     crossorigin="anonymous"
   ></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <script>
     $(document).ready(function () {
       console.log("시작 화면");
@@ -359,6 +315,18 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
         $("#none3").css("display", "none");
       });
     });
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+      prevText: '이전 달',
+      nextText: '다음 달',
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+      showMonthAfterYear: true,
+      yearSuffix: '년'
+    });
   </script>
   <script src="/ckeditor/ckeditor.js"></script>
   <script>
@@ -366,7 +334,6 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
   </script>
   <script>
     $(document).ready(function () {
-      console.log("ㅇㅇㅇㅇ");
       $.ajax({
         type: "post",
         url: "/artist/getArtist",
@@ -391,5 +358,8 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
         },
       });
     });
+    $(function() {
+      $(".datepicker").datepicker({minDate : 0});
+    })
   </script>
 </html>
