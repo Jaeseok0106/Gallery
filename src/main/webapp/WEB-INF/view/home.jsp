@@ -56,36 +56,14 @@ prefix="c" %> <%@ page session="false" %>
         <div class="nav-scroller mb-7" id="list">
           <ul class="nav justify-content-center">
             <li class="nav-item mx-5">
-              <a
-                class="nav-link active p-7"
-                aria-current="page"
-                href="#"
-                id="nav1"
-                >About us</a
-              >
+              <a class="nav-link active p-7" aria-current="page" href="/letter" id="nav1">About us</a>
               <div>
-                <ul
-                  class="nav justify-content-end"
-                  style="display: none"
-                  id="none1"
-                >
+                <ul class="nav justify-content-end" style="display: none" id="none1">
                   <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/letter"
-                      id="detail"
-                      >Director's letter</a
-                    >
+                    <a class="nav-link" aria-current="page" href="/letter" id="detail">Director's letter</a>
                   </li>
                   <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/visit"
-                      id="detail"
-                      >Visit</a
-                    >
+                    <a class="nav-link" aria-current="page" href="/visit" id="detail">Visit</a>
                   </li>
                 </ul>
               </div>
@@ -97,20 +75,10 @@ prefix="c" %> <%@ page session="false" %>
               <a class="nav-link" href="/artist" id="nav3">Artist</a>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" href="#" id="nav4">Post</a>
-              <ul
-                class="nav justify-content-end"
-                style="display: none"
-                id="none2"
-              >
+              <a class="nav-link" href="/review" id="nav4">Post</a>
+              <ul class="nav justify-content-end" style="display: none" id="none2">
                 <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    aria-current="page"
-                    href="/review"
-                    id="detail"
-                    >Review</a
-                  >
+                  <a class="nav-link" aria-current="page" href="/review" id="detail">Review</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/qna" id="detail">Q&A</a>
@@ -121,23 +89,19 @@ prefix="c" %> <%@ page session="false" %>
               </ul>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" aria-current="page" href="#" id="nav5"
-                >Member</a
-              >
-              <ul
-                class="nav justify-content-end"
-                style="display: none"
-                id="none3"
-              >
+            <c:if test="${user.id == null}">
+              <a class="nav-link" aria-current="page" href="/login" id="nav5">Member</a>
+            </c:if>
+            <c:if test="${user.id != null && user.role == '방문자'}">
+              <a class="nav-link" aria-current="page" href="/mypage" id="nav5">Member</a>
+            </c:if>
+            <c:if test="${user.id != null && user.role == '관리자'}">
+              <a class="nav-link" aria-current="page" href="/listuser" id="nav5">Member</a>
+            </c:if>
+              <ul class="nav justify-content-end" style="display: none" id="none3">
                 <c:if test="${user.id == null}">
                   <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/login"
-                      id="detail"
-                      >Login</a
-                    >
+                    <a class="nav-link" aria-current="page" href="/login" id="detail">Login</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/signin" id="detail">Sign in</a>
@@ -145,35 +109,26 @@ prefix="c" %> <%@ page session="false" %>
                 </c:if>
                 <c:if test="${user.id != null }">
                   <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      aria-current="page"
-                      href="/logout"
-                      id="detail"
-                      >Logout</a
-                    >
+                    <a class="nav-link" aria-current="page" href="/logout" id="detail">Logout</a>
                   </li>
                 </c:if>
                 <c:if test="${user.role == '방문자'}">
                   <li class="nav-item">
                     <a class="nav-link" href="/mypage" id="detail">My page</a>
                   </li>
-
                 </c:if>
                 <c:if test="${user.role == '관리자'}">
                   <li class="nav-item">
-                    <a class="nav-link" href="listuser" id="detail">회원관리</a>
+                    <a class="nav-link" href="/listuser" id="detail">회원관리</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="listReserve" id="detail">예약관리</a>
+                    <a class="nav-link" href="/listReserve" id="detail">예약관리</a>
                   </li>
                 </c:if>
               </ul>
             </li>
             <li class="nav-item mx-5">
-              <a class="nav-link" aria-current="page" href="/notice" id="nav6"
-                >Notice</a
-              >
+              <a class="nav-link" aria-current="page" href="/notice" id="nav6">Notice</a>
             </li>
           </ul>
         </div>
