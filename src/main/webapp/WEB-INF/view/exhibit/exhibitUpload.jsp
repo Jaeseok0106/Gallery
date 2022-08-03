@@ -187,13 +187,13 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
           <tr class="py-5">
             <td class="col-3 text-center">시작 날짜 :</td>
             <td class="col-8 text-left">
-              <input class="form-control" type="date" name="startDate" />
+              <input class="form-control datepicker" name="startDate" />
             </td>
           </tr>
           <tr class="py-5">
             <td class="col-3 text-center">끝 날짜 :</td>
             <td class="col-8 text-left">
-              <input class="form-control" type="date" name="endDate" />
+              <input class="form-control datepicker" name="endDate" />
             </td>
           </tr>
           <tr class="py-5">
@@ -277,6 +277,7 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
     crossorigin="anonymous"
   ></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <script>
     $(document).ready(function () {
       console.log("시작 화면");
@@ -314,6 +315,18 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
         $("#none3").css("display", "none");
       });
     });
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+      prevText: '이전 달',
+      nextText: '다음 달',
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+      showMonthAfterYear: true,
+      yearSuffix: '년'
+    });
   </script>
   <script src="/ckeditor/ckeditor.js"></script>
   <script>
@@ -321,7 +334,6 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
   </script>
   <script>
     $(document).ready(function () {
-      console.log("ㅇㅇㅇㅇ");
       $.ajax({
         type: "post",
         url: "/artist/getArtist",
@@ -346,5 +358,8 @@ uri="http://www.springframework.org/tags/form"%> <%@ page session="false" %>
         },
       });
     });
+    $(function() {
+      $(".datepicker").datepicker({minDate : 0});
+    })
   </script>
 </html>

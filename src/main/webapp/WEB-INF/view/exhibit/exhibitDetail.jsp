@@ -10,6 +10,7 @@ prefix="c" %> <%@ page session="false" %>
       crossorigin="anonymous"
     />
     <title>전시회 정보</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <style>
     .nav-item{
@@ -157,7 +158,7 @@ prefix="c" %> <%@ page session="false" %>
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <input type="hidden" id="exhibitId" value="${exhibit.id}" />
     <!-- main 안에다가 주 내용 작성할것 -->
-    <main class="container p-5">
+    <main class = "container h-auto">
       <div class="page-title">
         <h1>전시회 정보</h1>
       </div>
@@ -176,9 +177,9 @@ prefix="c" %> <%@ page session="false" %>
             </div>
           </div>
         </div>
-        <div class="col-6">
-          <div class="container">
-            <dl class="row py-5">
+        <div class="col-6 h-auto">
+          <div class="container h-auto">
+            <dl class="row h-auto py-5">
               <dt class="col-sm-3">전시회 이름</dt>
               <dd class="col-sm-9">${exhibit.name}</dd>
               <dt class="col-sm-3">아티스트 정보</dt>
@@ -211,7 +212,7 @@ prefix="c" %> <%@ page session="false" %>
     <!-- 하단 -->
     <div class="container-fluid" id="footer">
       <footer
-        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+        class="d-flex justify-content-between align-items-center py-3 my-4 h-auto"
       >
         <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
 

@@ -152,7 +152,7 @@ text-decoration-line:none;
 		<div class = "row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center" id = "artist">
 			<c:forEach var = "artist" items= "${artist}">
 				<div class = "col-sm-6 col-md-6 col-xs-12 col-lg-4">
-					<div class="card" style="width: 19rem; height : 24rem;">
+					<div class="card h-100" style="width: 19rem; height : 24rem;">
 					  <img src="${artist.profile}" class="card-img-top" alt="여기에 사진 들어감" style = "height:100%;">
 					  <div class="card-body">
 						<a href = "./artist/detail/${artist.id}"><h5 class="card-title">${artist.name}</h5></a>
