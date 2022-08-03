@@ -192,6 +192,7 @@ a {
 					</p>
 					<p class = "col-12 text-center">
 						<form:errors path = "email" class = "FieldError"/>
+						<label class = "FieldError">${overlapEmail}</label>
 					</p>
 					<p>
 						<label class = "col-4 text-end">우편번호 : </label>

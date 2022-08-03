@@ -101,6 +101,12 @@ public class UserController {
 			model.addAttribute("overlap", "중복된 아이디입니다.");
 			return "users/signin";
 		}
+		boolean checkEmail = userService.checkEmail(form.getEmail());
+		if (checkEmail) {
+			model.addAttribute("user", usera);
+			model.addAttribute("overlapEmail", "중복된 이메일입니다.");
+			return "users/signin";
+		}
 		if (!form.getPassword().equals(form.getPasswordCheck()))
 		{
 			model.addAttribute("user", usera);
