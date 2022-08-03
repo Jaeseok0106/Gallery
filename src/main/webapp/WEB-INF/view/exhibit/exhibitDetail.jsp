@@ -153,12 +153,12 @@ prefix="c" %> <%@ page session="false" %>
         </ul>
       </div>
     </header>
-  </div>
+  </div> <br>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <input type="hidden" id="exhibitId" value="${exhibit.id}" />
     <!-- main 안에다가 주 내용 작성할것 -->
-    <main class = "container h-auto">
+    <main class = "container">
       <div class="page-title">
         <h1>전시회 정보</h1>
       </div>

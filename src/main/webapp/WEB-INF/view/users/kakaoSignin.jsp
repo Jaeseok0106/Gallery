@@ -221,7 +221,7 @@
 				<li class="nav-item"><a href="#"
 					class="nav-link px-2 text-muted">Pricing</a></li>
 				<li class="nav-item"><a href="#"
-					class="nav-link px-2 text-muted">FAQs</a></li>
+					class="nav-link px-2 text-muted">FAQ</a></li>
 				<li class="nav-item"><a href="#"
 					class="nav-link px-2 text-muted">About</a></li>
 			</ul>
