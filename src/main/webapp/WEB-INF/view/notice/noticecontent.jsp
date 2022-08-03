@@ -196,7 +196,7 @@
     <c:if test="${user.role=='관리자'}">
     <div class="text-end">
         <button type="button" class="btn btn-outline-Dark" id="update">수정</button>
-        <button type="button" class="btn btn-outline-Dark" id="delete">삭제</button>
+        <button type="button" class="btn btn-outline-Dark" id="deleteA">삭제</button>
     </div>
     </c:if>
 </main>
@@ -277,13 +277,13 @@
         });
     });
     $(document)
-        .on('click','#delete',function(){
+        .on('click','#deleteA',function(){
             if(confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
                     type:'get',datatype:'text',url:'content/delete',
                     data : {id : $("#id").val()},
                     success:function(){
-                        alert("게시물이 삭제 되었습니다.");
+                        alert("게시물이 삭제되었습니다.");
                         document.location.href = "/notice";
                     }
                 })

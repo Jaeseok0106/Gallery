@@ -159,20 +159,33 @@
     </div>
     <ul class="nav justify-content-center" id="gry">
         <li class="nav-item col-2">
-            <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;" value="1">예매 내역</span>
+            <span class="nav-link" aria-current="page" id="cgv" style="cursor:hand;">예매 내역</span>
         </li>
         <li class="nav-item col-2">
-            <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;"value="2">개인 정보 관리</span>
+            <span class="nav-link" aria-current="page" id="mmt" style="cursor:hand;">개인 정보 관리</span>
         </li>
         <li class="nav-item col-2">
-            <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;"value="3">회원 탈퇴</span>
+            <span class="nav-link" aria-current="page" id="myPost" style="cursor:hand;">내가 작성한 글</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="myComment" style="cursor:hand;">내가 작성한 댓글</span>
+        </li>
+        <li class="nav-item col-2">
+            <span class="nav-link" aria-current="page" id="sec" style="cursor:hand;">회원 탈퇴</span>
         </li>
     </ul>
     <div id="bcc">
     </div>
+    <div id="dcc">
+    </div>
     <div  id="acc">
     </div>
     <div id="ccc">
+    </div>
+    <div id = "findMyPost">
+
+    </div>
+    <div id = "findMyComment">
     </div>
 
     </div>
@@ -724,7 +737,7 @@
                 }
             })
         })
-
+kk
 </script>
 <script>
     function sample6_execDaumPostcode() {
@@ -817,5 +830,106 @@
                 }
             })
         })
+</script>
+<script>
+    $(document)
+    .on("click", "#myComment", function() {
+        $.ajax({
+            type : "POST",
+            url : "/findAllMyComment",
+            data : {userId : $("#usernum").val()},
+            dataType : "JSON",
+            success : function(data) {
+                console.log(data);
+                let temp =
+                    `<table id = "comment" class = "table">
+                        <tr><th>
+                            번호
+                        </th>
+                        <th>
+                            작성 글 번호
+                        </th>
+                        <th>
+                            내용
+                        </th>
+                       <th>
+                            날짜
+                        </th></tr>
+                    </table>`;
+                $("#findMyComment").append(temp);
+                for (let i = 0; i <data.length; i++) {
+                    let userComment = data[i];
+                    console.log(userComment);
+                    $.ajax({
+                        type : "POST",
+                        url  : "/getCategory",
+                        data : {postId : userComment['postId']},
+                        dataType : "text",
+                        success : function (data) {
+                            let str =
+                                `<tr><td>\${userComment['id']}</td>
+                        <td>\${userComment['postId']}</td>
+                        <td><a href = \${data}?id=\${userComment['postId']}>\${userComment['content']}</td></a>
+                        <td>\${userComment['postDate']}</td></tr>`;
+                            $("#comment").append(str);
+                        }
+                    })
+                }
+            }
+        })
+    })
+</script>
+<script>
+    function commentPaging() {
+        let RowsPerPage = 15;
+        let pageList;
+        let commentCount;
+        console.log("페이징 호출여부");
+        $.ajax({
+            type : "POST",
+            url : "/getMyCommentNum",
+            dataType : "text",
+            data : {userId : $("#usernum").val()},
+            beforeSend : function() {
+                $("#commentPage").empty();
+            },
+            success : function (data) {
+                commentCount = data;
+                console.log("댓글 -> ", commentCount);
+                pageList = Math.ceil(commentCount / RowsPerPage) + 1;
+                $("#pageMax").val(pageList);
+                console.log("페이지 리스트 -> ", pageList);
+                let temp = `<li class="page-item" id = "previous">
+                    <span class="page-link" onclick="getComment(\${$("#currentCommentPage").val()-1})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </span>
+                </li>`;
+                $("#commentPage").append(temp);
+                if (pageList == 1) {
+                    let str = `<li class="page-item">
+                    <span class="page-link" onclick="getComment(1)">
+                    1
+                    </span>
+                 </li>`;
+                    $("#commentPage").append(str);
+                } else {
+                    for (let i = 1; i < pageList; i++) {
+                        let str = `<li class="page-item">
+                    <span class="page-link" onclick="getComment(\${i})">
+                    \${i}
+                    </span>
+                 </li>`;
+                        $("#commentPage").append(str);
+                    }
+                }
+                let temp2 = `<li class="page-item" id = "next">
+                    <span class="page-link" onclick="getComment(\${parseInt($("#currentCommentPage").val()) + 1})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>`;
+                $("#commentPage").append(temp2);
+            }
+        })
+    }
 </script>
 </html>

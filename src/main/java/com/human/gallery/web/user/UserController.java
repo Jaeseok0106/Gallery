@@ -101,6 +101,12 @@ public class UserController {
 			model.addAttribute("overlap", "중복된 아이디입니다.");
 			return "users/signin";
 		}
+		boolean checkEmail = userService.checkEmail(form.getEmail());
+		if (checkEmail) {
+			model.addAttribute("user", usera);
+			model.addAttribute("overlapEmail", "중복된 이메일입니다.");
+			return "users/signin";
+		}
 		if (!form.getPassword().equals(form.getPasswordCheck()))
 		{
 			model.addAttribute("user", usera);
@@ -175,7 +181,7 @@ public class UserController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "11afdf6f295b3f272c88971d1ea73cdd");
-		params.add("redirect_uri", "http://localhost:8080/auth/kakao/callback");
+		params.add("redirect_uri", "http://nurgallery.shop/auth/kakao/callback");
 		params.add("code", code);
 		params.add("client_secret", "cYyzjY4ee1qMSBmJOJyYQf1RbwPJ9W5L");
 
