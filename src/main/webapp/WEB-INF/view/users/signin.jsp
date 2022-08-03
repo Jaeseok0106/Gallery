@@ -153,40 +153,55 @@ a {
 					<p>
 						<label class = "col-4 text-end">ID : </label>
 						<form:input path ="id" class = "col-8" placeholder="ID를 입력해주세요." style = "width:40%;"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "id" class = "FieldError" />
 						<label class = "FieldError">${overlap} </label>
+
 					</p>
 					<p>
 						<label class = "col-4 text-end">비밀번호 : </label>
 					    <form:password path = "password" class = "col-8" id="floatingPassword" style = "width:40%;" placeholder="Password" />
+					</p>
+					<p class = "col-12 text-center">
 					    <form:errors path = "password" class = "FieldError"/>
 					</p>
 					<p>
 						<label class = "col-4 text-end">비밀번호 확인 : </label>
 						<form:password path = "passwordCheck" class = "col-8" style = "width:40%;" placeholder="Password Check" />
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "passwordCheck" class = "FieldError"/>
 						<label class = "FieldError">${passwordError}</label>
 					</p>
 					<p>
 						<label class = "col-4 text-end">이름 : </label>
 						<form:input path ="name" class = "col-8" style = "width:40%;" placeholder="이름을 입력해주세요."/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "name" class = "FieldError" />
 					</p>
 					<p>
 						<label class = "col-4 text-end">E-mail : </label>
 					      <form:input path = "email" class="col-8" id="floatingemail" style = "width:40%;" placeholder="example@example.com" />
-					      <form:errors path = "email" class = "FieldError"/>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "email" class = "FieldError"/>
 					</p>
 					<p>
 						<label class = "col-4 text-end">우편번호 : </label>
-						<form:input path = "postcode" class="col-8" style = "width:40%;" id="sample6_postcode" readonly ="true" placeholder="우편번호"/>
+						<form:input path = "postcode" class="col-8" style = "width:40%;" id="sample6_postcode" readonly ="true" placeholder="POST CODE"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "postcode" class = "FieldError"/>
-							<input type="button" class = "btn btn-primary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="button" class = "btn btn-dark" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 					</p>
 					<p>
 						<label class = "col-4 text-end">주소 : </label>
 						<form:input path = "address" id="sample6_address" class="col-8" style = "width:40%;"
 							placeholder="주소" readonly ="true"/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "address" class = "FieldError"/>
 							<br>
 					</p>
@@ -194,17 +209,21 @@ a {
 						<label class = "col-4 text-end">상세주소 : </label>
 						<form:input path = "dtaddress" id="sample6_detailAddress"
 							class = "col-4" placeholder="상세주소" style="width:20%;"/>
-						<form:errors path = "dtaddress" class = "FieldError"/> 
 						<form:input path = "refAddress"	class = "col-4" style = "width:20%;" id="sample6_extraAddress" placeholder="참고항목" readonly = "true"/>
+					</p>
+					<p class = "col-12 text-center">
+						<form:errors path = "dtaddress" class = "FieldError"/>
 						<form:errors path = "refAddress" class ="FieldError" />
 					</p>
 					<p>
 						<label class = "col-4 text-end">전화번호 : </label>
-						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 제외한 전화번호를 입력해주세요."/> <br>
+						<form:input path = "mobile" class = "col-8" style = "width:40%;" placeholder="'-' 를 제외한 전화번호를 입력해주세요."/>
+					</p>
+					<p class = "col-12 text-center">
 						<form:errors path = "mobile" class = "FieldError"/>
 					</p>
 					<p class="col-9 text-end">
-						<button type="submit" id="updateBtn" class = "btn btn-primary">회원 가입</button>
+						<button type="submit" id="updateBtn" class = "btn btn-dark">회원 가입</button>
 					</p>
 				</div>
 			</form:form>

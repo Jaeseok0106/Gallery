@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +122,7 @@ public class mypageController {
     @PostMapping("/mypage")
     public String doMypage(@Validated @ModelAttribute("mypage") UsersUpdateForm form, BindingResult bindingResult,
                            Model model,
-                           @SessionAttribute(name = "user", required = false) Users usera) throws NoSuchAlgorithmException {
+                           @SessionAttribute(name = "user", required = false) Users usera) throws NoSuchAlgorithmException, NoSuchAlgorithmException {
 
         if (bindingResult.hasErrors())
         {

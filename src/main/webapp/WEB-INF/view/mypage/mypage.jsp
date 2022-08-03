@@ -242,213 +242,216 @@
 </script>
 <script>
     $(document)
-        .on('click','#cgv',function(){
+        .on('click','#cgv',function() {
+            $("#paymentTable").empty();
             $("#acc").empty();
-            let str=`<br><br><h2 style="text-align: center">예매 내역</h2><hr>
+            let str = `<br><br><h2 style="text-align: center">예매 내역</h2><hr>
                     <main class = "container p-5">
-	<div class = "container">
-	</div>
-    <div class="col-12 col-sm-12 text-center">
-        조회기간&nbsp;&nbsp;
-        <input type="button" class="btn btn-outline-secondary" id="btnToday" value = "오늘"></input>&nbsp;
-        <input type="button" class="btn btn-outline-secondary" id="btnWeek" value = "이번주"></input>&nbsp;
-        <input type="button" class="btn btn-outline-secondary" id="btnMonth" value = "이번달"></input>&nbsp;
-        <input type="date" id="date1">~
-        <input type="date" id="date2">&nbsp;
-        <input type="button" class="btn btn-outline-secondary" id="selectPayment" style="font-weight: bold;" value = "조회"></input>
-    </div>
-    <br><br>
-	<div class = "container" id = "boardList">
-		<div class = "row">
-			<table id = "paymentTable">
+                      <div class = "container">
+                      </div>
+                        <div class="col-12 col-sm-12 text-center">
+                            조회기간&nbsp;&nbsp;
+                            <input type="button" class="btn btn-outline-secondary" id="btnToday" value = "오늘"></input>&nbsp;
+                            <input type="button" class="btn btn-outline-secondary" id="btnWeek" value = "이번주"></input>&nbsp;
+                            <input type="button" class="btn btn-outline-secondary" id="btnMonth" value = "이번달"></input>&nbsp;
+                            <input type="date" id="date1">~
+                            <input type="date" id="date2">&nbsp;
+                            <input type="button" class="btn btn-outline-secondary" id="selectPayment" style="font-weight: bold;" value = "조회"></input>
+                        </div>
+                        <br><br>
+                      <div class = "container" id = "boardList">
+                        <div class = "row">
+                          <table id = "paymentTable">
 
-			</table>
-			<p></p>
-			<p></p>
-			<p></p>
-		</div>
-	</div>
-    <div id="history" style="display: none;" align="center">
-    <p style="margin-top: 40px;"></p>
-    <h2>예매내역</h2><br>
-    <table id="tb1" class="table table-striped text-center">
-    </table>
-    </div>
-</main>
-`;
-            $(document)
-                .on("click", "#btnToday", function() {
-                let today = getToday();
-                $.ajax({
-                    type: "POST",
-                    url: "/history/reserve/today",
-                    data: {userId: $("#usernum").val(), date: today},
-                    dataType: "JSON",
-                    beforeSend: function () {
-                        $("#paymentTable").empty();
-                    },
-                    success: function (data) {
-                        let temp = `<tr class ="text-center">
-                            <th>예매번호</th>
-                            <th>제목</th>
-                            <th>예매일자</th>
-                            <th>상태</th>
-                            <th>확인/신청</th>
-                        </tr>`
-                        $("#paymentTable").append(temp);
-                        let state;
-                        for (let i = 0; i < data.length; i++) {
-
-                            if (reserve['is_Payment'] == 'N') {
-                                state = "예약취소";
-                                let str = `
-                    <tr class = "p-5 text-center">
-                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
-                        <td>\${reserve['exhibitName']}</td>
-                        <td>\${reserve['reserveDate']}</td>
-                        <td>\${state}</td>
-                    </tr>`;
-                                $("#paymentTable").append(str);
-                            } else {
-                                state = "예약완료"
-                                let str = `
-                    <tr class = "p-5 text-center">
-                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
-                        <td>\${reserve['exhibitName']}</td>
-                        <td>\${reserve['reserveDate']}</td>
-                        <td>\${state}</td>
-                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
-                    </tr>`;
-                                $("#paymentTable").append(str);
-                            }
-                        }
-                    }
-                })
-            })
-
-
-            function getPaymentHistory() {
-                $.ajax({
-                    type : 'POST',
-                    url : '/history/reserve/'+ $("#usernum").val(),
-                    data : '',
-                    dataType : "JSON",
-                    beforeSend : function() {
-                        $("#paymentTable").empty();
-                    },
-                    success : function (data) {
-                        let temp = `<tr class ="text-center">
-                            <th>예매번호</th>
-                            <th>제목</th>
-                            <th>예매일자</th>
-                            <th>상태</th>
-                            <th>확인/신청</th>
-                        </tr>`
-                        $("#paymentTable").append(temp);
-                        for (let i = 0; i < data.length; i++) {
-                            let reserve = data[i];
-                            let state;
-                            if (reserve['state'] == 'N') {
-                                state = "예약취소"
-                                let str = `
-                    <tr class = "p-5 text-center">
-                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
-                        <td>\${reserve['exhibitionName']}</td>
-                        <td>\${reserve['reserveDate']}</td>
-                        <td>\${state}</td>
-                    </tr>`;
-                                $("#paymentTable").append(str);
-                            } else {
-                                state = "예약완료"
-                                let str = `
-                    <tr class = "p-5 text-center">
-                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
-                        <td>\${reserve['exhibitionName']}</td>
-                        <td>\${reserve['reserveDate']}</td>
-                        <td>\${state}</td>
-                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
-                    </tr>`;
-                                $("#paymentTable").append(str);
-                            }
-                        }
-                    }
-                })
-            }
-
-            function getToday(){
-                let date = new Date();
-                let year = date.getFullYear();
-                let month = ("0" + (1 + date.getMonth())).slice(-2);
-                let day = ("0" + date.getDate()).slice(-2);
-
-                return year + "-" + month + "-" + day;
-            }
-            function getThisWeek() {
-
-                let currentDay = new Date();
-                let theYear = currentDay.getFullYear();
-                let theMonth = currentDay.getMonth();
-                let theDate  = currentDay.getDate();
-                let theDayOfWeek = currentDay.getDay();
-
-                let thisWeek = [];
-
-                for(let i=0; i<7; i++) {
-                    let resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
-                    let yyyy = resultDay.getFullYear();
-                    let mm = Number(resultDay.getMonth()) + 1;
-                    let dd = resultDay.getDate();
-
-                    mm = String(mm).length === 1 ? '0' + mm : mm;
-                    dd = String(dd).length === 1 ? '0' + dd : dd;
-
-                    thisWeek[i] = yyyy + '-' + mm + '-' + dd;
-                }
-
-                return thisWeek;
-            }
-            function getThisMonth() {
-                let date = new Date();
-                let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-                let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-                console.log(firstDay);
-                console.log(lastDay);
-                firstDay = firstDay.toISOString().substring(0,10);
-                lastDay = lastDay.toISOString().substring(0,10);
-                let thisMonth = [];
-                thisMonth[0] = firstDay;
-                thisMonth[1] = lastDay;
-                return thisMonth;
-            }
-            $(document)
-                .ready(function() {
+                          </table>
+                          <p></p>
+                          <p></p>
+                          <p></p>
+                        </div>
+                      </div>
+                        <div id="history" style="display: none;" align="center">
+                        <p style="margin-top: 40px;"></p>
+                        <h2>예매내역</h2><br>
+                        <table id="tb1" class="table table-striped text-center">
+                        </table>
+                        </div>
+                    </main>
+                    `;
+            $("#acc").append(str);
+            getPaymentHistory();
+            $('#history').dialog({
+                resizable: false,
+                autoOpen:false,
+                width:600,
+                height:400,
+                open: function() {
+                    $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                },
+                close: function() {
+                    $("#paymentTable").empty();
                     getPaymentHistory();
-                    $('#history').dialog({
-                        resizable: false,
-                        autoOpen:false,
-                        width:600,
-                        height:400,
-                        open: function() {
-                            $(".ui-dialog-titlebar-close", $(this).parent()).hide();
-                        },
-                        close: function() {
-                        }
-                    })
-                })
-                .on('click','#btnDetail',function() {
-                    let id = $(this).parent().parent().find('td:eq(0)').attr('id');
-                    console.log("오픈할 id = " + id);
-                    $.ajax({
-                        type : 'POST',
-                        url : '/history/reserve/detail/' + id,
-                        data : {userId : $("#usernum").val()},
-                        dataType : 'JSON',
-                        beforeSend : function () {
-                            $("#tb1").empty();
-                        },
-                        success : function (data) {
-                            console.log("성공 " + data['orderId']);
+                }
+            })
+        })
+    $(document)
+        .on("click", "#btnToday", function() {
+            let today = getToday();
+            $.ajax({
+                type: "POST",
+                url: "/history/reserve/today",
+                data: {userId: $("#usernum").val(), date: today},
+                dataType: "JSON",
+                beforeSend: function () {
+                    $("#paymentTable").empty();
+                },
+                success: function (data) {
+                    let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                    $("#paymentTable").append(temp);
+                    let state;
+                    for (let i = 0; i < data.length; i++) {
+                        reserve = data[i];
+                        if (reserve['is_Payment'] == 'N') {
+                            state = "예약취소";
                             let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                            $("#paymentTable").append(str);
+                        } else {
+                            state = "예약완료"
+                            let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                            $("#paymentTable").append(str);
+                        }
+                    }
+                }
+            })
+        })
+
+
+    function getPaymentHistory() {
+        $.ajax({
+            type : 'POST',
+            url : '/history/reserve/'+ $("#usernum").val(),
+            data : '',
+            dataType : "JSON",
+            beforeSend : function() {
+                $("#paymentTable").empty();
+            },
+            success : function (data) {
+                let temp = `<tr class ="text-center">
+                            <th>예매번호</th>
+                            <th>제목</th>
+                            <th>예매일자</th>
+                            <th>상태</th>
+                            <th>확인/신청</th>
+                        </tr>`
+                $("#paymentTable").append(temp);
+                for (let i = 0; i < data.length; i++) {
+                    let reserve = data[i];
+                    let state;
+                    if (reserve['state'] == 'N') {
+                        state = "예약취소"
+                        let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitionName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                    </tr>`;
+                        $("#paymentTable").append(str);
+                    } else {
+                        state = "예약완료"
+                        let str = `
+                    <tr class = "p-5 text-center">
+                        <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
+                        <td>\${reserve['exhibitionName']}</td>
+                        <td>\${reserve['reserveDate']}</td>
+                        <td>\${state}</td>
+                        <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
+                    </tr>`;
+                        $("#paymentTable").append(str);
+                    }
+                }
+            }
+        })
+    }
+
+    function getToday(){
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = ("0" + (1 + date.getMonth())).slice(-2);
+        let day = ("0" + date.getDate()).slice(-2);
+
+        return year + "-" + month + "-" + day;
+    }
+    function getThisWeek() {
+
+        let currentDay = new Date();
+        let theYear = currentDay.getFullYear();
+        let theMonth = currentDay.getMonth();
+        let theDate  = currentDay.getDate();
+        let theDayOfWeek = currentDay.getDay();
+
+        let thisWeek = [];
+
+        for(let i=0; i<7; i++) {
+            let resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+            let yyyy = resultDay.getFullYear();
+            let mm = Number(resultDay.getMonth()) + 1;
+            let dd = resultDay.getDate();
+
+            mm = String(mm).length === 1 ? '0' + mm : mm;
+            dd = String(dd).length === 1 ? '0' + dd : dd;
+
+            thisWeek[i] = yyyy + '-' + mm + '-' + dd;
+        }
+
+        return thisWeek;
+    }
+    function getThisMonth() {
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        console.log(firstDay);
+        console.log(lastDay);
+        firstDay = firstDay.toISOString().substring(0,10);
+        lastDay = lastDay.toISOString().substring(0,10);
+        let thisMonth = [];
+        thisMonth[0] = firstDay;
+        thisMonth[1] = lastDay;
+        return thisMonth;
+    }
+    $(document)
+        .on('click','#btnDetail',function() {
+            let id = $(this).parent().parent().find('td:eq(0)').attr('id');
+            console.log("오픈할 id = " + id);
+            $.ajax({
+                type : 'POST',
+                url : '/history/reserve/detail/' + id,
+                data : {userId : $("#usernum").val()},
+                dataType : 'JSON',
+                beforeSend : function () {
+                    $("#tb1").empty();
+                },
+                success : function (data) {
+                    console.log("성공 " + data['orderId']);
+                    let str = `
 	 <tr>
 		<th>예매번호</th>
 		<td id = orderId>\${data['orderId']}</td>
@@ -482,68 +485,66 @@
 			<button type="button" class="btn btn-outline-dark" id="btnCancel">닫기</button>
 		</td>
 	</tr>`
-                            $("#tb1").append(str);
-                        }
-                    })
-                    $('#history').dialog('open');
-
-                })
-                .on('click','#btnCancel',function() {
-                    $('#history').dialog('close');
-                    getPaymentHistory();
-                })
-                .on('click','#btnC',function() {
-                    if(!confirm('예매를 취소하시겠습니까?'))  {
-                        return false;
-                    }
-                    else {
-                        $.ajax({
-                            type : 'POST',
-                            url : '/history/reserve/delete/'+$("#orderId").text(),
-                            data : '',
-                            dataType : 'JSON',
-                            success : function() {
-                                $('#history').dialog('close');
-                                getPaymentHistory();
-                            }
-                        })
+                    $("#tb1").append(str);
+                }
+            })
+            $('#history').dialog('open');
+        })
+        .on('click','#btnCancel',function() {
+            $('#history').dialog('close');
+        })
+        .on('click','#btnC',function() {
+            if(!confirm('예매를 취소하시겠습니까?'))  {
+                return false;
+            }
+            else {
+                $.ajax({
+                    type : 'POST',
+                    url : '/history/reserve/delete/'+$("#orderId").text(),
+                    data : '',
+                    dataType : 'JSON',
+                    success : function() {
+                        $('#history').dialog('close');
+                        getPaymentHistory();
                     }
                 })
-                .on("click", "#btnWeek", function() {
-                    let thisWeek = getThisWeek();
-                    $.ajax({
-                        type : "POST",
-                        url : "/history/reserve/thisWeek",
-                        data : {userId :$("#usernum").val(), startDate : thisWeek[0], endDate : thisWeek[6]},
-                        dataType : "JSON",
-                        beforeSend : function() {
-                            $("#paymentTable").empty();
-                        },
-                        success : function(data) {
-                            let temp = `<tr class ="text-center">
+            }
+        })
+        .on("click", "#btnWeek", function() {
+            let thisWeek = getThisWeek();
+            $.ajax({
+                type : "POST",
+                url : "/history/reserve/thisWeek",
+                data : {userId :$("#usernum").val(), startDate : thisWeek[0], endDate : thisWeek[6]},
+                dataType : "JSON",
+                beforeSend : function() {
+                    $("#paymentTable").empty();
+                },
+                success : function(data) {
+                    let temp = `<tr class ="text-center">
                             <th>예매번호</th>
                             <th>제목</th>
                             <th>예매일자</th>
                             <th>상태</th>
                             <th>확인/신청</th>
                         </tr>`
-                            $("#paymentTable").append(temp);
-                            for (let i = 0; i < data.length; i++) {
-                                let reserve = data[i];
-                                let state;
-                                if (reserve['isPayment'] == 'N') {
-                                    state = "예약취소"
-                                    let str = `
+                    $("#paymentTable").append(temp);
+                    for (let i = 0; i < data.length; i++) {
+                        let reserve = data[i];
+                        let state;
+                        if (reserve['isPayment'] == 'N') {
+                            state = "예약취소"
+                            let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
                         <td>\${reserve['reserveDate']}</td>
                         <td>\${state}</td>
                     </tr>`;
-                                    $("#paymentTable").append(str);
-                                } else {
-                                    state = "예약완료"
-                                    let str = `
+                            $("#paymentTable").append(str);
+                        } else {
+                            state = "예약완료"
+                            let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
@@ -551,47 +552,47 @@
                         <td>\${state}</td>
                         <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
                     </tr>`;
-                                    $("#paymentTable").append(str);
-                                }
-                            }
+                            $("#paymentTable").append(str);
                         }
-                    })
-                })
-                .on("click", "#btnMonth", function() {
-                    let date = getThisMonth();
-                    $.ajax({
-                        type : "POST",
-                        url : "/history/reserve/thisMonth",
-                        data : {userId :$("#usernum").val(), startDate : date[0], endDate : date[1]},
-                        dataType : "JSON",
-                        beforeSend : function() {
-                            $("#paymentTable").empty()
-                        },
-                        success : function(data) {
-                            let temp = `<tr class ="text-center">
+                    }
+                }
+            })
+        })
+        .on("click", "#btnMonth", function() {
+            let date = getThisMonth();
+            $.ajax({
+                type : "POST",
+                url : "/history/reserve/thisMonth",
+                data : {userId :$("#usernum").val(), startDate : date[0], endDate : date[1]},
+                dataType : "JSON",
+                beforeSend : function() {
+                    $("#paymentTable").empty()
+                },
+                success : function(data) {
+                    let temp = `<tr class ="text-center">
                             <th>예매번호</th>
                             <th>제목</th>
                             <th>예매일자</th>
                             <th>상태</th>
                             <th>확인/신청</th>
                         </tr>`
-                            $("#paymentTable").append(temp);
-                            for (let i = 0; i < data.length; i++) {
-                                let reserve = data[i];
-                                let state;
-                                if (reserve['isPayment'] == 'N') {
-                                    state = "예약취소"
-                                    let str = `
+                    $("#paymentTable").append(temp);
+                    for (let i = 0; i < data.length; i++) {
+                        let reserve = data[i];
+                        let state;
+                        if (reserve['isPayment'] == 'N') {
+                            state = "예약취소"
+                            let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
                         <td>\${reserve['reserveDate']}</td>
                         <td>\${state}</td>
                     </tr>`;
-                                    $("#paymentTable").append(str);
-                                } else {
-                                    state = "예약완료"
-                                    let str = `
+                            $("#paymentTable").append(str);
+                        } else {
+                            state = "예약완료"
+                            let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
@@ -599,49 +600,49 @@
                         <td>\${state}</td>
                         <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
                     </tr>`;
-                                    $("#paymentTable").append(str);
-                                }
-                            }
+                            $("#paymentTable").append(str);
                         }
-                    })
-                })
-                .on("click", "#selectPayment", function() {
-                    if ($("#date1").val() == '' || $("#date2").val() == '') {
-                        alert("날짜를 제대로 선택해주세요");
-                    } else {
-                        $.ajax({
-                            type : "POST",
-                            url : "/history/reserve/date",
-                            data : {userId :$("#usernum").val(), startDate : $("#date1").val(), endDate : $("#date2").val()},
-                            dataType : "JSON",
-                            beforeSend : function() {
-                                $("#paymentTable").empty()
-                            },
-                            success : function(data) {
-                                let temp = `<tr class ="text-center">
+                    }
+                }
+            })
+        })
+        .on("click", "#selectPayment", function() {
+            if ($("#date1").val() == '' || $("#date2").val() == '') {
+                alert("날짜를 제대로 선택해주세요");
+            } else {
+                $.ajax({
+                    type : "POST",
+                    url : "/history/reserve/date",
+                    data : {userId :$("#usernum").val(), startDate : $("#date1").val(), endDate : $("#date2").val()},
+                    dataType : "JSON",
+                    beforeSend : function() {
+                        $("#paymentTable").empty()
+                    },
+                    success : function(data) {
+                        let temp = `<tr class ="text-center">
                             <th>예매번호</th>
                             <th>제목</th>
                             <th>예매일자</th>
                             <th>상태</th>
                             <th>확인/신청</th>
                         </tr>`
-                                $("#paymentTable").append(temp);
-                                for (let i = 0; i < data.length; i++) {
-                                    let reserve = data[i];
-                                    let state;
-                                    if (reserve['isPayment'] == 'N') {
-                                        state = "예약취소"
-                                        let str = `
+                        $("#paymentTable").append(temp);
+                        for (let i = 0; i < data.length; i++) {
+                            let reserve = data[i];
+                            let state;
+                            if (reserve['isPayment'] == 'N') {
+                                state = "예약취소"
+                                let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
                         <td>\${reserve['reserveDate']}</td>
                         <td>\${state}</td>
                     </tr>`;
-                                        $("#paymentTable").append(str);
-                                    } else {
-                                        state = "예약완료"
-                                        let str = `
+                                $("#paymentTable").append(str);
+                            } else {
+                                state = "예약완료"
+                                let str = `
                     <tr class = "p-5 text-center">
                         <td id = \${reserve['orderId']}>\${reserve['orderId']}</td>
                         <td>\${reserve['exhibitName']}</td>
@@ -649,14 +650,12 @@
                         <td>\${state}</td>
                         <td><button type="button" class="btn btn-outline-dark" id="btnDetail">상세보기</button></td>
                     </tr>`;
-                                        $("#paymentTable").append(str);
-                                    }
-                                }
+                                $("#paymentTable").append(str);
                             }
-                        })
+                        }
                     }
                 })
-            $("#acc").append(str);
+            }
         })
 </script>
 <script>
@@ -715,8 +714,6 @@
     $(document)
         .on('click','#mmt',function() {
             $("#acc").empty();
-
-
             let str = `<main class="container text-center">
                         <br><br><h2 style="text-align: center">개인 정보 수정</h2><hr><br>
                         <form:form id="frmupdate" action="/mypage" method="POST" modelAttribute = "mypage">
@@ -746,28 +743,16 @@
                         </main>`;
             $("#acc").append(str);
         })
-        // .on('click','#btnupdate',function(){
-        //     $.ajax({
-        //         type : "POST",
-        //         url : "/mypage/update",
-        //         data : {userId :$("#usernum").val(), password : $("#pwd").val()},
-        //         dataType : "JSON",
-        //         success : function(data) {
-        //         console.log(data);
-        //     }
-        //
-        //     })
-        //     })
 </script>
 <script>
     $(document)
-    .on('click','#sec',function(){
-        $("#acc").empty();
-        let str=`<br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
+        .on('click','#sec',function(){
+            $("#acc").empty();
+            let str=`<br><br><h2 style="text-align: center">회원 탈퇴</h2><hr><br>
                <table boder="1" bordercolor="black" class="center">
                 <tr><td>비밀번호:<input type="text" id="pw"><button id="btntc" value="탈퇴">탈퇴</button></td></tr>
                 </table> `;
-        $('#acc').append(str);
-    })
+            $('#acc').append(str);
+        })
 </script>
 </html>

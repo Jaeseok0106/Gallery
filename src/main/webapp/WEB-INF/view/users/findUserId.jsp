@@ -117,10 +117,9 @@
 <script>
     $(document)
     .on("click", "#submitMail", function() {
+        console.log("메일 보내기 호출");
         if ($("#submitMail").val() == '인증번호 받기') {
-            if ($("#userEmail").val() == '') {
-
-
+            if ($("#userEmail").val() != '') {
                 $.ajax({
                     type: "POST",
                     url: "/findMyId",

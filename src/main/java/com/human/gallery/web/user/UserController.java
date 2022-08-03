@@ -109,6 +109,7 @@ public class UserController {
 		}
 		userService.addUsers(form);
 		model.addAttribute("user", usera);
+
 		return "redirect:/login";
 	}
 	@GetMapping("/findMyId")

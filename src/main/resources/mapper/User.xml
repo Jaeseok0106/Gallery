@@ -35,12 +35,6 @@
 <insert id = "addKakaoUser" parameterType="String">
 	insert into Users values (Users_SEQ.nextval, #{id}, #{password}, '방문자', null, 'KAKAO')
 </insert>
-	<select id = "findUsersByEmail" resultType="Integer">
-		select id from userdetail where email = #{param1}
-	</select>
-	<select id = "findUserIdByNum" resultType = "String">
-		select id from users where usernum = #{param1}
-	</select>
 	<update id="impoupdate">
 		update userdetail set username=#{param1},email=#{param2},postcode=#{param3},address=#{param4},dtaddress=#{param5},mobile=#{param6}
 		                  where id = (select usernum from users where id = #{param7})
