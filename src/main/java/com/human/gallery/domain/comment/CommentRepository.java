@@ -32,4 +32,8 @@ public interface CommentRepository {
                                           @Param("pageNumber") String pageNumber);
 
     Comment findOneById(@Param("commentId") String id);
+    ArrayList<Comment> findUserCommentById(@Param("userId") String userId);
+    Integer returnCategory(@Param("postId") String postId);
+
+    Integer returnCommentNum(@Param("userId") String userId);
 }
