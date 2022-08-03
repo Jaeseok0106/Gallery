@@ -161,7 +161,7 @@ prefix="c" %> <%@ page session="false" %>
       <div class="page-title">
         <h1>전시회 정보</h1>
       </div>
-      <div class="row mb-2" style="height: 700px">
+      <div class="row mb-2">
         <div class="col-6">
           <div
             id="carouselExampleSlidesOnly"
