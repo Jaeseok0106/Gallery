@@ -85,6 +85,7 @@ public class UserService {
 		userRepository.addUser(user.getId(), tempPassword, salt);
 		Integer number = userRepository.findNumById(user.getId());
 		String address = user.getAddress() + " " + user.getRefAddress();
+		log.info("무결성 제약조건 {}", number);
 		userRepository.addDetail(number, user.getName(),user.getMobile(), address ,user.getDtaddress(), user.getEmail(), user.getPostcode());
 	}
 
