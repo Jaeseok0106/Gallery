@@ -153,7 +153,7 @@ prefix="c" %> <%@ page session="false" %>
         </ul>
       </div>
     </header>
-  </div>
+  </div> <br>
     <input type="hidden" id="role" value="${user.role}" />
     <input type="hidden" id="usernum" value="${user.userNum}" />
     <input type="hidden" id="exhibitId" value="${exhibit.id}" />
