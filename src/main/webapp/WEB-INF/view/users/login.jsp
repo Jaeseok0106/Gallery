@@ -94,7 +94,7 @@ body {
     </div>
     <div class="form-floating" id="kakaologin">
         <div class="kakaobtn">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=11afdf6f295b3f272c88971d1ea73cdd&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=11afdf6f295b3f272c88971d1ea73cdd&redirect_uri=http://nurgallery.shop/auth/kakao/callback&response_type=code">
                 <img src="/loginButton.png" width="300px" height="47px"/>
             </a>
         </div>

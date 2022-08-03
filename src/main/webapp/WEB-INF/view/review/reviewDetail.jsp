@@ -202,7 +202,7 @@
     <div class="text-end">
         <c:if test="${user.id == rdto.userid || user.role =='관리자'}">
         <button type="button" class="btn btn-outline-Dark" onclick="location.href='reviewUpdate?id=${rdto.id}'">수정</button>
-        <a href="deleteReview?id=${rdto.id}"><button type="button" class="btn btn-outline-Dark" id="delete">삭제</button></a>
+        <a href="deleteReview?id=${rdto.id}"><button type="button" class="btn btn-outline-Dark" id="deleteB">삭제</button></a>
         </c:if>
     </div>
 
@@ -294,15 +294,15 @@
             $("#none3").css("display", "none");
         });
     });
-    $('#delete').click(function () {
+    $('#deleteB').click(function () {
         if(!confirm('게시글을 삭제하시겠습니까?')) {
             return false;
         }
     })
 
+    let postid=$("#postId").val();
+    let userid=$("#usernum").val();
     function updateLike() {
-        let postid=$("#postId").val();
-        let userid=$("#usernum").val();
         $.ajax({
             type:"POST",
             url:"/review/like",
@@ -320,4 +320,5 @@
         });
     }
 </script>
+<script src="/js/comment.js"></script>
 </html>
