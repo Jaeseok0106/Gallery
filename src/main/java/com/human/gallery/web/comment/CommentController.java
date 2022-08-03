@@ -111,4 +111,27 @@ public class CommentController {
             commentRepository.updateByIdWithDelete(temp, id);
         }
     }
+    @PostMapping("/findAllMyComment")
+    @ResponseBody
+    public Object returnAllComment(@RequestParam("userId") String id) {
+
+        List<Comment> userCommentById = commentRepository.findUserCommentById(id);
+        return  userCommentById;
+    }
+    @PostMapping("/getCategory")
+    @ResponseBody
+    public String returnCategory(@RequestParam("postId") String id) {
+        Integer category = commentRepository.returnCategory(id);
+        log.info("게시글 카테고리 = {}", category);
+        if (category == 3) {
+            return "detail";
+        } else {
+            return "reviewDetail";
+        }
+    }
+    @PostMapping("/getMyCommentNum")
+    @ResponseBody
+    public String returnMyCommentNum(@RequestParam("userId") String id) {
+        return null;
+    }
 }

@@ -38,35 +38,49 @@ $(document).ready(function () {
     })
 })
     .on("click", "#addComment", function() {
-        $.ajax({
-            type : "POST",
-            url : "/commentWrite",
-            dataType : "text",
-            data : {postId : $("#postId").val(), writer : $("#usernum").val(), content : $("#commentForm").val()},
-            beforeSend : function() {
-                // $("#addComment").after().remove();
-            },
-            success : function(data) {
-                getComment(parseInt($("#pageMax").val())-1);
-            }
-        })
+        editor = CKEDITOR.instances.commentForm.getData();
+        console.log("입력한 값 = ", editor);
+        if (editor == null || editor == '') {
+            alert("댓글 내용을 입력해주세요");
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/commentWrite",
+                dataType: "text",
+                data: {postId: $("#postId").val(), writer: $("#usernum").val(), content: editor},
+                beforeSend: function () {
+                    // $("#addComment").after().remove();
+                },
+                success: function (data) {
+                    getComment(parseInt($("#pageMax").val()) - 1);
+                }
+            })
+        }
     })
     .on("click", "#addReply", function() {
         console.log("호출 여부");
-        $.ajax({
-            type : "POST",
-            url : "/commentWrite",
-            dataType : "text",
-            data : {postId : $("#postId").val(), writer : $("#usernum").val(), content : $("#replyForm").val(),
-                reparent : $("#reparent").val()},
-            beforeSend : function () {
-                // $("#writeComment").empty();
-            },
-            success : function () {
-                console.log("데이터 보낸거같은데");
-                getComment($("#currentCommentPage").val());
-            }
-        })
+        let replyContent = CKEDITOR.instances.replyForm.getData();
+        if (replyContent == '' || replyContent == null) {
+            alert("댓글 내용을 입력하세요");
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/commentWrite",
+                dataType: "text",
+                data: {
+                    postId: $("#postId").val(), writer: $("#usernum").val(), content: replyContent,
+                    reparent: $("#reparent").val()
+                },
+                beforeSend: function () {
+                    // $("#writeComment").empty();
+                },
+                success: function () {
+                    console.log("데이터 보낸거같은데");
+                    getComment($("#currentCommentPage").val());
+                }
+            })
+        }
     })
     .on("click", "#updateReply", function() {
         let temp = $(this).parent().attr('id');
@@ -74,7 +88,9 @@ $(document).ready(function () {
         temp = temp.split("userComment");
         let commentId = temp[1];
         console.log(commentId);
-        let content = $("#updateForm").val();
+
+        let content = CKEDITOR.instances.updateForm.getData();
+
         console.log("수정 전 값 = ", content);
         if (content == null || content == '') {
             alert("댓글은 공백을 입력할 수 없습니다.");
@@ -107,6 +123,7 @@ function reply_click(commentNumber) {
             <button type="button" id="addReply" class="btn btn-outline-Dark" style="height:auto;">등록</button>
          </div>`;
         $(`#userComment${commentNumber}`).append(str);
+        CKEDITOR.replace("replyForm");
     } else {
         $("#writePostComment").remove();
     }
@@ -202,6 +219,8 @@ function getComment(page) {
             }
             getCommentNum();
             commentPaging();
+            CKEDITOR.replace("commentForm");
+            CKEDITOR.replace("replyForm");
         }
     })
 }
@@ -237,6 +256,7 @@ function updateComment(commentNumber) {
                 let str = `<textarea id="updateForm" rows="3" cols="10" style="width:90%; display: inline; text-align:left;">${commentPost[0]}</textarea>
                 <button type="button" id="updateReply" class="btn btn-outline-Dark" style="height:auto;">등록</button>`;
                 $("#userComment"+commentNumber).append(str);
+                CKEDITOR.replace("updateForm");
             } else {
                 $("#userComment"+commentNumber).children().remove();
                 $("#userComment"+commentNumber).text(commentPost[0]);
